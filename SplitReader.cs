@@ -10,10 +10,13 @@ namespace Innovoft.IO
 	{
 		#region Fields
 		private Stream stream;
-		private byte[] raw;
+		private readonly Encoding encoding;
+		private readonly Decoder decoder;
+		private readonly int length;
+		private readonly byte[] raw;
 		private int rawOffset;
 		private int rawLength;
-		private char[] chars;
+		private readonly char[] chars;
 		private int charsOffset;
 		private int charsLength;
 		#endregion //Fields
@@ -21,7 +24,24 @@ namespace Innovoft.IO
 		#region Constructors
 		public SplitReader(Stream stream)
 		{
+			if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
+			if (!stream.CanRead)
+			{
+				throw new ArgumentException("!stream.CanRead");
+			}
 			this.stream = stream;
+			this.encoding = System.Text.Encoding.UTF8;
+			this.decoder = encoding.GetDecoder();
+			this.length = 4096;
+			this.raw = new byte[length];
+			this.rawOffset = 0;
+			this.rawLength = 0;
+			this.chars = new char[length];
+			this.charsOffset = 0;
+			this.charsLength = 0;
 		}
 		#endregion //Constructors
 
@@ -31,6 +51,10 @@ namespace Innovoft.IO
 			Dispose(disposing: false);
 		}
 		#endregion //Finalizer
+
+		#region Properties
+		public Encoding Encoding => encoding;
+		#endregion //Properties
 
 		#region Methods
 		#region Dispose
@@ -52,6 +76,11 @@ namespace Innovoft.IO
 			{
 				throw new ObjectDisposedException(nameof(SplitReader));
 			}
+			throw new NotImplementedException();
+		}
+
+		private bool ReadBuffers()
+		{
 			throw new NotImplementedException();
 		}
 		#endregion //Methods
