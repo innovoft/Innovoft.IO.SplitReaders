@@ -18,6 +18,7 @@ namespace Innovoft.IO
 		private Func<byte[], int, int, int> streamRead;
 		private readonly Encoding encoding;
 		private readonly Decoder decoder;
+		private readonly Func<byte[], int, int, char[], int, int> decoderGetChars;
 		private readonly int length;
 		private readonly byte[] raw;
 		private readonly char[] chars;
@@ -40,6 +41,7 @@ namespace Innovoft.IO
 			this.streamRead = stream.Read;
 			this.encoding = System.Text.Encoding.UTF8;
 			this.decoder = encoding.GetDecoder();
+			this.decoderGetChars = decoder.GetChars;
 			this.length = 4096;
 			this.raw = new byte[length];
 			this.chars = new char[length];
@@ -93,7 +95,7 @@ namespace Innovoft.IO
 					return false;
 				}
 				charsOffset = 0;
-				charsLength = decoder.GetChars(raw, 0, read, chars, 0);
+				charsLength = decoderGetChars(raw, 0, read, chars, 0);
 				if (charsLength > 0)
 				{
 					return true;
