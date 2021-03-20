@@ -18,7 +18,8 @@ namespace Innovoft.IO
 			var text = string.Join(separator.ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
 			var actuals = new List<string>();
-			using (var reader = new SplitReader(null))
+			using (var readerStream = new MemoryStream(raw))
+			using (var reader = new SplitReader(readerStream))
 			{
 				Assert.IsTrue(reader.ReadLine(separator, actuals), "!ReadLine");
 				Assert.AreEqual(expecteds.Length, actuals.Count, "expecteds.Length != actuals.Count");
