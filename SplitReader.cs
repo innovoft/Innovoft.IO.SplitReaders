@@ -46,7 +46,7 @@ namespace Innovoft.IO
 		}
 		#endregion //Dispose
 
-		private int ReadBuffers(char separator, List<string> columns)
+		public int ReadBuffers(char separator, List<string> columns)
 		{
 			if (stream == null)
 			{
