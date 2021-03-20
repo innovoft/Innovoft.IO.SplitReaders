@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Innovoft.IO.SplitReaders", "Innovoft.IO.SplitReaders.csproj", "{79D5E54F-B070-457D-A6B6-067CB7E1A514}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DB3E3852-63E0-43E6-9725-23D490C5650F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Innovoft.IO.SplitReaders.Tests", "Innovoft.IO.SplitReaders.Tests\Innovoft.IO.SplitReaders.Tests.csproj", "{B6482819-A400-4ECB-9EBF-F140A87FB3D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{79D5E54F-B070-457D-A6B6-067CB7E1A514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D5E54F-B070-457D-A6B6-067CB7E1A514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D5E54F-B070-457D-A6B6-067CB7E1A514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6482819-A400-4ECB-9EBF-F140A87FB3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6482819-A400-4ECB-9EBF-F140A87FB3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6482819-A400-4ECB-9EBF-F140A87FB3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6482819-A400-4ECB-9EBF-F140A87FB3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6482819-A400-4ECB-9EBF-F140A87FB3D3} = {DB3E3852-63E0-43E6-9725-23D490C5650F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D5A451F-EE45-47B0-A2A5-5DD7C293FB22}
