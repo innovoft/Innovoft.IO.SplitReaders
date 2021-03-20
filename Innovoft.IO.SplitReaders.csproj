@@ -9,4 +9,10 @@
     <RootNamespace>Innovoft.IO</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Innovoft.IO.SplitReaders.Tests\**" />
+    <EmbeddedResource Remove="Innovoft.IO.SplitReaders.Tests\**" />
+    <None Remove="Innovoft.IO.SplitReaders.Tests\**" />
+  </ItemGroup>
+
 </Project>
