@@ -15,6 +15,7 @@ namespace Innovoft.IO
 
 		#region Fields
 		private Stream stream;
+		private Func<byte[], int, int, int> streamRead;
 		private readonly Encoding encoding;
 		private readonly Decoder decoder;
 		private readonly int length;
@@ -36,6 +37,7 @@ namespace Innovoft.IO
 				throw new ArgumentException("!stream.CanRead");
 			}
 			this.stream = stream;
+			this.streamRead = stream.Read;
 			this.encoding = System.Text.Encoding.UTF8;
 			this.decoder = encoding.GetDecoder();
 			this.length = 4096;
@@ -68,6 +70,7 @@ namespace Innovoft.IO
 		private void Dispose(bool disposing)
 		{
 			Interlocked.Exchange(ref stream, null)?.Dispose();
+			streamRead = null;
 		}
 		#endregion //Dispose
 
@@ -84,7 +87,7 @@ namespace Innovoft.IO
 		{
 			while (true)
 			{
-				var read = stream.Read(raw, 0, length);
+				var read = streamRead(raw, 0, length);
 				if (read <= 0)
 				{
 					return false;
