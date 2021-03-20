@@ -19,8 +19,6 @@ namespace Innovoft.IO
 		private readonly Decoder decoder;
 		private readonly int length;
 		private readonly byte[] raw;
-		private int rawOffset;
-		private int rawLength;
 		private readonly char[] chars;
 		private int charsOffset;
 		private int charsLength;
@@ -42,8 +40,6 @@ namespace Innovoft.IO
 			this.decoder = encoding.GetDecoder();
 			this.length = 4096;
 			this.raw = new byte[length];
-			this.rawOffset = 0;
-			this.rawLength = 0;
 			this.chars = new char[length];
 			this.charsOffset = 0;
 			this.charsLength = 0;
@@ -86,7 +82,20 @@ namespace Innovoft.IO
 
 		private bool ReadBuffers()
 		{
-			throw new NotImplementedException();
+			while (true)
+			{
+				var read = stream.Read(raw, 0, length);
+				if (read <= 0)
+				{
+					return false;
+				}
+				charsOffset = 0;
+				charsLength = decoder.GetChars(raw, 0, read, chars, 0);
+				if (charsLength > 0)
+				{
+					return true;
+				}
+			}
 		}
 		#endregion //Methods
 	}
