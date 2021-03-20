@@ -6,6 +6,7 @@
     <RepositoryUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>csv</PackageTags>
+    <RootNamespace>Innovoft.IO</RootNamespace>
   </PropertyGroup>
 
 </Project>
