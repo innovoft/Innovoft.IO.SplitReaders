@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>csv</PackageTags>
+  </PropertyGroup>
+
+</Project>
