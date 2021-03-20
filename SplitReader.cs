@@ -82,6 +82,10 @@ namespace Innovoft.IO
 			{
 				throw new ObjectDisposedException(nameof(SplitReader));
 			}
+			if (charsOffset >= charsLength && !ReadBuffers())
+			{
+				return false;
+			}
 			throw new NotImplementedException();
 		}
 
