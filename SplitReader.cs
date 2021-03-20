@@ -8,6 +8,11 @@ namespace Innovoft.IO
 {
 	public sealed class SplitReader : IDisposable
 	{
+		#region Constants
+		private const char CR = '\r';
+		private const char LF = '\n';
+		#endregion //Constants
+
 		#region Fields
 		private Stream stream;
 		private readonly Encoding encoding;
