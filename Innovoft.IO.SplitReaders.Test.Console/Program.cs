@@ -122,10 +122,10 @@ namespace Innovoft.IO
 
 		private static void Results()
 		{
-			ReadLineCompare();
+			ReadLineAddCompare();
 		}
 
-		private static void ReadLineCompare()
+		private static void ReadLineAddCompare()
 		{
 			using (var lineStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read))
 			using (var lineReader = new StreamReader(lineStream))
@@ -137,7 +137,7 @@ namespace Innovoft.IO
 				{
 					var line = lineReader.ReadLine();
 					splits.Clear();
-					var split = splitReader.ReadLine(separator, splits);
+					var split = splitReader.ReadLineAdd(separator, splits);
 					if ((line != null) != split)
 					{
 						Console.WriteLine("Number of lines is not the same.");

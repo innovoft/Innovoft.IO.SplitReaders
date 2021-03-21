@@ -14,7 +14,7 @@
 		{ "Predicate<char>", "separator(letter)" },
 		{ "char[]", "Contains(separator, letter)" },
 	};
-	var valuess = new Dictionary<string, string>()
+	var valuesAdds = new Dictionary<string, string>()
 	{
 		{ "List<string>", "values.Add(value)" },
 		{ "ICollection<string>", "values.Add(value)" },
@@ -39,7 +39,7 @@ namespace Innovoft.IO
 	{
 		var separator = sp.Key;
 		var test = sp.Value;
-		foreach (var vp in valuess)
+		foreach (var vp in valuesAdds)
 		{
 			var values = vp.Key;
 			var add = vp.Value;
@@ -54,7 +54,7 @@ namespace Innovoft.IO
 				line = true;
 			}
 #>
-		public bool ReadLine(<#= separator #> separator, <#= values #> values)
+		public bool ReadLineAdd(<#= separator #> separator, <#= values #> values)
 		{
 			if (stream == null)
 			{
