@@ -14,7 +14,7 @@ namespace Innovoft.IO
 		public void ReadLineTest()
 		{
 			const char separator = ',';
-			var expecteds = new string[] { "A", "B", "C", "D", };
+			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(separator.ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
 			var actuals = new List<string>();
