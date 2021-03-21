@@ -26,7 +26,8 @@ namespace Innovoft.IO
 
 		#region Fields
 		private static string sourcePath;
-		private static char separator;
+		private static char separator = ',';
+		private static char[] separators = new char[1] { ',', };
 		#endregion //Fields
 
 		#region Methods
@@ -103,6 +104,47 @@ namespace Innovoft.IO
 
 		private static void Results()
 		{
+			ReadLineCompare();
+		}
+
+		private static void ReadLineCompare()
+		{
+			using (var lineStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			using (var lineReader = new StreamReader(lineStream))
+			using (var splitStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			using (var splitReader = new SplitReader(splitStream))
+			{
+				var splits = new List<string>();
+				while (true)
+				{
+					var line = lineReader.ReadLine();
+					splits.Clear();
+					var split = splitReader.ReadLine(separator, splits);
+					if ((line != null) != split)
+					{
+						Console.WriteLine("Number of lines is not the same.");
+						return;
+					}
+					if (line == null || !split)
+					{
+						return;
+					}
+					var columns = line.Split(separators);
+					if (columns.Length != splits.Count)
+					{
+						Console.WriteLine("Number of columns is not the same.");
+						return;
+					}
+					for (var i = columns.Length - 1; i >= 0; --i)
+					{
+						if (columns[i] != splits[i])
+						{
+							Console.WriteLine("A column is not the same.");
+							return;
+						}
+					}
+				}
+			}
 		}
 		#endregion //Methods
 	}
