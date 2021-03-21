@@ -57,6 +57,24 @@ namespace Innovoft.IO
 						errors.Add("Problems processing -Source " + exception.Message);
 					}
 					break;
+
+				case "-Separator":
+					try
+					{
+						var value = args[++i];
+						if (value.Length != 1)
+						{
+							errors.Add("-Separator can only be one letter");
+							break;
+						}
+
+						separators[0] = separator = value[0];
+					}
+					catch (Exception exception)
+					{
+						errors.Add("Problems processing -Separator " + exception.Message);
+					}
+					break;
 				}
 			}
 
