@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,7 +7,11 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>csv</PackageTags>
     <RootNamespace>Innovoft.IO</RootNamespace>
-  </PropertyGroup>
+		<!--T4-->
+		<TransformOnBuild>true</TransformOnBuild>
+		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+	</PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
@@ -21,5 +25,24 @@
   <ItemGroup>
     <None Remove=".gitignore" />
   </ItemGroup>
+
+  <ItemGroup>
+		<T4Transform Include="SplitReader.tt">
+			<Link>SplitReader.tt</Link>
+			<OutputFilePath>$(ProjectDir)</OutputFilePath>
+			<OutputFileName>SplitReader.tt.cs</OutputFileName>
+			<LastGenOutput>$(ProjectDir)SplitReader.tt.cs</LastGenOutput>
+		</T4Transform>
+  </ItemGroup>
+
+	<ItemGroup>
+		<None Include="SplitReader.tt.cs">
+			<AutoGen>True</AutoGen>
+			<DependentUpon>SplitReader.tt</DependentUpon>
+		</None>
+	</ItemGroup>
+
+	<!--T4-->
+	<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
 
 </Project>

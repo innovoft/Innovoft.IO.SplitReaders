@@ -1,0 +1,174 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+	var separators = new Dictionary<string, string>()
+	{
+		{ "char", "letter == separator" },
+		{ "HashSet<char>", "separator.Contains(letter)" },
+		{ "List<char>", "separator.Contains(letter)" },
+		{ "ICollection<char>", "separator.Contains(letter)" },
+		{ "Predicate<char>", "separator(letter)" },
+		{ "char[]", "Contains(separator, letter)" },
+	};
+	var valuess = new Dictionary<string, string>()
+	{
+		{ "List<string>", "values.Add(value)" },
+		{ "ICollection<string>", "values.Add(value)" },
+		{ "Action<string>", "values(value)" },
+	};
+	bool line;
+#>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Innovoft.IO
+{
+	partial class SplitReader
+	{
+		#region Methods
+<#
+	line = false;
+#>
+<#
+	foreach (var sp in separators)
+	{
+		var separator = sp.Key;
+		var test = sp.Value;
+		foreach (var vp in valuess)
+		{
+			var values = vp.Key;
+			var add = vp.Value;
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+#>
+		public bool ReadLine(<#= separator #> separator, <#= values #> values)
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(SplitReader));
+			}
+			if (lettersOffset >= lettersLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = lettersOffset;
+			var building = false;
+			while (true)
+			{
+				var letter = letters[lettersOffset];
+				switch (letter)
+				{
+				case CR:
+					if (building)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						var value = builder.ToString();
+						<#= add #>;
+						builder.Clear();
+					}
+					else
+					{
+						var value = new string(letters, offset, lettersOffset - offset);
+						<#= add #>;
+					}
+					++lettersOffset;
+					//LF
+					if (lettersOffset >= lettersLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (letters[lettersOffset] == LF)
+					{
+						++lettersOffset;
+					}
+					return true;
+
+				case LF:
+					if (building)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						var value = builder.ToString();
+						<#= add #>;
+						builder.Clear();
+						++lettersOffset;
+						return true;
+					}
+					else
+					{
+						var value = new string(letters, offset, lettersOffset - offset);
+						<#= add #>;
+						++lettersOffset;
+						return true;
+					}
+
+				default:
+					if (<#= test #>)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							var value = builder.ToString();
+							<#= add #>;
+							builder.Clear();
+							building = false;
+							offset = ++lettersOffset;
+							break;
+						}
+						else
+						{
+							var value = new string(letters, offset, lettersOffset - offset);
+							<#= add #>;
+							offset = ++lettersOffset;
+							break;
+						}
+					}
+					else
+					{
+						++lettersOffset;
+					}
+					break;
+				}
+				if (lettersOffset >= lettersLength)
+				{
+					if (offset <= lettersOffset)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						building = true;
+					}
+					if (!ReadBuffers())
+					{
+						if (building)
+						{
+							var value = builder.ToString();
+							<#= add #>;
+							builder.Clear();
+						}
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
+		#endregion //Methods
+	}
+}
