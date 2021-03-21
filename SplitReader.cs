@@ -301,6 +301,118 @@ namespace Innovoft.IO
 			}
 		}
 
+		public bool ReadLine(char separator, Action<string> values)
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(SplitReader));
+			}
+			if (lettersOffset >= lettersLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = lettersOffset;
+			var building = false;
+			while (true)
+			{
+				var letter = letters[lettersOffset];
+				switch (letter)
+				{
+				case CR:
+					if (building)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						var value = builder.ToString();
+						values(value);
+						builder.Clear();
+					}
+					else
+					{
+						var value = new string(letters, offset, lettersOffset - offset);
+						values(value);
+					}
+					++lettersOffset;
+					//LF
+					if (lettersOffset >= lettersLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (letters[lettersOffset] == LF)
+					{
+						++lettersOffset;
+					}
+					return true;
+
+				case LF:
+					if (building)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						var value = builder.ToString();
+						values(value);
+						builder.Clear();
+						++lettersOffset;
+						return true;
+					}
+					else
+					{
+						var value = new string(letters, offset, lettersOffset - offset);
+						values(value);
+						++lettersOffset;
+						return true;
+					}
+
+				default:
+					if (letter == separator)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							var value = builder.ToString();
+							values(value);
+							builder.Clear();
+							building = false;
+							offset = ++lettersOffset;
+							break;
+						}
+						else
+						{
+							var value = new string(letters, offset, lettersOffset - offset);
+							values(value);
+							offset = ++lettersOffset;
+							break;
+						}
+					}
+					else
+					{
+						++lettersOffset;
+					}
+					break;
+				}
+				if (lettersOffset >= lettersLength)
+				{
+					if (offset <= lettersOffset)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						building = true;
+					}
+					if (!ReadBuffers())
+					{
+						if (building)
+						{
+							var value = builder.ToString();
+							values(value);
+							builder.Clear();
+						}
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+
 		private bool ReadBuffers()
 		{
 			while (true)
