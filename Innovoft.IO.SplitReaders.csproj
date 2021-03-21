@@ -10,8 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
     <Compile Remove="Innovoft.IO.SplitReaders.Tests\**" />
+    <EmbeddedResource Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
     <EmbeddedResource Remove="Innovoft.IO.SplitReaders.Tests\**" />
+    <None Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
     <None Remove="Innovoft.IO.SplitReaders.Tests\**" />
   </ItemGroup>
 
