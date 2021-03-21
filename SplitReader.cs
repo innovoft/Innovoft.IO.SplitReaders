@@ -1871,11 +1871,11 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static bool Contains(char[] values, char separator)
+		private static bool Contains(char[] values, char value)
 		{
 			for (var i = values.Length - 1; i >= 0; --i)
 			{
-				if (values[i] == separator)
+				if (values[i] == value)
 				{
 					return true;
 				}
