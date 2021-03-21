@@ -20,10 +20,11 @@ namespace Innovoft.IO
 		private readonly Decoder decoder;
 		private readonly Func<byte[], int, int, char[], int, int> decoderGetChars;
 		private readonly int length;
-		private readonly byte[] raw;
-		private readonly char[] chars;
-		private int charsOffset;
-		private int charsLength;
+		private readonly byte[] buffer;
+		private readonly char[] letters;
+		private int lettersOffset;
+		private int lettersLength;
+		private readonly StringBuilder builder = new StringBuilder();
 		#endregion //Fields
 
 		#region Constructors
@@ -43,10 +44,10 @@ namespace Innovoft.IO
 			this.decoder = encoding.GetDecoder();
 			this.decoderGetChars = decoder.GetChars;
 			this.length = 4096;
-			this.raw = new byte[length];
-			this.chars = new char[length];
-			this.charsOffset = 0;
-			this.charsLength = 0;
+			this.buffer = new byte[length];
+			this.letters = new char[length];
+			this.lettersOffset = 0;
+			this.lettersLength = 0;
 		}
 		#endregion //Constructors
 
@@ -76,31 +77,130 @@ namespace Innovoft.IO
 		}
 		#endregion //Dispose
 
-		public bool ReadLine(char separator, List<string> columns)
+		public bool ReadLine(char separator, List<string> values)
 		{
 			if (stream == null)
 			{
 				throw new ObjectDisposedException(nameof(SplitReader));
 			}
-			if (charsOffset >= charsLength && !ReadBuffers())
+			if (lettersOffset >= lettersLength && !ReadBuffers())
 			{
 				return false;
 			}
-			throw new NotImplementedException();
+			var offset = lettersOffset;
+			var building = false;
+			while (true)
+			{
+				var letter = letters[lettersOffset];
+				switch (letter)
+				{
+				case CR:
+					if (building)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						var value = builder.ToString();
+						values.Add(value);
+						builder.Clear();
+					}
+					else
+					{
+						var value = new string(letters, offset, lettersOffset - offset);
+						values.Add(value);
+					}
+					++lettersOffset;
+					//LF
+					if (lettersOffset >= lettersLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (letters[lettersOffset] == LF)
+					{
+						++lettersOffset;
+					}
+					return true;
+
+				case LF:
+					if (building)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						var value = builder.ToString();
+						values.Add(value);
+						builder.Clear();
+						++lettersOffset;
+						return true;
+					}
+					else
+					{
+						var value = new string(letters, offset, lettersOffset - offset);
+						values.Add(value);
+						++lettersOffset;
+						return true;
+					}
+
+				default:
+					if (letter == separator)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							var value = builder.ToString();
+							values.Add(value);
+							builder.Clear();
+							building = false;
+							offset = ++lettersOffset;
+							break;
+						}
+						else
+						{
+							var value = new string(letters, offset, lettersOffset - offset);
+							values.Add(value);
+							offset = ++lettersOffset;
+							break;
+						}
+					}
+					else
+					{
+						++lettersOffset;
+					}
+					break;
+				}
+				if (lettersOffset >= lettersLength)
+				{
+					if (offset <= lettersOffset)
+					{
+						builder.Append(letters, offset, lettersOffset - offset);
+						building = true;
+					}
+					if (!ReadBuffers())
+					{
+						if (building)
+						{
+							var value = builder.ToString();
+							values.Add(value);
+							builder.Clear();
+						}
+						return true;
+					}
+					offset = 0;
+				}
+			}
 		}
 
 		private bool ReadBuffers()
 		{
 			while (true)
 			{
-				var read = streamRead(raw, 0, length);
+				var read = streamRead(buffer, 0, length);
 				if (read <= 0)
 				{
 					return false;
 				}
-				charsOffset = 0;
-				charsLength = decoderGetChars(raw, 0, read, chars, 0);
-				if (charsLength > 0)
+				lettersOffset = 0;
+				lettersLength = decoderGetChars(buffer, 0, read, letters, 0);
+				if (lettersLength > 0)
 				{
 					return true;
 				}
