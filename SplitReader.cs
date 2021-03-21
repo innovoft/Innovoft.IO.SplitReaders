@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
@@ -1755,6 +1756,19 @@ namespace Innovoft.IO
 					offset = 0;
 				}
 			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static bool Contains(char[] values, char separator)
+		{
+			for (var i = values.Length - 1; i >= 0; --i)
+			{
+				if (values[i] == separator)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private bool ReadBuffers()
