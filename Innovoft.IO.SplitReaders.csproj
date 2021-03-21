@@ -18,4 +18,8 @@
     <None Remove="Innovoft.IO.SplitReaders.Tests\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
 </Project>
