@@ -47,5 +47,29 @@ namespace Innovoft.IO
 				}
 			}
 		}
+
+		[TestMethod]
+		public void ReadColumnsSetTest()
+		{
+			const char separator = ',';
+			var expecteds = new string[] { "A", "B", "C", "D", "", };
+			var text = string.Join(separator.ToString(), expecteds);
+			var raw = Encoding.UTF8.GetBytes(text);
+			var columns = new int[expecteds.Length];
+			for (var column = columns.Length - 1; column >= 0; --column)
+			{
+				columns[column] = column;
+			}
+			var actuals = new string[expecteds.Length];
+			using (var readerStream = new MemoryStream(raw))
+			using (var reader = new SplitReader(readerStream))
+			{
+				Assert.IsTrue(reader.ReadColumns(separator, columns, actuals), "!ReadColumns");
+				for (var i = expecteds.Length - 1; i >= 0; --i)
+				{
+					Assert.AreEqual(expecteds[i], actuals[i], i.ToString());
+				}
+			}
+		}
 	}
 }
