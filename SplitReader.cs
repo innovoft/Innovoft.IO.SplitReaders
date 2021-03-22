@@ -78,7 +78,7 @@ namespace Innovoft.IO
 		}
 		#endregion //Dispose
 
-		public bool ReadLine()
+		public bool ReadColumns()
 		{
 			if (stream == null)
 			{
