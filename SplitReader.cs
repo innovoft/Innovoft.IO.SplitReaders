@@ -78,6 +78,144 @@ namespace Innovoft.IO
 		}
 		#endregion //Dispose
 
+		public bool ReadColumn(char separator, int column, out string value)
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(SplitReader));
+			}
+			if (lettersOffset >= lettersLength && !ReadBuffers())
+			{
+				value = null;
+				return false;
+			}
+			var offset = lettersOffset;
+			var building = false;
+			string columnValue = null;
+			while (true)
+			{
+				var letter = letters[lettersOffset];
+				switch (letter)
+				{
+				case CR:
+					if (column == 0)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							columnValue = builder.ToString();
+							builder.Clear();
+						}
+						else
+						{
+							columnValue = new string(letters, offset, lettersOffset - offset);
+						}
+					}
+					++lettersOffset;
+					//LF
+					if (lettersOffset >= lettersLength)
+					{
+						if (!ReadBuffers())
+						{
+							value = columnValue;
+							return true;
+						}
+					}
+					if (letters[lettersOffset] == LF)
+					{
+						++lettersOffset;
+					}
+					value = columnValue;
+					return true;
+
+				case LF:
+					if (column == 0)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							columnValue = builder.ToString();
+							builder.Clear();
+							++lettersOffset;
+							value = columnValue;
+							return true;
+						}
+						else
+						{
+							columnValue = new string(letters, offset, lettersOffset - offset);
+							++lettersOffset;
+							value = columnValue;
+							return true;
+						}
+					}
+					else
+					{
+						++lettersOffset;
+						value = columnValue;
+						return true;
+					}
+
+				default:
+					if (letter == separator)
+					{
+						if (column == 0)
+						{
+							if (building)
+							{
+								builder.Append(letters, offset, lettersOffset - offset);
+								columnValue = builder.ToString();
+								builder.Clear();
+								building = false;
+								offset = ++lettersOffset;
+								--column;
+								break;
+							}
+							else
+							{
+								columnValue = new string(letters, offset, lettersOffset - offset);
+								offset = ++lettersOffset;
+								--column;
+								break;
+							}
+						}
+						else
+						{
+							offset = ++lettersOffset;
+							--column;
+							break;
+						}
+					}
+					else
+					{
+						++lettersOffset;
+					}
+					break;
+				}
+				if (lettersOffset >= lettersLength)
+				{
+					if (column == 0)
+					{
+						if (offset <= lettersOffset)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							building = true;
+						}
+					}
+					if (!ReadBuffers())
+					{
+						if (building)
+						{
+							columnValue = builder.ToString();
+							builder.Clear();
+						}
+						value = columnValue;
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool Contains(char[] values, char value)
 		{
