@@ -209,14 +209,14 @@ namespace Innovoft.IO
 		if (separator.Generic)
 		{
 #>
-		public bool ReadColumn<TSeparator>(TSeparator separator, int column, out string value)
+		public bool ReadColumns<TSeparator>(TSeparator separator, int column, out string value)
 			where TSeparator: <#= separator.Type #>
 <#
 		}
 		else
 		{
 #>
-		public bool ReadColumn(<#= separator.Type #> separator, int column, out string value)
+		public bool ReadColumns(<#= separator.Type #> separator, int column, out string value)
 <#
 		}
 #>
