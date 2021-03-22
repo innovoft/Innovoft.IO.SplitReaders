@@ -5,14 +5,14 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 <#
-	var separators = new Dictionary<string, string>()
+	var separators = new List<(string Type, string Test)>()
 	{
-		{ "char", "letter == separator" },
-		{ "HashSet<char>", "separator.Contains(letter)" },
-		{ "List<char>", "separator.Contains(letter)" },
-		{ "ICollection<char>", "separator.Contains(letter)" },
-		{ "Predicate<char>", "separator(letter)" },
-		{ "char[]", "Contains(separator, letter)" },
+		( Type: "char", Test: "letter == separator" ),
+		( Type: "HashSet<char>", Test: "separator.Contains(letter)" ),
+		( Type: "List<char>", Test: "separator.Contains(letter)" ),
+		( Type: "ICollection<char>", Test: "separator.Contains(letter)" ),
+		( Type: "Predicate<char>", Test: "separator(letter)" ),
+		( Type: "char[]", Test: "Contains(separator, letter)" ),
 	};
 	var valuesAdds = new Dictionary<string, string>()
 	{
@@ -35,10 +35,8 @@ namespace Innovoft.IO
 	line = false;
 #>
 <#
-	foreach (var sp in separators)
+	foreach (var separator in separators)
 	{
-		var separator = sp.Key;
-		var test = sp.Value;
 		foreach (var vp in valuesAdds)
 		{
 			var values = vp.Key;
@@ -54,7 +52,7 @@ namespace Innovoft.IO
 				line = true;
 			}
 #>
-		public bool ReadColumnsAdd(<#= separator #> separator, <#= values #> values)
+		public bool ReadColumnsAdd(<#= separator.Type #> separator, <#= values #> values)
 		{
 			if (stream == null)
 			{
@@ -118,7 +116,7 @@ namespace Innovoft.IO
 					}
 
 				default:
-					if (<#= test #>)
+					if (<#= separator.Test #>)
 					{
 						if (building)
 						{
