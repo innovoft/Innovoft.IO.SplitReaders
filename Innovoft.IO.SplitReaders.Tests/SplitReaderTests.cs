@@ -64,7 +64,7 @@ namespace Innovoft.IO
 			using (var readerStream = new MemoryStream(raw))
 			using (var reader = new SplitReader(readerStream))
 			{
-				Assert.IsTrue(reader.ReadColumns(separator, columns, actuals), "!ReadColumns");
+				Assert.IsTrue(reader.ReadColumnsSet(separator, columns, actuals), "!ReadColumns");
 				for (var i = expecteds.Length - 1; i >= 0; --i)
 				{
 					Assert.AreEqual(expecteds[i], actuals[i], i.ToString());
