@@ -16,6 +16,11 @@
 		( Type: "ICollection<string>", Generic: true, Add: "values.Add(value)" ),
 		( Type: "Action<string>", Generic: false, Add: "values(value)" ),
 	};
+	var columnsINDXs = new List<(string Type, bool Generic, string Property)>()
+	{
+		(Type: "int[]", Generic: false, Property: "Length"),
+		(Type: "IList<int>", Generic: true, Property: "Count"),
+	};
 	var valuesSets = new List<(string Type, bool Generic, string Set)>()
 	{
 		(Type: "string[]", Generic: false, Set: "values[columnsColumn] = value" ),
@@ -369,51 +374,59 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		foreach (var values in valuesSets)
+		foreach (var columns in columnsINDXs)
 		{
-			if (line)
+			foreach (var values in valuesSets)
 			{
+				if (line)
+				{
 #>
 
 <#
-			}
-			else
-			{
-				line = true;
-			}
-			if (separator.Generic)
-			{
-				if (values.Generic)
-				{
-#>
-		public bool ReadColumns<TSeparator, TValues>(TSeparator separator, int[] columns, TValues values)
-			where TSeparator: <#= separator.Type #> where TValues: <#= values.Type #>
-<#
 				}
 				else
 				{
-#>
-		public bool ReadColumns<TSeparator>(TSeparator separator, int[] columns, <#= values.Type #> values)
-			where TSeparator: <#= separator.Type #>
-<#
+					line = true;
 				}
-			}
-			else
-			{
-				if (values.Generic)
+				var generic = separator.Generic || columns.Generic || values.Generic;
+				string parameters;
+				string where;
+				if (generic)
 				{
-#>
-		public bool ReadColumns<TValues>(<#= separator.Type #> separator, int[] columns, TValues values)
-			where TValues: <#= values.Type #>
-<#
+					var parameterss = new List<string>(3);
+					var wheres = new List<string>(3);
+					if (separator.Generic)
+					{
+						parameterss.Add("TSeparator");
+						wheres.Add("where TSeparator: " + separator.Type);
+					}
+					if (columns.Generic)
+					{
+						parameterss.Add("TColumns");
+						wheres.Add("where TColumns: " + columns.Type);
+					}
+					if (values.Generic)
+					{
+						parameterss.Add("TValues");
+						wheres.Add("where TValues: " + values.Type);
+					}
+					parameters = "<" + string.Join(", ", parameterss) + ">";
+					where = string.Join(" ", wheres);
 				}
 				else
 				{
+					parameters = "";
+					where = null;
+				}
 #>
-		public bool ReadColumns(<#= separator.Type #> separator, int[] columns, <#= values.Type #> values)
+		public bool ReadColumns<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= columns.Generic ? "TColumns" : columns.Type #> columns, <#= values.Generic ? "TValues" : values.Type #> values)
+<#
+				if (generic)
+				{
+#>
+			<#= where #>
 <#
 				}
-			}
 #>
 		{
 			if (stream == null)
@@ -429,7 +442,7 @@ namespace Innovoft.IO
 					var value = default(string);
 					<#= values.Set #>;
 					++columnsOffset;
-					if (columnsOffset >= columns.Length)
+					if (columnsOffset >= columns.<#= columns.Property #>)
 					{
 						break;
 					}
@@ -455,7 +468,7 @@ namespace Innovoft.IO
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.Length)
+							if (columnsOffset < columns.<#= columns.Property #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -466,7 +479,7 @@ namespace Innovoft.IO
 							var value = new string(letters, offset, lettersOffset - offset);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.Length)
+							if (columnsOffset < columns.<#= columns.Property #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -474,14 +487,14 @@ namespace Innovoft.IO
 					}
 					++lettersOffset;
 					//Columns
-					if (columnsOffset < columns.Length)
+					if (columnsOffset < columns.<#= columns.Property #>)
 					{
 						while (true)
 						{
 							var value = default(string);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset >= columns.Length)
+							if (columnsOffset >= columns.<#= columns.Property #>)
 							{
 								break;
 							}
@@ -512,7 +525,7 @@ namespace Innovoft.IO
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.Length)
+							if (columnsOffset < columns.<#= columns.Property #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -523,7 +536,7 @@ namespace Innovoft.IO
 							var value = new string(letters, offset, lettersOffset - offset);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.Length)
+							if (columnsOffset < columns.<#= columns.Property #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -531,14 +544,14 @@ namespace Innovoft.IO
 					}
 					++lettersOffset;
 					//Columns
-					if (columnsOffset < columns.Length)
+					if (columnsOffset < columns.<#= columns.Property #>)
 					{
 						while (true)
 						{
 							var value = default(string);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset >= columns.Length)
+							if (columnsOffset >= columns.<#= columns.Property #>)
 							{
 								break;
 							}
@@ -558,7 +571,7 @@ namespace Innovoft.IO
 								var value = builder.ToString();
 								<#= values.Set #>;
 								++columnsOffset;
-								if (columnsOffset < columns.Length)
+								if (columnsOffset < columns.<#= columns.Property #>)
 								{
 									columnsColumn = columns[columnsOffset];
 								}
@@ -577,7 +590,7 @@ namespace Innovoft.IO
 								var value = new string(letters, offset, lettersOffset - offset);
 								<#= values.Set #>;
 								++columnsOffset;
-								if (columnsOffset < columns.Length)
+								if (columnsOffset < columns.<#= columns.Property #>)
 								{
 									columnsColumn = columns[columnsOffset];
 								}
@@ -621,21 +634,21 @@ namespace Innovoft.IO
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.Length)
+							if (columnsOffset < columns.<#= columns.Property #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
 							builder.Clear();
 						}
 						//Columns
-						if (columnsOffset < columns.Length)
+						if (columnsOffset < columns.<#= columns.Property #>)
 						{
 							while (true)
 							{
 								var value = default(string);
 								<#= values.Set #>;
 								++columnsOffset;
-								if (columnsOffset >= columns.Length)
+								if (columnsOffset >= columns.<#= columns.Property #>)
 								{
 									break;
 								}
@@ -649,6 +662,7 @@ namespace Innovoft.IO
 			}
 		}
 <#
+			}
 		}
 	}
 #>
