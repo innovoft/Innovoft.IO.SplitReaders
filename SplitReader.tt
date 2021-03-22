@@ -16,6 +16,15 @@
 		( Type: "ICollection<string>", Generic: true, Add: "values.Add(value)" ),
 		( Type: "Action<string>", Generic: false, Add: "values(value)" ),
 	};
+	var valuesOnes = new List<(string Type, bool Generic, string Name, string Set)>()
+	{
+		( Type: "out string", Generic: false, Name: "", Set: "values = value" ),
+		( Type: "Action<string>", Generic: false, Name: "", Set: "values(value)" ),
+		( Type: "string[]", Generic: false, Name: "", Set: "values[column] = value" ),
+		( Type: "IList<string>", Generic: true, Name: "", Set: "values[column] = value" ),
+		( Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[column] = value" ),
+		( Type: "Action<int, string>", Generic: false, Name: "", Set: "values(column, value)" ),
+	};
 	var columnsINDXs = new List<(string Type, bool Generic, string Property)>()
 	{
 		(Type: "int[]", Generic: false, Property: "Length"),
@@ -209,51 +218,66 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		if (line)
+		foreach (var values in valuesOnes)
 		{
+			if (line)
+			{
 #>
 
 <#
-		}
-		else
-		{
-			line = true;
-		}
-		string parameters;
-		string where;
-		if (separator.Generic)
-		{
-			parameters = "<TSeparator>";
-			where = "where TSeparator: " + separator.Type;
-		}
-		else
-		{
-			parameters = "";
-			where = null;
-		}
+			}
+			else
+			{
+				line = true;
+			}
+			var generic = separator.Generic || values.Generic;
+			string parameters;
+			string where;
+			if (generic)
+			{
+				var parameterss = new List<string>(3);
+				var wheres = new List<string>(3);
+				if (separator.Generic)
+				{
+					parameterss.Add("TSeparator");
+					wheres.Add("where TSeparator: " + separator.Type);
+				}
+				if (values.Generic)
+				{
+					parameterss.Add("TValues");
+					wheres.Add("where TValues: " + values.Type);
+				}
+				parameters = "<" + string.Join(", ", parameterss) + ">";
+				where = string.Join(" ", wheres);
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
 #>
-		public bool ReadColumnsSet<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, out string value)
+		public bool ReadColumnsSet<#= values.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, <#= values.Generic ? "TValues" : values.Type #> values)
 <#
-		if (separator.Generic)
-		{
+			if (generic)
+			{
 #>
 			<#= where #>
 <#
-		}
+			}
 #>
 		{
 			if (stream == null)
 			{
 				throw new ObjectDisposedException(nameof(SplitReader));
 			}
+			string value = null;
 			if (lettersOffset >= lettersLength && !ReadBuffers())
 			{
-				value = null;
+				<#= values.Set #>;
 				return false;
 			}
 			var offset = lettersOffset;
 			var building = false;
-			string columnValue = null;
 			while (true)
 			{
 				var letter = letters[lettersOffset];
@@ -265,21 +289,21 @@ namespace Innovoft.IO
 						if (building)
 						{
 							builder.Append(letters, offset, lettersOffset - offset);
-							columnValue = builder.ToString();
+							value = builder.ToString();
 							builder.Clear();
 						}
 						else
 						{
-							columnValue = new string(letters, offset, lettersOffset - offset);
+							value = new string(letters, offset, lettersOffset - offset);
 						}
 					}
 					++lettersOffset;
+					<#= values.Set #>;
 					//LF
 					if (lettersOffset >= lettersLength)
 					{
 						if (!ReadBuffers())
 						{
-							value = columnValue;
 							return true;
 						}
 					}
@@ -287,7 +311,6 @@ namespace Innovoft.IO
 					{
 						++lettersOffset;
 					}
-					value = columnValue;
 					return true;
 
 				case LF:
@@ -296,24 +319,24 @@ namespace Innovoft.IO
 						if (building)
 						{
 							builder.Append(letters, offset, lettersOffset - offset);
-							columnValue = builder.ToString();
+							value = builder.ToString();
 							builder.Clear();
 							++lettersOffset;
-							value = columnValue;
+							<#= values.Set #>;
 							return true;
 						}
 						else
 						{
-							columnValue = new string(letters, offset, lettersOffset - offset);
+							value = new string(letters, offset, lettersOffset - offset);
 							++lettersOffset;
-							value = columnValue;
+							<#= values.Set #>;
 							return true;
 						}
 					}
 					else
 					{
 						++lettersOffset;
-						value = columnValue;
+						<#= values.Set #>;
 						return true;
 					}
 
@@ -325,18 +348,16 @@ namespace Innovoft.IO
 							if (building)
 							{
 								builder.Append(letters, offset, lettersOffset - offset);
-								columnValue = builder.ToString();
+								value = builder.ToString();
 								builder.Clear();
 								building = false;
-								offset = ++lettersOffset;
-								--column;
+								column = -1;
 								break;
 							}
 							else
 							{
-								columnValue = new string(letters, offset, lettersOffset - offset);
-								offset = ++lettersOffset;
-								--column;
+								value = new string(letters, offset, lettersOffset - offset);
+								column = -1;
 								break;
 							}
 						}
@@ -367,10 +388,10 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							columnValue = builder.ToString();
+							value = builder.ToString();
 							builder.Clear();
 						}
-						value = columnValue;
+						<#= values.Set #>;
 						return true;
 					}
 					offset = 0;
@@ -378,6 +399,7 @@ namespace Innovoft.IO
 			}
 		}
 <#
+		}
 	}
 #>
 <#
