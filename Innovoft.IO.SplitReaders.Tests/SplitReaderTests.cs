@@ -42,7 +42,7 @@ namespace Innovoft.IO
 				using (var readerStream = new MemoryStream(raw))
 				using (var reader = new SplitReader(readerStream))
 				{
-					Assert.IsTrue(reader.ReadColumns(separator, i, out var actual), "!ReadColumn");
+					Assert.IsTrue(reader.ReadColumnsSet(separator, i, out var actual), "!ReadColumn");
 					Assert.AreEqual(expecteds[i], actual, i.ToString());
 				}
 			}

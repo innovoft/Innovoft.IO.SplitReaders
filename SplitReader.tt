@@ -232,7 +232,7 @@ namespace Innovoft.IO
 			where = null;
 		}
 #>
-		public bool ReadColumns<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, out string value)
+		public bool ReadColumnsSet<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, out string value)
 <#
 		if (separator.Generic)
 		{
