@@ -11,7 +11,7 @@ namespace Innovoft.IO
 	public class SplitReaderTests
 	{
 		[TestMethod]
-		public void ReadLineAddTest()
+		public void ReadColumnsAddTest()
 		{
 			const char separator = ',';
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
@@ -21,7 +21,7 @@ namespace Innovoft.IO
 			using (var readerStream = new MemoryStream(raw))
 			using (var reader = new SplitReader(readerStream))
 			{
-				Assert.IsTrue(reader.ReadLineAdd(separator, actuals), "!ReadLine");
+				Assert.IsTrue(reader.ReadColumnsAdd(separator, actuals), "!ReadLine");
 				Assert.AreEqual(expecteds.Length, actuals.Count, "expecteds.Length != actuals.Count");
 				for (var i = expecteds.Length - 1; i >= 0; --i)
 				{

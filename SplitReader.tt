@@ -54,7 +54,7 @@ namespace Innovoft.IO
 				line = true;
 			}
 #>
-		public bool ReadLineAdd(<#= separator #> separator, <#= values #> values)
+		public bool ReadColumnsAdd(<#= separator #> separator, <#= values #> values)
 		{
 			if (stream == null)
 			{
