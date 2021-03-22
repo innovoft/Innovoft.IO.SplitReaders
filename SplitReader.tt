@@ -12,11 +12,10 @@
 		( Type: "Predicate<char>", Generic: false, Test: "separator(letter)" ),
 		( Type: "char[]", Generic: false, Test: "Contains(separator, letter)" ),
 	};
-	var valuesAdds = new List<(string Type, string Add)>()
+	var valuesAdds = new List<(string Type, bool Generic, string Add)>()
 	{
-		( Type: "List<string>", Add: "values.Add(value)" ),
-		( Type: "ICollection<string>", Add: "values.Add(value)" ),
-		( Type: "Action<string>", Add: "values(value)" ),
+		( Type: "ICollection<string>", Generic: true, Add: "values.Add(value)" ),
+		( Type: "Action<string>", Generic: false, Add: "values(value)" ),
 	};
 	bool line;
 #>
@@ -49,16 +48,36 @@ namespace Innovoft.IO
 			}
 			if (separator.Generic)
 			{
+				if (values.Generic)
+				{
+#>
+		public bool ReadColumnsAdd<TSeparator, TValues>(TSeparator separator, TValues values)
+			where TSeparator: <#= separator.Type #> where TValues: <#= values.Type #>
+<#
+				}
+				else
+				{
 #>
 		public bool ReadColumnsAdd<TSeparator>(TSeparator separator, <#= values.Type #> values)
 			where TSeparator: <#= separator.Type #>
 <#
+				}
 			}
 			else
 			{
+				if (values.Generic)
+				{
+#>
+		public bool ReadColumnsAdd<TValues>(<#= separator.Type #> separator, TValues values)
+			where TValues: <#= values.Type #>
+<#
+				}
+				else
+				{
 #>
 		public bool ReadColumnsAdd(<#= separator.Type #> separator, <#= values.Type #> values)
 <#
+				}
 			}
 #>
 		{
