@@ -219,17 +219,25 @@ namespace Innovoft.IO
 		{
 			line = true;
 		}
+		string parameters;
+		string where;
 		if (separator.Generic)
 		{
-#>
-		public bool ReadColumns<TSeparator>(TSeparator separator, int column, out string value)
-			where TSeparator: <#= separator.Type #>
-<#
+			parameters = "<TSeparator>";
+			where = "where TSeparator: " + separator.Type;
 		}
 		else
 		{
+			parameters = "";
+			where = null;
+		}
 #>
-		public bool ReadColumns(<#= separator.Type #> separator, int column, out string value)
+		public bool ReadColumns<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, out string value)
+<#
+		if (separator.Generic)
+		{
+#>
+			<#= where #>
 <#
 		}
 #>
