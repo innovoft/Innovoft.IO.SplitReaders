@@ -25,7 +25,7 @@
 		( Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[column] = value" ),
 		( Type: "Action<int, string>", Generic: false, Name: "", Set: "values(column, value)" ),
 	};
-	var columnsINDXs = new List<(string Type, bool Generic, string Test, string Property)>()
+	var columnss = new List<(string Type, bool Generic, string Test, string Property)>()
 	{
 		(Type: "int[]", Generic: false, Test: "column == columnsColumn", Property: "Length"),
 		(Type: "IList<int>", Generic: true, Test: "column == columnsColumn", Property: "Count"),
@@ -405,7 +405,7 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		foreach (var columns in columnsINDXs)
+		foreach (var columns in columnss)
 		{
 			foreach (var values in valuesSets)
 			{
