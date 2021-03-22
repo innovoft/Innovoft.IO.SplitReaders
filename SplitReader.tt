@@ -57,38 +57,39 @@ namespace Innovoft.IO
 			{
 				line = true;
 			}
-			if (separator.Generic)
+			var generic = separator.Generic || values.Generic;
+			string parameters;
+			string where;
+			if (generic)
 			{
+				var parameterss = new List<string>(3);
+				var wheres = new List<string>(3);
+				if (separator.Generic)
+				{
+					parameterss.Add("TSeparator");
+					wheres.Add("where TSeparator: " + separator.Type);
+				}
 				if (values.Generic)
 				{
-#>
-		public bool ReadColumns<TSeparator, TValues>(TSeparator separator, TValues values)
-			where TSeparator: <#= separator.Type #> where TValues: <#= values.Type #>
-<#
+					parameterss.Add("TValues");
+					wheres.Add("where TValues: " + values.Type);
 				}
-				else
-				{
-#>
-		public bool ReadColumns<TSeparator>(TSeparator separator, <#= values.Type #> values)
-			where TSeparator: <#= separator.Type #>
-<#
-				}
+				parameters = "<" + string.Join(", ", parameterss) + ">";
+				where = string.Join(" ", wheres);
 			}
 			else
 			{
-				if (values.Generic)
-				{
+				parameters = "";
+				where = null;
+			}
 #>
-		public bool ReadColumns<TValues>(<#= separator.Type #> separator, TValues values)
-			where TValues: <#= values.Type #>
+		public bool ReadColumns<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= values.Generic ? "TValues" : values.Type #> values)
 <#
-				}
-				else
-				{
+			if (generic)
+			{
 #>
-		public bool ReadColumns(<#= separator.Type #> separator, <#= values.Type #> values)
+			<#= where #>
 <#
-				}
 			}
 #>
 		{
