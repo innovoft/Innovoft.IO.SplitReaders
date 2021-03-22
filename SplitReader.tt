@@ -30,12 +30,24 @@
 		(Type: "int[]", Generic: false, Size: "Length"),
 		(Type: "IList<int>", Generic: true, Size: "Count"),
 	};
-	var valuesSets = new List<(string Type, bool Generic, string Name, string Set)>()
+	var valuesSetINDXs = new List<(string Type, bool Generic, string Name, string Set)>()
 	{
 		(Type: "string[]", Generic: false, Name: "", Set: "values[columnsColumn] = value" ),
 		(Type: "IList<string>", Generic: true, Name: "", Set: "values[columnsColumn] = value" ),
 		(Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[columnsColumn] = value" ),
 		(Type: "Action<int, string>", Generic: false, Name: "", Set: "values(columnsColumn, value)" ),
+	};
+	var columnsMTHDs = new List<(string Type, bool Generic, string Name, string Test)>()
+	{
+		(Type: "ICollection<int>", Generic: true, Name: "Collection", Test: "columns.Contains(column)"),
+		(Type: "Predicate<int>", Generic: false, Name: "", Test: "columns(column)"),
+	};
+	var valuesSetMTHDs = new List<(string Type, bool Generic, string Name, string Set)>()
+	{
+		(Type: "string[]", Generic: false, Name: "", Set: "values[column] = value" ),
+		(Type: "IList<string>", Generic: true, Name: "", Set: "values[column] = value" ),
+		(Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[column] = value" ),
+		(Type: "Action<int, string>", Generic: false, Name: "", Set: "values(column, value)" ),
 	};
 	bool line;
 #>
@@ -407,7 +419,7 @@ namespace Innovoft.IO
 	{
 		foreach (var columns in columnsINDXs)
 		{
-			foreach (var values in valuesSets)
+			foreach (var values in valuesSetINDXs)
 			{
 				if (line)
 				{
@@ -685,6 +697,200 @@ namespace Innovoft.IO
 								}
 								columnsColumn = columns[columnsOffset];
 							}
+						}
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+			}
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var columns in columnsMTHDs)
+		{
+			foreach (var values in valuesSetMTHDs)
+			{
+				if (line)
+				{
+#>
+
+<#
+				}
+				else
+				{
+					line = true;
+				}
+				var generic = separator.Generic || columns.Generic || values.Generic;
+				string parameters;
+				string where;
+				if (generic)
+				{
+					var parameterss = new List<string>(3);
+					var wheres = new List<string>(3);
+					if (separator.Generic)
+					{
+						parameterss.Add("TSeparator");
+						wheres.Add("where TSeparator: " + separator.Type);
+					}
+					if (columns.Generic)
+					{
+						parameterss.Add("TColumns");
+						wheres.Add("where TColumns: " + columns.Type);
+					}
+					if (values.Generic)
+					{
+						parameterss.Add("TValues");
+						wheres.Add("where TValues: " + values.Type);
+					}
+					parameters = "<" + string.Join(", ", parameterss) + ">";
+					where = string.Join(" ", wheres);
+				}
+				else
+				{
+					parameters = "";
+					where = null;
+				}
+#>
+		public bool ReadColumnsSet<#= columns.Name #><#= values.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= columns.Generic ? "TColumns" : columns.Type #> columns, <#= values.Generic ? "TValues" : values.Type #> values)
+<#
+				if (generic)
+				{
+#>
+			<#= where #>
+<#
+				}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(SplitReader));
+			}
+			if (lettersOffset >= lettersLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = lettersOffset;
+			var building = false;
+			var column = 0;
+			while (true)
+			{
+				var letter = letters[lettersOffset];
+				switch (letter)
+				{
+				case CR:
+					//Column
+					if (<#= columns.Test #>)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							var value = builder.ToString();
+							<#= values.Set #>;
+							builder.Clear();
+						}
+						else
+						{
+							var value = new string(letters, offset, lettersOffset - offset);
+							<#= values.Set #>;
+						}
+					}
+					++lettersOffset;
+					//LF
+					if (lettersOffset >= lettersLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (letters[lettersOffset] == LF)
+					{
+						++lettersOffset;
+					}
+					return true;
+
+				case LF:
+					//Column
+					if (<#= columns.Test #>)
+					{
+						if (building)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							var value = builder.ToString();
+							<#= values.Set #>;
+							builder.Clear();
+						}
+						else
+						{
+							var value = new string(letters, offset, lettersOffset - offset);
+							<#= values.Set #>;
+						}
+					}
+					++lettersOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						if (<#= columns.Test #>)
+						{
+							if (building)
+							{
+								builder.Append(letters, offset, lettersOffset - offset);
+								var value = builder.ToString();
+								<#= values.Set #>;
+								builder.Clear();
+								building = false;
+								offset = ++lettersOffset;
+								++column;
+								break;
+							}
+							else
+							{
+								var value = new string(letters, offset, lettersOffset - offset);
+								<#= values.Set #>;
+								offset = ++lettersOffset;
+								++column;
+								break;
+							}
+						}
+						else
+						{
+							offset = ++lettersOffset;
+							++column;
+							break;
+						}
+					}
+					else
+					{
+						++lettersOffset;
+					}
+					break;
+				}
+				if (lettersOffset >= lettersLength)
+				{
+					if (<#= columns.Test #>)
+					{
+						if (offset <= lettersOffset)
+						{
+							builder.Append(letters, offset, lettersOffset - offset);
+							building = true;
+						}
+					}
+					if (!ReadBuffers())
+					{
+						//Column
+						if (building)
+						{
+							var value = builder.ToString();
+							<#= values.Set #>;
+							builder.Clear();
 						}
 						return true;
 					}
