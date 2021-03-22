@@ -712,6 +712,242 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
+		foreach (var values in valuesSetINDXs)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			var parameterss = new List<string>(3);
+			var wheres = new List<string>(3);
+			if (separator.Generic)
+			{
+				parameterss.Add("TSeparator");
+				wheres.Add("where TSeparator: " + separator.Type);
+			}
+			parameterss.Add("TColumns");
+			wheres.Add("where TColumns: IEnumerable<int>");
+			if (values.Generic)
+			{
+				parameterss.Add("TValues");
+				wheres.Add("where TValues: " + values.Type);
+			}
+			var parameters = "<" + string.Join(", ", parameterss) + ">";
+			var where = string.Join(" ", wheres);
+#>
+		public bool ReadColumnsSetEnumerable<#= values.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, TColumns columns, <#= values.Generic ? "TValues" : values.Type #> values)
+			<#= where #>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(SplitReader));
+			}
+			using (var enumerator = columns.GetEnumerator())
+			{
+				var columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+				if (lettersOffset >= lettersLength && !ReadBuffers())
+				{
+					if (columnsColumn >= 0)
+					{
+						while (true)
+						{
+							var value = default(string);
+							<#= values.Set #>;
+							if (!enumerator.MoveNext())
+							{
+								break;
+							}
+							columnsColumn = enumerator.Current;
+						}
+					}
+					return false;
+				}
+				var offset = lettersOffset;
+				var building = false;
+				var column = 0;
+				while (true)
+				{
+					var letter = letters[lettersOffset];
+					switch (letter)
+					{
+					case CR:
+						//Column
+						if (column == columnsColumn)
+						{
+							if (building)
+							{
+								builder.Append(letters, offset, lettersOffset - offset);
+								var value = builder.ToString();
+								<#= values.Set #>;
+								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+								builder.Clear();
+							}
+							else
+							{
+								var value = new string(letters, offset, lettersOffset - offset);
+								<#= values.Set #>;
+								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+							}
+						}
+						++lettersOffset;
+						//Columns
+						if (columnsColumn >= 0)
+						{
+							while (true)
+							{
+								var value = default(string);
+								<#= values.Set #>;
+								if (!enumerator.MoveNext())
+								{
+									break;
+								}
+								columnsColumn = enumerator.Current;
+							}
+						}
+						//LF
+						if (lettersOffset >= lettersLength)
+						{
+							if (!ReadBuffers())
+							{
+								return true;
+							}
+						}
+						if (letters[lettersOffset] == LF)
+						{
+							++lettersOffset;
+						}
+						return true;
+
+					case LF:
+						//Column
+						if (column == columnsColumn)
+						{
+							if (building)
+							{
+								builder.Append(letters, offset, lettersOffset - offset);
+								var value = builder.ToString();
+								<#= values.Set #>;
+								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+								builder.Clear();
+							}
+							else
+							{
+								var value = new string(letters, offset, lettersOffset - offset);
+								<#= values.Set #>;
+								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+							}
+						}
+						++lettersOffset;
+						//Columns
+						if (columnsColumn >= 0)
+						{
+							while (true)
+							{
+								var value = default(string);
+								<#= values.Set #>;
+								if (!enumerator.MoveNext())
+								{
+									break;
+								}
+								columnsColumn = enumerator.Current;
+							}
+						}
+						return true;
+
+					default:
+						if (<#= separator.Test #>)
+						{
+							if (column == columnsColumn)
+							{
+								if (building)
+								{
+									builder.Append(letters, offset, lettersOffset - offset);
+									var value = builder.ToString();
+									<#= values.Set #>;
+									columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+									builder.Clear();
+									building = false;
+									offset = ++lettersOffset;
+									++column;
+									break;
+								}
+								else
+								{
+									var value = new string(letters, offset, lettersOffset - offset);
+									<#= values.Set #>;
+									columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+									offset = ++lettersOffset;
+									++column;
+									break;
+								}
+							}
+							else
+							{
+								offset = ++lettersOffset;
+								++column;
+								break;
+							}
+						}
+						else
+						{
+							++lettersOffset;
+						}
+						break;
+					}
+					if (lettersOffset >= lettersLength)
+					{
+						if (column == columnsColumn)
+						{
+							if (offset <= lettersOffset)
+							{
+								builder.Append(letters, offset, lettersOffset - offset);
+								building = true;
+							}
+						}
+						if (!ReadBuffers())
+						{
+							//Column
+							if (building)
+							{
+								var value = builder.ToString();
+								<#= values.Set #>;
+								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
+								builder.Clear();
+							}
+							//Columns
+							if (columnsColumn >= 0)
+							{
+								while (true)
+								{
+									var value = default(string);
+									<#= values.Set #>;
+									if (!enumerator.MoveNext())
+									{
+										break;
+									}
+									columnsColumn = enumerator.Current;
+								}
+							}
+							return true;
+						}
+						offset = 0;
+					}
+				}
+			}
+		}
+<#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
 		foreach (var columns in columnsMTHDs)
 		{
 			foreach (var values in valuesSetMTHDs)
