@@ -25,16 +25,16 @@
 		( Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[column] = value" ),
 		( Type: "Action<int, string>", Generic: false, Name: "", Set: "values(column, value)" ),
 	};
-	var columnss = new List<(string Type, bool Generic, string Test, string Property)>()
+	var columnsINDXs = new List<(string Type, bool Generic, string Size)>()
 	{
-		(Type: "int[]", Generic: false, Test: "column == columnsColumn", Property: "Length"),
-		(Type: "IList<int>", Generic: true, Test: "column == columnsColumn", Property: "Count"),
+		(Type: "int[]", Generic: false, Size: "Length"),
+		(Type: "IList<int>", Generic: true, Size: "Count"),
 	};
 	var valuesSets = new List<(string Type, bool Generic, string Name, string Set)>()
 	{
 		(Type: "string[]", Generic: false, Name: "", Set: "values[columnsColumn] = value" ),
 		(Type: "IList<string>", Generic: true, Name: "", Set: "values[columnsColumn] = value" ),
-		(Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[columnsColumn] = value" ),//conflicts with IList<string>
+		(Type: "IDictionary<int, string>", Generic: true, Name: "Dictionary", Set: "values[columnsColumn] = value" ),
 		(Type: "Action<int, string>", Generic: false, Name: "", Set: "values(columnsColumn, value)" ),
 	};
 	bool line;
@@ -405,7 +405,7 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		foreach (var columns in columnss)
+		foreach (var columns in columnsINDXs)
 		{
 			foreach (var values in valuesSets)
 			{
@@ -473,7 +473,7 @@ namespace Innovoft.IO
 					var value = default(string);
 					<#= values.Set #>;
 					++columnsOffset;
-					if (columnsOffset >= columns.<#= columns.Property #>)
+					if (columnsOffset >= columns.<#= columns.Size #>)
 					{
 						break;
 					}
@@ -491,7 +491,7 @@ namespace Innovoft.IO
 				{
 				case CR:
 					//Column
-					if (<#= columns.Test #>)
+					if (column == columnsColumn)
 					{
 						if (building)
 						{
@@ -499,7 +499,7 @@ namespace Innovoft.IO
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.<#= columns.Property #>)
+							if (columnsOffset < columns.<#= columns.Size #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -510,7 +510,7 @@ namespace Innovoft.IO
 							var value = new string(letters, offset, lettersOffset - offset);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.<#= columns.Property #>)
+							if (columnsOffset < columns.<#= columns.Size #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -518,14 +518,14 @@ namespace Innovoft.IO
 					}
 					++lettersOffset;
 					//Columns
-					if (columnsOffset < columns.<#= columns.Property #>)
+					if (columnsOffset < columns.<#= columns.Size #>)
 					{
 						while (true)
 						{
 							var value = default(string);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset >= columns.<#= columns.Property #>)
+							if (columnsOffset >= columns.<#= columns.Size #>)
 							{
 								break;
 							}
@@ -548,7 +548,7 @@ namespace Innovoft.IO
 
 				case LF:
 					//Column
-					if (<#= columns.Test #>)
+					if (column == columnsColumn)
 					{
 						if (building)
 						{
@@ -556,7 +556,7 @@ namespace Innovoft.IO
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.<#= columns.Property #>)
+							if (columnsOffset < columns.<#= columns.Size #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -567,7 +567,7 @@ namespace Innovoft.IO
 							var value = new string(letters, offset, lettersOffset - offset);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.<#= columns.Property #>)
+							if (columnsOffset < columns.<#= columns.Size #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
@@ -575,14 +575,14 @@ namespace Innovoft.IO
 					}
 					++lettersOffset;
 					//Columns
-					if (columnsOffset < columns.<#= columns.Property #>)
+					if (columnsOffset < columns.<#= columns.Size #>)
 					{
 						while (true)
 						{
 							var value = default(string);
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset >= columns.<#= columns.Property #>)
+							if (columnsOffset >= columns.<#= columns.Size #>)
 							{
 								break;
 							}
@@ -594,7 +594,7 @@ namespace Innovoft.IO
 				default:
 					if (<#= separator.Test #>)
 					{
-						if (<#= columns.Test #>)
+						if (column == columnsColumn)
 						{
 							if (building)
 							{
@@ -602,7 +602,7 @@ namespace Innovoft.IO
 								var value = builder.ToString();
 								<#= values.Set #>;
 								++columnsOffset;
-								if (columnsOffset < columns.<#= columns.Property #>)
+								if (columnsOffset < columns.<#= columns.Size #>)
 								{
 									columnsColumn = columns[columnsOffset];
 								}
@@ -621,7 +621,7 @@ namespace Innovoft.IO
 								var value = new string(letters, offset, lettersOffset - offset);
 								<#= values.Set #>;
 								++columnsOffset;
-								if (columnsOffset < columns.<#= columns.Property #>)
+								if (columnsOffset < columns.<#= columns.Size #>)
 								{
 									columnsColumn = columns[columnsOffset];
 								}
@@ -649,7 +649,7 @@ namespace Innovoft.IO
 				}
 				if (lettersOffset >= lettersLength)
 				{
-					if (<#= columns.Test #>)
+					if (column == columnsColumn)
 					{
 						if (offset <= lettersOffset)
 						{
@@ -665,21 +665,21 @@ namespace Innovoft.IO
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
-							if (columnsOffset < columns.<#= columns.Property #>)
+							if (columnsOffset < columns.<#= columns.Size #>)
 							{
 								columnsColumn = columns[columnsOffset];
 							}
 							builder.Clear();
 						}
 						//Columns
-						if (columnsOffset < columns.<#= columns.Property #>)
+						if (columnsOffset < columns.<#= columns.Size #>)
 						{
 							while (true)
 							{
 								var value = default(string);
 								<#= values.Set #>;
 								++columnsOffset;
-								if (columnsOffset >= columns.<#= columns.Property #>)
+								if (columnsOffset >= columns.<#= columns.Size #>)
 								{
 									break;
 								}
