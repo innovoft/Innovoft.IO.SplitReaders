@@ -50,14 +50,14 @@ namespace Innovoft.IO
 				if (values.Generic)
 				{
 #>
-		public bool ReadColumnsAdd<TSeparator, TValues>(TSeparator separator, TValues values)
+		public bool ReadColumns<TSeparator, TValues>(TSeparator separator, TValues values)
 			where TSeparator: <#= separator.Type #> where TValues: <#= values.Type #>
 <#
 				}
 				else
 				{
 #>
-		public bool ReadColumnsAdd<TSeparator>(TSeparator separator, <#= values.Type #> values)
+		public bool ReadColumns<TSeparator>(TSeparator separator, <#= values.Type #> values)
 			where TSeparator: <#= separator.Type #>
 <#
 				}
@@ -67,14 +67,14 @@ namespace Innovoft.IO
 				if (values.Generic)
 				{
 #>
-		public bool ReadColumnsAdd<TValues>(<#= separator.Type #> separator, TValues values)
+		public bool ReadColumns<TValues>(<#= separator.Type #> separator, TValues values)
 			where TValues: <#= values.Type #>
 <#
 				}
 				else
 				{
 #>
-		public bool ReadColumnsAdd(<#= separator.Type #> separator, <#= values.Type #> values)
+		public bool ReadColumns(<#= separator.Type #> separator, <#= values.Type #> values)
 <#
 				}
 			}
