@@ -14,11 +14,11 @@
 		( Type: "Predicate<char>", Test: "separator(letter)" ),
 		( Type: "char[]", Test: "Contains(separator, letter)" ),
 	};
-	var valuesAdds = new Dictionary<string, string>()
+	var valuesAdds = new List<(string Type, string Add)>()
 	{
-		{ "List<string>", "values.Add(value)" },
-		{ "ICollection<string>", "values.Add(value)" },
-		{ "Action<string>", "values(value)" },
+		( Type: "List<string>", Add: "values.Add(value)" ),
+		( Type: "ICollection<string>", Add: "values.Add(value)" ),
+		( Type: "Action<string>", Add: "values(value)" ),
 	};
 	bool line;
 #>
@@ -37,10 +37,8 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		foreach (var vp in valuesAdds)
+		foreach (var values in valuesAdds)
 		{
-			var values = vp.Key;
-			var add = vp.Value;
 			if (line)
 			{
 #>
@@ -52,7 +50,7 @@ namespace Innovoft.IO
 				line = true;
 			}
 #>
-		public bool ReadColumnsAdd(<#= separator.Type #> separator, <#= values #> values)
+		public bool ReadColumnsAdd(<#= separator.Type #> separator, <#= values.Type #> values)
 		{
 			if (stream == null)
 			{
@@ -74,13 +72,13 @@ namespace Innovoft.IO
 					{
 						builder.Append(letters, offset, lettersOffset - offset);
 						var value = builder.ToString();
-						<#= add #>;
+						<#= values.Add #>;
 						builder.Clear();
 					}
 					else
 					{
 						var value = new string(letters, offset, lettersOffset - offset);
-						<#= add #>;
+						<#= values.Add #>;
 					}
 					++lettersOffset;
 					//LF
@@ -102,7 +100,7 @@ namespace Innovoft.IO
 					{
 						builder.Append(letters, offset, lettersOffset - offset);
 						var value = builder.ToString();
-						<#= add #>;
+						<#= values.Add #>;
 						builder.Clear();
 						++lettersOffset;
 						return true;
@@ -110,7 +108,7 @@ namespace Innovoft.IO
 					else
 					{
 						var value = new string(letters, offset, lettersOffset - offset);
-						<#= add #>;
+						<#= values.Add #>;
 						++lettersOffset;
 						return true;
 					}
@@ -122,7 +120,7 @@ namespace Innovoft.IO
 						{
 							builder.Append(letters, offset, lettersOffset - offset);
 							var value = builder.ToString();
-							<#= add #>;
+							<#= values.Add #>;
 							builder.Clear();
 							building = false;
 							offset = ++lettersOffset;
@@ -131,7 +129,7 @@ namespace Innovoft.IO
 						else
 						{
 							var value = new string(letters, offset, lettersOffset - offset);
-							<#= add #>;
+							<#= values.Add #>;
 							offset = ++lettersOffset;
 							break;
 						}
@@ -154,7 +152,7 @@ namespace Innovoft.IO
 						if (building)
 						{
 							var value = builder.ToString();
-							<#= add #>;
+							<#= values.Add #>;
 							builder.Clear();
 						}
 						return true;
