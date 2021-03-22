@@ -137,7 +137,7 @@ namespace Innovoft.IO
 				{
 					var line = lineReader.ReadLine();
 					splits.Clear();
-					var split = splitReader.ReadColumns(separator, splits);
+					var split = splitReader.ReadColumnsAdd(separator, splits);
 					if ((line != null) != split)
 					{
 						Console.WriteLine("Number of lines is not the same.");

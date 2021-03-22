@@ -83,7 +83,7 @@ namespace Innovoft.IO
 				where = null;
 			}
 #>
-		public bool ReadColumns<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= values.Generic ? "TValues" : values.Type #> values)
+		public bool ReadColumnsAdd<#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= values.Generic ? "TValues" : values.Type #> values)
 <#
 			if (generic)
 			{
