@@ -5,14 +5,12 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 <#
-	var separators = new List<(string Type, string Test)>()
+	var separators = new List<(string Type, bool Generic, string Test)>()
 	{
-		( Type: "char", Test: "letter == separator" ),
-		( Type: "HashSet<char>", Test: "separator.Contains(letter)" ),
-		( Type: "List<char>", Test: "separator.Contains(letter)" ),
-		( Type: "ICollection<char>", Test: "separator.Contains(letter)" ),
-		( Type: "Predicate<char>", Test: "separator(letter)" ),
-		( Type: "char[]", Test: "Contains(separator, letter)" ),
+		( Type: "char", Generic: false, Test: "letter == separator" ),
+		( Type: "ICollection<char>", Generic: true, Test: "separator.Contains(letter)" ),
+		( Type: "Predicate<char>", Generic: false, Test: "separator(letter)" ),
+		( Type: "char[]", Generic: false, Test: "Contains(separator, letter)" ),
 	};
 	var valuesAdds = new List<(string Type, string Add)>()
 	{
@@ -49,8 +47,20 @@ namespace Innovoft.IO
 			{
 				line = true;
 			}
+			if (separator.Generic)
+			{
+#>
+		public bool ReadColumnsAdd<TSeparator>(TSeparator separator, <#= values.Type #> values)
+			where TSeparator: <#= separator.Type #>
+<#
+			}
+			else
+			{
 #>
 		public bool ReadColumnsAdd(<#= separator.Type #> separator, <#= values.Type #> values)
+<#
+			}
+#>
 		{
 			if (stream == null)
 			{
