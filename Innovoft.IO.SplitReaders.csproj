@@ -7,15 +7,15 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>csv</PackageTags>
     <RootNamespace>Innovoft.IO</RootNamespace>
-		<!--T4-->
-		<TransformOnBuild>true</TransformOnBuild>
-		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
-		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
 		<Authors>Steven Retz</Authors>
 		<Company>Innovoft</Company>
 		<Copyright>Copyright © Innovoft 2021</Copyright>
 		<PackageProjectUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</PackageProjectUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!--T4-->
+		<TransformOnBuild>true</TransformOnBuild>
+		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
