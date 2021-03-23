@@ -15,6 +15,7 @@
 		<Company>Innovoft</Company>
 		<Copyright>Copyright © Innovoft 2021</Copyright>
 		<PackageProjectUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</PackageProjectUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
