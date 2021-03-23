@@ -16,6 +16,10 @@
 		<PackageProjectUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</PackageProjectUrl>
 	</PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
     <Compile Remove="Innovoft.IO.SplitReaders.Tests\**" />
