@@ -5,7 +5,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>csv</PackageTags>
+    <PackageTags>csv split efficincy efficient split splitting string-manipulation splitter splitting-text efficient-algorithm</PackageTags>
     <RootNamespace>Innovoft.IO</RootNamespace>
 		<Authors>Steven Retz</Authors>
 		<Company>Innovoft</Company>
