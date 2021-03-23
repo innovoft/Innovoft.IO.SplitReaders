@@ -10,6 +10,7 @@
 		<Authors>Steven Retz</Authors>
 		<Company>Innovoft</Company>
 		<Copyright>Copyright © Innovoft 2021</Copyright>
+		<Description>efficient csv splitting</Description>
 		<PackageProjectUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</PackageProjectUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<!--T4-->
@@ -24,7 +25,7 @@
 	
 	<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
 		<Exec Command="git rev-parse HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False">
-			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
+			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
 		</Exec>
 	</Target>
 	
