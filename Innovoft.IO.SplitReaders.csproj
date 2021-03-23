@@ -11,6 +11,9 @@
 		<TransformOnBuild>true</TransformOnBuild>
 		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
 		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+		<Company>Innovoft</Company>
+		<Copyright>Copyright © Innovoft 2021</Copyright>
+		<PackageProjectUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</PackageProjectUrl>
 	</PropertyGroup>
 
   <ItemGroup>
