@@ -45,9 +45,6 @@
 			<OutputFileName>SplitReader.tt.cs</OutputFileName>
 			<LastGenOutput>$(ProjectDir)SplitReader.tt.cs</LastGenOutput>
 		</T4Transform>
-  </ItemGroup>
-
-	<ItemGroup>
 		<None Include="SplitReader.tt.cs">
 			<AutoGen>True</AutoGen>
 			<DependentUpon>SplitReader.tt</DependentUpon>
