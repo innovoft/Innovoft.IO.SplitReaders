@@ -11,6 +11,7 @@
 		<TransformOnBuild>true</TransformOnBuild>
 		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
 		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+		<Authors>Steven Retz</Authors>
 		<Company>Innovoft</Company>
 		<Copyright>Copyright © Innovoft 2021</Copyright>
 		<PackageProjectUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</PackageProjectUrl>
