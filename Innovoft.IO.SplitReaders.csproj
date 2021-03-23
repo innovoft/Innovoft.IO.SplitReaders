@@ -19,7 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
-
+	
+	<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
+		<Exec Command="git rev-parse HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False">
+			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
+		</Exec>
+	</Target>
+	
   <ItemGroup>
     <Compile Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
     <Compile Remove="Innovoft.IO.SplitReaders.Tests\**" />
