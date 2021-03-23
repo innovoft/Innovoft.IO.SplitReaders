@@ -35,9 +35,6 @@
     <EmbeddedResource Remove="Innovoft.IO.SplitReaders.Tests\**" />
     <None Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
     <None Remove="Innovoft.IO.SplitReaders.Tests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove=".gitignore" />
   </ItemGroup>
 
