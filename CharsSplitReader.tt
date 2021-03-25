@@ -3,15 +3,140 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text" #>
 <#@ output extension=".cs" #>
+<#
+	var separators = new List<(string Type, bool Generic, string Test)>()
+	{
+		( Type: "char", Generic: false, Test: "letter == separator" ),
+		( Type: "ICollection<char>", Generic: true, Test: "separator.Contains(letter)" ),
+		( Type: "Predicate<char>", Generic: false, Test: "separator(letter)" ),
+		( Type: "char[]", Generic: false, Test: "Contains(separator, letter)" ),
+	};
+	var methods = new List<(string Name, string Math)>()
+	{
+		( Name: "Length", Math: "decodedOffset - offset"),
+		( Name: "Ending", Math: "decodedOffset"),
+	};
+	bool line;
+#>
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Innovoft.IO
 {
-	partial class LettersSplitReader
+	partial class CharsSplitReader
 	{
 		#region Methods
+<#
+	line = false;
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, Func<Action<char[], int, int>> add)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(CharsSplitReader));
+			}
+			if (decodedOffset >= decodedLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = decodedOffset;
+			var building = add();
+			while (true)
+			{
+				var letter = decoded[decodedOffset];
+				switch (letter)
+				{
+				case CR:
+					building(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					//LF
+					if (decodedOffset >= decodedLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (decoded[decodedOffset] == LF)
+					{
+						++decodedOffset;
+					}
+					return true;
+
+				case LF:
+					building(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						building(decoded, offset, <#= method.Math #>);
+						offset = ++decodedOffset;
+						building = add();
+						break;
+					}
+					else
+					{
+						++decodedOffset;
+					}
+					break;
+				}
+				if (decodedOffset >= decodedLength)
+				{
+					if (offset <= decodedOffset)
+					{
+						building(decoded, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
 		#endregion //Methods
 	}
 }
