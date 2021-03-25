@@ -41,7 +41,9 @@ namespace Innovoft.IO
 
 		private bool ReadBuffer()
 		{
-			throw new NotImplementedException();
+			bufferOffset = 0;
+			bufferLength = streamRead(buffer, 0, length);
+			return bufferLength > 0;
 		}
 		#endregion //Methods
 	}
