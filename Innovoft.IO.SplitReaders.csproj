@@ -65,6 +65,19 @@
 		</None>
 	</ItemGroup>
 
+  <ItemGroup>
+		<T4Transform Include="BufferSplitReader.tt">
+			<Link>BufferSplitReader.tt</Link>
+			<OutputFilePath>$(ProjectDir)</OutputFilePath>
+			<OutputFileName>BufferSplitReader.tt.cs</OutputFileName>
+			<LastGenOutput>$(ProjectDir)BufferSplitReader.tt.cs</LastGenOutput>
+		</T4Transform>
+		<None Include="BufferSplitReader.tt.cs">
+			<AutoGen>True</AutoGen>
+			<DependentUpon>BufferSplitReader.tt</DependentUpon>
+		</None>
+	</ItemGroup>
+
 	<!--T4-->
 	<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
 
