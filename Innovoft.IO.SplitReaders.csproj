@@ -53,15 +53,15 @@
 	</ItemGroup>
 
   <ItemGroup>
-		<T4Transform Include="LettersSplitReader.tt">
-			<Link>LettersSplitReader.tt</Link>
+		<T4Transform Include="CharsSplitReader.tt">
+			<Link>CharsSplitReader.tt</Link>
 			<OutputFilePath>$(ProjectDir)</OutputFilePath>
-			<OutputFileName>LettersSplitReader.tt.cs</OutputFileName>
-			<LastGenOutput>$(ProjectDir)LettersSplitReader.tt.cs</LastGenOutput>
+			<OutputFileName>CharsSplitReader.tt.cs</OutputFileName>
+			<LastGenOutput>$(ProjectDir)CharsSplitReader.tt.cs</LastGenOutput>
 		</T4Transform>
-		<None Include="LettersSplitReader.tt.cs">
+		<None Include="CharsSplitReader.tt.cs">
 			<AutoGen>True</AutoGen>
-			<DependentUpon>LettersSplitReader.tt</DependentUpon>
+			<DependentUpon>CharsSplitReader.tt</DependentUpon>
 		</None>
 	</ItemGroup>
 

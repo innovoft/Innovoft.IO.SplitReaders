@@ -6,10 +6,10 @@ using System.Threading;
 
 namespace Innovoft.IO
 {
-	public sealed partial class LettersSplitReader : DecodeSplitReader
+	public sealed partial class CharsSplitReader : DecodeSplitReader
 	{
 		#region Constructors
-		public LettersSplitReader(Stream stream)
+		public CharsSplitReader(Stream stream)
 			: base(stream)
 		{
 		}
