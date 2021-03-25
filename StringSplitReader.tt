@@ -121,7 +121,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(SplitReader));
+				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			if (lettersOffset >= lettersLength && !ReadBuffers())
 			{
@@ -285,7 +285,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(SplitReader));
+				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			string value = null;
 			if (lettersOffset >= lettersLength && !ReadBuffers())
@@ -479,7 +479,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(SplitReader));
+				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			var columnsColumn = columns[0];
 			var columnsOffset = 0;
@@ -751,7 +751,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(SplitReader));
+				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			using (var enumerator = columns.GetEnumerator())
 			{
@@ -1010,7 +1010,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(SplitReader));
+				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			if (lettersOffset >= lettersLength && !ReadBuffers())
 			{
@@ -1196,7 +1196,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(SplitReader));
+				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			int column;
 			if (lettersOffset >= lettersLength && !ReadBuffers())
