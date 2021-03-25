@@ -7,6 +7,11 @@ namespace Innovoft.IO
 {
 	public sealed partial class BufferSplitReader : SplitReader
 	{
+		#region Fields
+		private int bufferOffset;
+		private int bufferLength;
+		#endregion //Fields
+
 		#region Constructors
 		public BufferSplitReader(Stream stream)
 			: base(stream)
