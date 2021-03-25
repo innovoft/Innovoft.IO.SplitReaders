@@ -123,60 +123,60 @@ namespace Innovoft.IO
 			{
 				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
-			if (lettersOffset >= lettersLength && !ReadBuffers())
+			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
 				return false;
 			}
-			var offset = lettersOffset;
+			var offset = decodedOffset;
 			var building = false;
 			while (true)
 			{
-				var letter = letters[lettersOffset];
+				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
 					if (building)
 					{
-						builder.Append(letters, offset, lettersOffset - offset);
+						builder.Append(decoded, offset, decodedOffset - offset);
 						var value = builder.ToString();
 						<#= values.Add #>;
 						builder.Clear();
 					}
 					else
 					{
-						var value = new string(letters, offset, lettersOffset - offset);
+						var value = new string(decoded, offset, decodedOffset - offset);
 						<#= values.Add #>;
 					}
-					++lettersOffset;
+					++decodedOffset;
 					//LF
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (!ReadBuffers())
 						{
 							return true;
 						}
 					}
-					if (letters[lettersOffset] == LF)
+					if (decoded[decodedOffset] == LF)
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					return true;
 
 				case LF:
 					if (building)
 					{
-						builder.Append(letters, offset, lettersOffset - offset);
+						builder.Append(decoded, offset, decodedOffset - offset);
 						var value = builder.ToString();
 						<#= values.Add #>;
 						builder.Clear();
-						++lettersOffset;
+						++decodedOffset;
 						return true;
 					}
 					else
 					{
-						var value = new string(letters, offset, lettersOffset - offset);
+						var value = new string(decoded, offset, decodedOffset - offset);
 						<#= values.Add #>;
-						++lettersOffset;
+						++decodedOffset;
 						return true;
 					}
 
@@ -185,33 +185,33 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							<#= values.Add #>;
 							builder.Clear();
 							building = false;
-							offset = ++lettersOffset;
+							offset = ++decodedOffset;
 							break;
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							<#= values.Add #>;
-							offset = ++lettersOffset;
+							offset = ++decodedOffset;
 							break;
 						}
 					}
 					else
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					break;
 				}
-				if (lettersOffset >= lettersLength)
+				if (decodedOffset >= decodedLength)
 				{
-					if (offset <= lettersOffset)
+					if (offset <= decodedOffset)
 					{
-						builder.Append(letters, offset, lettersOffset - offset);
+						builder.Append(decoded, offset, decodedOffset - offset);
 						building = true;
 					}
 					if (!ReadBuffers())
@@ -288,16 +288,16 @@ namespace Innovoft.IO
 				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			string value = null;
-			if (lettersOffset >= lettersLength && !ReadBuffers())
+			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
 				<#= values.Set #>;
 				return false;
 			}
-			var offset = lettersOffset;
+			var offset = decodedOffset;
 			var building = false;
 			while (true)
 			{
-				var letter = letters[lettersOffset];
+				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
@@ -305,28 +305,28 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							value = builder.ToString();
 							builder.Clear();
 						}
 						else
 						{
-							value = new string(letters, offset, lettersOffset - offset);
+							value = new string(decoded, offset, decodedOffset - offset);
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					<#= values.Set #>;
 					//LF
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (!ReadBuffers())
 						{
 							return true;
 						}
 					}
-					if (letters[lettersOffset] == LF)
+					if (decoded[decodedOffset] == LF)
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					return true;
 
@@ -335,24 +335,24 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							value = builder.ToString();
 							builder.Clear();
-							++lettersOffset;
+							++decodedOffset;
 							<#= values.Set #>;
 							return true;
 						}
 						else
 						{
-							value = new string(letters, offset, lettersOffset - offset);
-							++lettersOffset;
+							value = new string(decoded, offset, decodedOffset - offset);
+							++decodedOffset;
 							<#= values.Set #>;
 							return true;
 						}
 					}
 					else
 					{
-						++lettersOffset;
+						++decodedOffset;
 						<#= values.Set #>;
 						return true;
 					}
@@ -364,7 +364,7 @@ namespace Innovoft.IO
 						{
 							if (building)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								value = builder.ToString();
 								builder.Clear();
 								building = false;
@@ -373,31 +373,31 @@ namespace Innovoft.IO
 							}
 							else
 							{
-								value = new string(letters, offset, lettersOffset - offset);
+								value = new string(decoded, offset, decodedOffset - offset);
 								column = -1;
 								break;
 							}
 						}
 						else
 						{
-							offset = ++lettersOffset;
+							offset = ++decodedOffset;
 							--column;
 							break;
 						}
 					}
 					else
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					break;
 				}
-				if (lettersOffset >= lettersLength)
+				if (decodedOffset >= decodedLength)
 				{
 					if (column == 0)
 					{
-						if (offset <= lettersOffset)
+						if (offset <= decodedOffset)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							building = true;
 						}
 					}
@@ -483,7 +483,7 @@ namespace Innovoft.IO
 			}
 			var columnsColumn = columns[0];
 			var columnsOffset = 0;
-			if (lettersOffset >= lettersLength && !ReadBuffers())
+			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
 				while (true)
 				{
@@ -498,12 +498,12 @@ namespace Innovoft.IO
 				}
 				return false;
 			}
-			var offset = lettersOffset;
+			var offset = decodedOffset;
 			var building = false;
 			var column = 0;
 			while (true)
 			{
-				var letter = letters[lettersOffset];
+				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
@@ -512,7 +512,7 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
@@ -524,7 +524,7 @@ namespace Innovoft.IO
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							<#= values.Set #>;
 							++columnsOffset;
 							if (columnsOffset < columns.<#= columns.Size #>)
@@ -533,7 +533,7 @@ namespace Innovoft.IO
 							}
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					//Columns
 					if (columnsOffset < columns.<#= columns.Size #>)
 					{
@@ -550,16 +550,16 @@ namespace Innovoft.IO
 						}
 					}
 					//LF
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (!ReadBuffers())
 						{
 							return true;
 						}
 					}
-					if (letters[lettersOffset] == LF)
+					if (decoded[decodedOffset] == LF)
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					return true;
 
@@ -569,7 +569,7 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							<#= values.Set #>;
 							++columnsOffset;
@@ -581,7 +581,7 @@ namespace Innovoft.IO
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							<#= values.Set #>;
 							++columnsOffset;
 							if (columnsOffset < columns.<#= columns.Size #>)
@@ -590,7 +590,7 @@ namespace Innovoft.IO
 							}
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					//Columns
 					if (columnsOffset < columns.<#= columns.Size #>)
 					{
@@ -615,7 +615,7 @@ namespace Innovoft.IO
 						{
 							if (building)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								var value = builder.ToString();
 								<#= values.Set #>;
 								++columnsOffset;
@@ -629,13 +629,13 @@ namespace Innovoft.IO
 								}
 								builder.Clear();
 								building = false;
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 							else
 							{
-								var value = new string(letters, offset, lettersOffset - offset);
+								var value = new string(decoded, offset, decodedOffset - offset);
 								<#= values.Set #>;
 								++columnsOffset;
 								if (columnsOffset < columns.<#= columns.Size #>)
@@ -646,31 +646,31 @@ namespace Innovoft.IO
 								{
 									columnsColumn = -1;
 								}
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 						}
 						else
 						{
-							offset = ++lettersOffset;
+							offset = ++decodedOffset;
 							++column;
 							break;
 						}
 					}
 					else
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					break;
 				}
-				if (lettersOffset >= lettersLength)
+				if (decodedOffset >= decodedLength)
 				{
 					if (column == columnsColumn)
 					{
-						if (offset <= lettersOffset)
+						if (offset <= decodedOffset)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							building = true;
 						}
 					}
@@ -756,7 +756,7 @@ namespace Innovoft.IO
 			using (var enumerator = columns.GetEnumerator())
 			{
 				var columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
-				if (lettersOffset >= lettersLength && !ReadBuffers())
+				if (decodedOffset >= decodedLength && !ReadBuffers())
 				{
 					if (columnsColumn >= 0)
 					{
@@ -773,12 +773,12 @@ namespace Innovoft.IO
 					}
 					return false;
 				}
-				var offset = lettersOffset;
+				var offset = decodedOffset;
 				var building = false;
 				var column = 0;
 				while (true)
 				{
-					var letter = letters[lettersOffset];
+					var letter = decoded[decodedOffset];
 					switch (letter)
 					{
 					case CR:
@@ -787,7 +787,7 @@ namespace Innovoft.IO
 						{
 							if (building)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								var value = builder.ToString();
 								<#= values.Set #>;
 								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
@@ -795,12 +795,12 @@ namespace Innovoft.IO
 							}
 							else
 							{
-								var value = new string(letters, offset, lettersOffset - offset);
+								var value = new string(decoded, offset, decodedOffset - offset);
 								<#= values.Set #>;
 								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
 							}
 						}
-						++lettersOffset;
+						++decodedOffset;
 						//Columns
 						if (columnsColumn >= 0)
 						{
@@ -816,16 +816,16 @@ namespace Innovoft.IO
 							}
 						}
 						//LF
-						if (lettersOffset >= lettersLength)
+						if (decodedOffset >= decodedLength)
 						{
 							if (!ReadBuffers())
 							{
 								return true;
 							}
 						}
-						if (letters[lettersOffset] == LF)
+						if (decoded[decodedOffset] == LF)
 						{
-							++lettersOffset;
+							++decodedOffset;
 						}
 						return true;
 
@@ -835,7 +835,7 @@ namespace Innovoft.IO
 						{
 							if (building)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								var value = builder.ToString();
 								<#= values.Set #>;
 								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
@@ -843,12 +843,12 @@ namespace Innovoft.IO
 							}
 							else
 							{
-								var value = new string(letters, offset, lettersOffset - offset);
+								var value = new string(decoded, offset, decodedOffset - offset);
 								<#= values.Set #>;
 								columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
 							}
 						}
-						++lettersOffset;
+						++decodedOffset;
 						//Columns
 						if (columnsColumn >= 0)
 						{
@@ -872,46 +872,46 @@ namespace Innovoft.IO
 							{
 								if (building)
 								{
-									builder.Append(letters, offset, lettersOffset - offset);
+									builder.Append(decoded, offset, decodedOffset - offset);
 									var value = builder.ToString();
 									<#= values.Set #>;
 									columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
 									builder.Clear();
 									building = false;
-									offset = ++lettersOffset;
+									offset = ++decodedOffset;
 									++column;
 									break;
 								}
 								else
 								{
-									var value = new string(letters, offset, lettersOffset - offset);
+									var value = new string(decoded, offset, decodedOffset - offset);
 									<#= values.Set #>;
 									columnsColumn = enumerator.MoveNext() ? enumerator.Current : -1;
-									offset = ++lettersOffset;
+									offset = ++decodedOffset;
 									++column;
 									break;
 								}
 							}
 							else
 							{
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 						}
 						else
 						{
-							++lettersOffset;
+							++decodedOffset;
 						}
 						break;
 					}
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (column == columnsColumn)
 						{
-							if (offset <= lettersOffset)
+							if (offset <= decodedOffset)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								building = true;
 							}
 						}
@@ -1012,16 +1012,16 @@ namespace Innovoft.IO
 			{
 				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
-			if (lettersOffset >= lettersLength && !ReadBuffers())
+			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
 				return false;
 			}
-			var offset = lettersOffset;
+			var offset = decodedOffset;
 			var building = false;
 			var column = 0;
 			while (true)
 			{
-				var letter = letters[lettersOffset];
+				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
@@ -1030,29 +1030,29 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							<#= values.Set #>;
 							builder.Clear();
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							<#= values.Set #>;
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					//LF
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (!ReadBuffers())
 						{
 							return true;
 						}
 					}
-					if (letters[lettersOffset] == LF)
+					if (decoded[decodedOffset] == LF)
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					return true;
 
@@ -1062,18 +1062,18 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							<#= values.Set #>;
 							builder.Clear();
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							<#= values.Set #>;
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					return true;
 
 				default:
@@ -1083,43 +1083,43 @@ namespace Innovoft.IO
 						{
 							if (building)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								var value = builder.ToString();
 								<#= values.Set #>;
 								builder.Clear();
 								building = false;
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 							else
 							{
-								var value = new string(letters, offset, lettersOffset - offset);
+								var value = new string(decoded, offset, decodedOffset - offset);
 								<#= values.Set #>;
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 						}
 						else
 						{
-							offset = ++lettersOffset;
+							offset = ++decodedOffset;
 							break;
 						}
 					}
 					else
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					break;
 				}
-				if (lettersOffset >= lettersLength)
+				if (decodedOffset >= decodedLength)
 				{
 					if (<#= columns.Test #>)
 					{
-						if (offset <= lettersOffset)
+						if (offset <= decodedOffset)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							building = true;
 						}
 					}
@@ -1199,7 +1199,7 @@ namespace Innovoft.IO
 				throw new ObjectDisposedException(nameof(StringSplitReader));
 			}
 			int column;
-			if (lettersOffset >= lettersLength && !ReadBuffers())
+			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
 				for (column = values.<#= values.Size #> - 1; column >= 0; --column)
 				{
@@ -1208,12 +1208,12 @@ namespace Innovoft.IO
 				}
 				return false;
 			}
-			var offset = lettersOffset;
+			var offset = decodedOffset;
 			var building = false;
 			column = 0;
 			while (true)
 			{
-				var letter = letters[lettersOffset];
+				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
@@ -1222,7 +1222,7 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							values[column] = value;
 							++column;
@@ -1230,12 +1230,12 @@ namespace Innovoft.IO
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							values[column] = value;
 							++column;
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					//Columns
 					for (; column < values.<#= values.Size #>; ++column)
 					{
@@ -1243,16 +1243,16 @@ namespace Innovoft.IO
 						values[column] = value;
 					}
 					//LF
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (!ReadBuffers())
 						{
 							return true;
 						}
 					}
-					if (letters[lettersOffset] == LF)
+					if (decoded[decodedOffset] == LF)
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					return true;
 
@@ -1262,7 +1262,7 @@ namespace Innovoft.IO
 					{
 						if (building)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							var value = builder.ToString();
 							values[column] = value;
 							++column;
@@ -1270,12 +1270,12 @@ namespace Innovoft.IO
 						}
 						else
 						{
-							var value = new string(letters, offset, lettersOffset - offset);
+							var value = new string(decoded, offset, decodedOffset - offset);
 							values[column] = value;
 							++column;
 						}
 					}
-					++lettersOffset;
+					++decodedOffset;
 					//Columns
 					for (; column < values.<#= values.Size #>; ++column)
 					{
@@ -1291,43 +1291,43 @@ namespace Innovoft.IO
 						{
 							if (building)
 							{
-								builder.Append(letters, offset, lettersOffset - offset);
+								builder.Append(decoded, offset, decodedOffset - offset);
 								var value = builder.ToString();
 								values[column] = value;
 								builder.Clear();
 								building = false;
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 							else
 							{
-								var value = new string(letters, offset, lettersOffset - offset);
+								var value = new string(decoded, offset, decodedOffset - offset);
 								values[column] = value;
-								offset = ++lettersOffset;
+								offset = ++decodedOffset;
 								++column;
 								break;
 							}
 						}
 						else
 						{
-							offset = ++lettersOffset;
+							offset = ++decodedOffset;
 							break;
 						}
 					}
 					else
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					break;
 				}
-				if (lettersOffset >= lettersLength)
+				if (decodedOffset >= decodedLength)
 				{
 					if (column < values.<#= values.Size #>)
 					{
-						if (offset <= lettersOffset)
+						if (offset <= decodedOffset)
 						{
-							builder.Append(letters, offset, lettersOffset - offset);
+							builder.Append(decoded, offset, decodedOffset - offset);
 							building = true;
 						}
 					}

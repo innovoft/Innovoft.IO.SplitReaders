@@ -22,9 +22,9 @@ namespace Innovoft.IO
 		protected readonly Func<byte[], int, int, char[], int, int> decoderGetChars;
 		protected readonly int length;
 		protected readonly byte[] buffer;
-		protected readonly char[] letters;
-		protected int lettersOffset;
-		protected int lettersLength;
+		protected readonly char[] decoded;
+		protected int decodedOffset;
+		protected int decodedLength;
 		#endregion //Fields
 
 		#region Constructors
@@ -45,9 +45,9 @@ namespace Innovoft.IO
 			this.decoderGetChars = decoder.GetChars;
 			this.length = 4096;
 			this.buffer = new byte[length];
-			this.letters = new char[length];
-			this.lettersOffset = 0;
-			this.lettersLength = 0;
+			this.decoded = new char[length];
+			this.decodedOffset = 0;
+			this.decodedLength = 0;
 		}
 		#endregion //Constructors
 
@@ -83,40 +83,40 @@ namespace Innovoft.IO
 			{
 				throw new ObjectDisposedException(this.GetType().Name);
 			}
-			if (lettersOffset >= lettersLength && !ReadBuffers())
+			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
 				return false;
 			}
 			while (true)
 			{
-				var letter = letters[lettersOffset];
+				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
-					++lettersOffset;
+					++decodedOffset;
 					//LF
-					if (lettersOffset >= lettersLength)
+					if (decodedOffset >= decodedLength)
 					{
 						if (!ReadBuffers())
 						{
 							return true;
 						}
 					}
-					if (letters[lettersOffset] == LF)
+					if (decoded[decodedOffset] == LF)
 					{
-						++lettersOffset;
+						++decodedOffset;
 					}
 					return true;
 
 				case LF:
-					++lettersOffset;
+					++decodedOffset;
 					return true;
 
 				default:
-					++lettersOffset;
+					++decodedOffset;
 					break;
 				}
-				if (lettersOffset >= lettersLength)
+				if (decodedOffset >= decodedLength)
 				{
 					if (!ReadBuffers())
 					{
@@ -148,9 +148,9 @@ namespace Innovoft.IO
 				{
 					return false;
 				}
-				lettersOffset = 0;
-				lettersLength = decoderGetChars(buffer, 0, read, letters, 0);
-				if (lettersLength > 0)
+				decodedOffset = 0;
+				decodedLength = decoderGetChars(buffer, 0, read, decoded, 0);
+				if (decodedLength > 0)
 				{
 					return true;
 				}
