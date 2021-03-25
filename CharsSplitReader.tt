@@ -137,6 +137,134 @@ namespace Innovoft.IO
 		}
 	}
 #>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, Action<char[], int, int> append)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(StringSplitReader));
+			}
+			if (decodedOffset >= decodedLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = decodedOffset;
+			while (true)
+			{
+				var letter = decoded[decodedOffset];
+				switch (letter)
+				{
+				case CR:
+					if (column == 0)
+					{
+						append(decoded, offset, <#= method.Math #>);
+					}
+					++decodedOffset;
+					//LF
+					if (decodedOffset >= decodedLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (decoded[decodedOffset] == LF)
+					{
+						++decodedOffset;
+					}
+					return true;
+
+				case LF:
+					if (column == 0)
+					{
+						append(decoded, offset, <#= method.Math #>);
+						++decodedOffset;
+						return true;
+					}
+					else
+					{
+						++decodedOffset;
+						return true;
+					}
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						if (column == 0)
+						{
+							append(decoded, offset, <#= method.Math #>);
+							column = -1;
+							break;
+						}
+						else
+						{
+							offset = ++decodedOffset;
+							--column;
+							break;
+						}
+					}
+					else
+					{
+						++decodedOffset;
+					}
+					break;
+				}
+				if (decodedOffset >= decodedLength)
+				{
+					if (column == 0)
+					{
+						if (offset <= decodedOffset)
+						{
+							append(decoded, offset, <#= method.Math #>);
+						}
+					}
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
 		#endregion //Methods
 	}
 }
