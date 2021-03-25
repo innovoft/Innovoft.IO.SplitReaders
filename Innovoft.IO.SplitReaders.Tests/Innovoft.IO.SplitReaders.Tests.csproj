@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="BufferColumn.cs" />
     <Compile Include="CharsColumn.cs" />
+    <Compile Include="BufferColumns.cs" />
     <Compile Include="CharsColumns.cs" />
     <Compile Include="StringSplitReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
