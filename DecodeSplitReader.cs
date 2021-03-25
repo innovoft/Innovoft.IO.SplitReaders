@@ -58,6 +58,10 @@ namespace Innovoft.IO
 		}
 		#endregion //Finalizer
 
+		#region Properties
+		public Encoding Encoding => encoding;
+		#endregion //Properties
+
 		#region Methods
 		#region Dispose
 		public void Dispose()
