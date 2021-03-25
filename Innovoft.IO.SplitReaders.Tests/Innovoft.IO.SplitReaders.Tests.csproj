@@ -42,6 +42,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BufferColumn.cs" />
     <Compile Include="CharsColumn.cs" />
     <Compile Include="CharsColumns.cs" />
     <Compile Include="StringSplitReaderTests.cs" />
