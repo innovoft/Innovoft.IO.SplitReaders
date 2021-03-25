@@ -38,7 +38,7 @@ namespace Innovoft.IO
 				lettersLength = tempLength;
 				letters = temp;
 			}
-			Buffer.BlockCopy(append, offset, letters, lettersOffset, length);
+			Array.Copy(append, offset, letters, lettersOffset, length);
 			lettersOffset += length;
 		}
 
