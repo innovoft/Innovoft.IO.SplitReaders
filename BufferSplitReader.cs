@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
@@ -25,6 +26,19 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Methods
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static bool Contains(byte[] values, byte value)
+		{
+			for (var i = values.Length - 1; i >= 0; --i)
+			{
+				if (values[i] == value)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		private bool ReadBuffer()
 		{
 			throw new NotImplementedException();
