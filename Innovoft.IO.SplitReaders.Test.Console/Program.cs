@@ -130,7 +130,7 @@ namespace Innovoft.IO
 			using (var lineStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read))
 			using (var lineReader = new StreamReader(lineStream))
 			using (var splitStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-			using (var splitReader = new SplitReader(splitStream))
+			using (var splitReader = new StringsSplitReader(splitStream))
 			{
 				var splits = new List<string>();
 				while (true)

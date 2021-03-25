@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Innovoft.IO
 {
-	public sealed partial class StringSplitReader : IDisposable
+	public sealed partial class StringsSplitReader : IDisposable
 	{
 		#region Constants
 		public const char CR = '\r';
@@ -29,7 +29,7 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
-		public StringSplitReader(Stream stream)
+		public StringsSplitReader(Stream stream)
 		{
 			if (stream == null)
 			{
@@ -53,7 +53,7 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Finalizer
-		~StringSplitReader()
+		~StringsSplitReader()
 		{
 			Dispose(disposing: false);
 		}
@@ -82,7 +82,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(StringSplitReader));
+				throw new ObjectDisposedException(nameof(StringsSplitReader));
 			}
 			if (lettersOffset >= lettersLength && !ReadBuffers())
 			{
