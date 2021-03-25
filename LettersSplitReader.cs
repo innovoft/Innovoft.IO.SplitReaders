@@ -72,6 +72,55 @@ namespace Innovoft.IO
 		}
 		#endregion //Dispose
 
+		public bool ReadColumns()
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(StringsSplitReader));
+			}
+			if (lettersOffset >= lettersLength && !ReadBuffers())
+			{
+				return false;
+			}
+			while (true)
+			{
+				var letter = letters[lettersOffset];
+				switch (letter)
+				{
+				case CR:
+					++lettersOffset;
+					//LF
+					if (lettersOffset >= lettersLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (letters[lettersOffset] == LF)
+					{
+						++lettersOffset;
+					}
+					return true;
+
+				case LF:
+					++lettersOffset;
+					return true;
+
+				default:
+					++lettersOffset;
+					break;
+				}
+				if (lettersOffset >= lettersLength)
+				{
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+				}
+			}
+		}
+
 		private bool ReadBuffers()
 		{
 			while (true)
