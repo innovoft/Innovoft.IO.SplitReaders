@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Innovoft.IO
 {
-	public abstract class DecodeSplitReader : IDisposable
+	public abstract class DecodeSplitReader : SplitReader
 	{
 		#region Constants
 		public const char CR = '\r';
@@ -15,13 +15,9 @@ namespace Innovoft.IO
 		#endregion //Constants
 
 		#region Fields
-		protected Stream stream;
-		protected Func<byte[], int, int, int> streamRead;
 		protected readonly Encoding encoding;
 		protected readonly Decoder decoder;
 		protected readonly Func<byte[], int, int, char[], int, int> decoderGetChars;
-		protected readonly int length;
-		protected readonly byte[] buffer;
 		protected readonly char[] decoded;
 		protected int decodedOffset;
 		protected int decodedLength;
@@ -29,23 +25,12 @@ namespace Innovoft.IO
 
 		#region Constructors
 		protected DecodeSplitReader(Stream stream)
+			: base(stream)
 		{
-			if (stream == null)
-			{
-				throw new ArgumentNullException(nameof(stream));
-			}
-			if (!stream.CanRead)
-			{
-				throw new ArgumentException("!stream.CanRead");
-			}
-			this.stream = stream;
-			this.streamRead = stream.Read;
 			this.encoding = System.Text.Encoding.UTF8;
 			this.decoder = encoding.GetDecoder();
 			this.decoderGetChars = decoder.GetChars;
-			this.length = 4096;
-			this.buffer = new byte[length];
-			this.decoded = new char[length];
+			this.decoded = new char[this.length];
 			this.decodedOffset = 0;
 			this.decodedLength = 0;
 		}
