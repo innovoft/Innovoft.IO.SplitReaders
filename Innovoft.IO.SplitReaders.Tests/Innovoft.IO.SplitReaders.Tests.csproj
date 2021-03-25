@@ -42,8 +42,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharsColumn.cs" />
+    <Compile Include="CharsColumns.cs" />
     <Compile Include="StringSplitReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CharsSplitReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
