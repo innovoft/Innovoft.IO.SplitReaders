@@ -11,6 +11,7 @@ namespace Innovoft.IO
 		#region Constants
 		public const byte CR = 0x0D;
 		public const byte LF = 0x0A;
+		public const byte Comma = 0x2C;
 		#endregion //Constants
 
 		#region Fields
