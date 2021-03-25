@@ -13,5 +13,12 @@ namespace Innovoft.IO
 		{
 		}
 		#endregion //Constructors
+
+		#region Methods
+		private bool ReadBuffer()
+		{
+			throw new NotImplementedException();
+		}
+		#endregion //Methods
 	}
 }
