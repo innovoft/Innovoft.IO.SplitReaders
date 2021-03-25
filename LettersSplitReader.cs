@@ -66,6 +66,24 @@ namespace Innovoft.IO
 			streamRead = null;
 		}
 		#endregion //Dispose
+
+		private bool ReadBuffers()
+		{
+			while (true)
+			{
+				var read = streamRead(buffer, 0, length);
+				if (read <= 0)
+				{
+					return false;
+				}
+				lettersOffset = 0;
+				lettersLength = decoderGetChars(buffer, 0, read, letters, 0);
+				if (lettersLength > 0)
+				{
+					return true;
+				}
+			}
+		}
 		#endregion //Methods
 	}
 }
