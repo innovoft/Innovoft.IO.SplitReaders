@@ -77,14 +77,14 @@ namespace Innovoft.IO
 				return false;
 			}
 			var offset = bufferOffset;
-			var building = add();
+			var append = add();
 			while (true)
 			{
 				var letter = buffer[bufferOffset];
 				switch (letter)
 				{
 				case CR:
-					building(buffer, offset, <#= method.Math #>);
+					append(buffer, offset, <#= method.Math #>);
 					++bufferOffset;
 					//LF
 					if (bufferOffset >= bufferLength)
@@ -101,16 +101,16 @@ namespace Innovoft.IO
 					return true;
 
 				case LF:
-					building(buffer, offset, <#= method.Math #>);
+					append(buffer, offset, <#= method.Math #>);
 					++bufferOffset;
 					return true;
 
 				default:
 					if (<#= separator.Test #>)
 					{
-						building(buffer, offset, <#= method.Math #>);
+						append(buffer, offset, <#= method.Math #>);
 						offset = ++bufferOffset;
-						building = add();
+						append = add();
 						break;
 					}
 					else
@@ -123,7 +123,7 @@ namespace Innovoft.IO
 				{
 					if (offset <= bufferOffset)
 					{
-						building(buffer, offset, <#= method.Math #>);
+						append(buffer, offset, <#= method.Math #>);
 					}
 					if (!ReadBuffer())
 					{

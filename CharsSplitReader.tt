@@ -77,14 +77,14 @@ namespace Innovoft.IO
 				return false;
 			}
 			var offset = decodedOffset;
-			var building = add();
+			var append = add();
 			while (true)
 			{
 				var letter = decoded[decodedOffset];
 				switch (letter)
 				{
 				case CR:
-					building(decoded, offset, <#= method.Math #>);
+					append(decoded, offset, <#= method.Math #>);
 					++decodedOffset;
 					//LF
 					if (decodedOffset >= decodedLength)
@@ -101,16 +101,16 @@ namespace Innovoft.IO
 					return true;
 
 				case LF:
-					building(decoded, offset, <#= method.Math #>);
+					append(decoded, offset, <#= method.Math #>);
 					++decodedOffset;
 					return true;
 
 				default:
 					if (<#= separator.Test #>)
 					{
-						building(decoded, offset, <#= method.Math #>);
+						append(decoded, offset, <#= method.Math #>);
 						offset = ++decodedOffset;
-						building = add();
+						append = add();
 						break;
 					}
 					else
@@ -123,7 +123,7 @@ namespace Innovoft.IO
 				{
 					if (offset <= decodedOffset)
 					{
-						building(decoded, offset, <#= method.Math #>);
+						append(decoded, offset, <#= method.Math #>);
 					}
 					if (!ReadBuffers())
 					{
