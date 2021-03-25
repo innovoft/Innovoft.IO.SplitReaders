@@ -3,16 +3,6 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text" #>
 <#@ output extension=".cs" #>
-<#
-	var separators = new List<(string Type, bool Generic, string Test)>()
-	{
-		( Type: "char", Generic: false, Test: "letter == separator" ),
-		( Type: "ICollection<char>", Generic: true, Test: "separator.Contains(letter)" ),
-		( Type: "Predicate<char>", Generic: false, Test: "separator(letter)" ),
-		( Type: "char[]", Generic: false, Test: "Contains(separator, letter)" ),
-	};
-	bool line;
-#>
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,9 +12,6 @@ namespace Innovoft.IO
 	partial class LettersSplitReader
 	{
 		#region Methods
-		public void Test()
-		{
-		}
 		#endregion //Methods
 	}
 }
