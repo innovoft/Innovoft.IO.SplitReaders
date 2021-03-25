@@ -77,7 +77,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(StringsSplitReader));
+				throw new ObjectDisposedException(this.GetType().Name);
 			}
 			if (lettersOffset >= lettersLength && !ReadBuffers())
 			{
