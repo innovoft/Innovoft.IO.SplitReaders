@@ -16,6 +16,11 @@
 		( Name: "Length", Math: "decodedOffset - offset"),
 		( Name: "Ending", Math: "decodedOffset"),
 	};
+	var appendsINDXs = new List<(string Type, bool Generic, string Size)>()
+	{
+		( Type: "Action<char[], int, int>[]", Generic: false, Size: "Length" ),
+		( Type: "IList<Action<char[], int, int>>", Generic: true, Size: "Count" ),
+	};
 	bool line;
 #>
 using System;
@@ -177,7 +182,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(StringSplitReader));
+				throw new ObjectDisposedException(nameof(CharsSplitReader));
 			}
 			if (decodedOffset >= decodedLength && !ReadBuffers())
 			{
@@ -262,6 +267,133 @@ namespace Innovoft.IO
 			}
 		}
 <#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var appends in appendsINDXs)
+		{
+			foreach (var method in methods)
+			{
+				if (line)
+				{
+#>
+
+<#
+				}
+				else
+				{
+					line = true;
+				}
+				var generic = separator.Generic || appends.Generic;
+				string parameters;
+				string where;
+				if (generic)
+				{
+					var parameterss = new List<string>(3);
+					var wheres = new List<string>(3);
+					if (separator.Generic)
+					{
+						parameterss.Add("TSeparator");
+						wheres.Add("where TSeparator: " + separator.Type);
+					}
+					if (appends.Generic)
+					{
+						parameterss.Add("TAppends");
+						wheres.Add("where TAppends: " + appends.Type);
+					}
+					parameters = "<" + string.Join(", ", parameterss) + ">";
+					where = string.Join(" ", wheres);
+				}
+				else
+				{
+					parameters = "";
+					where = null;
+				}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= appends.Generic ? "TAppends" : appends.Type #> appends)
+<#
+				if (generic)
+				{
+#>
+			<#= where #>
+<#
+				}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(CharsSplitReader));
+			}
+			if (decodedOffset >= decodedLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = decodedOffset;
+			var column = 0;
+			var append = 0 < appends.<#= appends.Size #> ? appends[0] : null;
+			while (true)
+			{
+				var letter = decoded[decodedOffset];
+				switch (letter)
+				{
+				case CR:
+					//Column
+					append?.Invoke(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					//LF
+					if (decodedOffset >= decodedLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (decoded[decodedOffset] == LF)
+					{
+						++decodedOffset;
+					}
+					return true;
+
+				case LF:
+					//Column
+					append?.Invoke(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append?.Invoke(decoded, offset, <#= method.Math #>);
+						offset = ++decodedOffset;
+						++column;
+						append = column < appends.<#= appends.Size #> ? appends[column] : null;
+						break;
+					}
+					else
+					{
+						++decodedOffset;
+						break;
+					}
+				}
+				if (decodedOffset >= decodedLength)
+				{
+					if (offset <= decodedOffset)
+					{
+						append?.Invoke(decoded, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+			}
 		}
 	}
 #>
