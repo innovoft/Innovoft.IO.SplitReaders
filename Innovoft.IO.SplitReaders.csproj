@@ -52,6 +52,19 @@
 		</None>
 	</ItemGroup>
 
+  <ItemGroup>
+		<T4Transform Include="LettersSplitReader.tt">
+			<Link>LettersSplitReader.tt</Link>
+			<OutputFilePath>$(ProjectDir)</OutputFilePath>
+			<OutputFileName>LettersSplitReader.tt.cs</OutputFileName>
+			<LastGenOutput>$(ProjectDir)LettersSplitReader.tt.cs</LastGenOutput>
+		</T4Transform>
+		<None Include="LettersSplitReader.tt.cs">
+			<AutoGen>True</AutoGen>
+			<DependentUpon>LettersSplitReader.tt</DependentUpon>
+		</None>
+	</ItemGroup>
+
 	<!--T4-->
 	<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
 
