@@ -40,15 +40,15 @@
   </ItemGroup>
 
   <ItemGroup>
-		<T4Transform Include="SplitReader.tt">
-			<Link>SplitReader.tt</Link>
+		<T4Transform Include="StringSplitReader.tt">
+			<Link>StringSplitReader.tt</Link>
 			<OutputFilePath>$(ProjectDir)</OutputFilePath>
-			<OutputFileName>SplitReader.tt.cs</OutputFileName>
-			<LastGenOutput>$(ProjectDir)SplitReader.tt.cs</LastGenOutput>
+			<OutputFileName>StringSplitReader.tt.cs</OutputFileName>
+			<LastGenOutput>$(ProjectDir)StringSplitReader.tt.cs</LastGenOutput>
 		</T4Transform>
-		<None Include="SplitReader.tt.cs">
+		<None Include="StringSplitReader.tt.cs">
 			<AutoGen>True</AutoGen>
-			<DependentUpon>SplitReader.tt</DependentUpon>
+			<DependentUpon>StringSplitReader.tt</DependentUpon>
 		</None>
 	</ItemGroup>
 

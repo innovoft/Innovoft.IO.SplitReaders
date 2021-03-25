@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Innovoft.IO
 {
 	[TestClass]
-	public class SplitReaderTests
+	public class StringSplitReaderTests
 	{
 		[TestMethod]
 		public void ReadColumnsAddTest()
@@ -19,7 +19,7 @@ namespace Innovoft.IO
 			var raw = Encoding.UTF8.GetBytes(text);
 			var actuals = new List<string>();
 			using (var readerStream = new MemoryStream(raw))
-			using (var reader = new SplitReader(readerStream))
+			using (var reader = new StringSplitReader(readerStream))
 			{
 				Assert.IsTrue(reader.ReadColumnsAdd(separator, actuals), "!ReadLine");
 				Assert.AreEqual(expecteds.Length, actuals.Count, "expecteds.Length != actuals.Count");
@@ -40,7 +40,7 @@ namespace Innovoft.IO
 			for (var i = expecteds.Length - 1; i >= 0; --i)
 			{
 				using (var readerStream = new MemoryStream(raw))
-				using (var reader = new SplitReader(readerStream))
+				using (var reader = new StringSplitReader(readerStream))
 				{
 					Assert.IsTrue(reader.ReadColumnsSet(separator, i, out var actual), "!ReadColumn");
 					Assert.AreEqual(expecteds[i], actual, i.ToString());
@@ -62,7 +62,7 @@ namespace Innovoft.IO
 			}
 			var actuals = new string[expecteds.Length];
 			using (var readerStream = new MemoryStream(raw))
-			using (var reader = new SplitReader(readerStream))
+			using (var reader = new StringSplitReader(readerStream))
 			{
 				Assert.IsTrue(reader.ReadColumnsSet(separator, columns, actuals), "!ReadColumns");
 				for (var i = expecteds.Length - 1; i >= 0; --i)
