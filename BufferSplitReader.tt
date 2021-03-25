@@ -137,6 +137,134 @@ namespace Innovoft.IO
 		}
 	}
 #>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, Action<byte[], int, int> append)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BufferSplitReader));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			var offset = bufferOffset;
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					if (column == 0)
+					{
+						append(buffer, offset, <#= method.Math #>);
+					}
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					if (column == 0)
+					{
+						append(buffer, offset, <#= method.Math #>);
+						++bufferOffset;
+						return true;
+					}
+					else
+					{
+						++bufferOffset;
+						return true;
+					}
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						if (column == 0)
+						{
+							append(buffer, offset, <#= method.Math #>);
+							column = -1;
+							break;
+						}
+						else
+						{
+							offset = ++bufferOffset;
+							--column;
+							break;
+						}
+					}
+					else
+					{
+						++bufferOffset;
+					}
+					break;
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (column == 0)
+					{
+						if (offset <= bufferOffset)
+						{
+							append(buffer, offset, <#= method.Math #>);
+						}
+					}
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
 		#endregion //Methods
 	}
 }
