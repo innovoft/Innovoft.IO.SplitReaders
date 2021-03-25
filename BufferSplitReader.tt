@@ -3,6 +3,21 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text" #>
 <#@ output extension=".cs" #>
+<#
+	var separators = new List<(string Type, bool Generic, string Test)>()
+	{
+		( Type: "byte", Generic: false, Test: "letter == separator" ),
+		( Type: "ICollection<byte>", Generic: true, Test: "separator.Contains(letter)" ),
+		( Type: "Predicate<byte>", Generic: false, Test: "separator(letter)" ),
+		( Type: "byte[]", Generic: false, Test: "Contains(separator, letter)" ),
+	};
+	var methods = new List<(string Name, string Math)>()
+	{
+		( Name: "Length", Math: "bufferOffset - offset"),
+		( Name: "Ending", Math: "bufferOffset"),
+	};
+	bool line;
+#>
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +27,116 @@ namespace Innovoft.IO
 	partial class BufferSplitReader
 	{
 		#region Methods
+<#
+	line = false;
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, Func<Action<byte[], int, int>> add)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BufferSplitReader));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			var offset = bufferOffset;
+			var building = add();
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					building(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					building(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						building(buffer, offset, <#= method.Math #>);
+						offset = ++bufferOffset;
+						building = add();
+						break;
+					}
+					else
+					{
+						++bufferOffset;
+					}
+					break;
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (offset <= bufferOffset)
+					{
+						building(buffer, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
 		#endregion //Methods
 	}
 }
