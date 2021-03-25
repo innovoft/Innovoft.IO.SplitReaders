@@ -8,6 +8,11 @@ namespace Innovoft.IO
 {
 	public sealed partial class LettersSplitReader : IDisposable
 	{
+		#region Constants
+		public const char CR = '\r';
+		public const char LF = '\n';
+		#endregion //Constants
+
 		#region Fields
 		private Stream stream;
 		private Func<byte[], int, int, int> streamRead;
