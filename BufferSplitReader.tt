@@ -400,6 +400,115 @@ namespace Innovoft.IO
 		}
 	}
 #>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, Action<int, byte[], int, int> appends)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BufferSplitReader));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			var offset = bufferOffset;
+			var column = 0;
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					//Column
+					appends(column, buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					//Column
+					appends(column, buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						appends(column, buffer, offset, <#= method.Math #>);
+						offset = ++bufferOffset;
+						++column;
+						break;
+					}
+					else
+					{
+						++bufferOffset;
+						break;
+					}
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (offset <= bufferOffset)
+					{
+						appends(column, buffer, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
 		#endregion //Methods
 	}
 }
