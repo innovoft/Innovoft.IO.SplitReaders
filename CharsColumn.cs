@@ -10,6 +10,7 @@ namespace Innovoft.IO
 		private int capacity;
 		private char[] letters;
 		private int count;
+		private bool appended;
 		#endregion //Fields
 
 		#region Constructors
@@ -30,11 +31,13 @@ namespace Innovoft.IO
 		public int Capacity => capacity;
 		public char[] Letters => letters;
 		public int Count => count;
+		public bool Appended => appended;
 		#endregion //Properties
 
 		#region Methods
 		public void AppendLength(char[] append, int offset, int length)
 		{
+			appended = true;
 			var required = count + length;
 			if (required > capacity)
 			{
