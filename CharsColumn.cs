@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	internal sealed class CharsColumn
+	public class CharsColumn
 	{
 		#region Fields
 		private int lettersLength;
