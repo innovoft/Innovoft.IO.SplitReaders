@@ -34,6 +34,10 @@ namespace Innovoft.IO
 		public bool Appended => appended;
 		#endregion //Properties
 
+		#region Indexes
+		public byte this[int offset] { get => buffer[offset]; set => buffer[offset] = value; }
+		#region Indexes
+
 		#region Methods
 		public void Clear()
 		{
