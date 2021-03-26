@@ -39,7 +39,7 @@ namespace Innovoft.IO
 			{
 				var tempLength = 2 * capacity;
 				var temp = new char[tempLength];
-				Buffer.BlockCopy(letters, 0, temp, 0, count);
+				Array.Copy(letters, 0, temp, 0, count);
 				capacity = tempLength;
 				letters = temp;
 			}
