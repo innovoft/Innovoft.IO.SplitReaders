@@ -51,6 +51,23 @@ namespace Innovoft.IO
 			count += length;
 		}
 
+		public void AppendEnding(char[] append, int offset, int ending)
+		{
+			appended = true;
+			var length = ending - offset;
+			var required = count + length;
+			if (required > capacity)
+			{
+				var tempLength = 2 * capacity;
+				var temp = new char[tempLength];
+				Array.Copy(letters, 0, temp, 0, count);
+				capacity = tempLength;
+				letters = temp;
+			}
+			Array.Copy(append, offset, letters, count, length);
+			count += length;
+		}
+
 		public override string ToString()
 		{
 			return new string(letters, 0, count);
