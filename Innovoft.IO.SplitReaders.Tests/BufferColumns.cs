@@ -7,19 +7,12 @@ namespace Innovoft.IO
 	internal sealed class BufferColumns
 	{
 		#region Fields
-		private Encoding encoding;
 		private readonly List<BufferColumn> columns = new List<BufferColumn>();
 		#endregion //Fields
 
 		#region Constructors
 		public BufferColumns()
-			: this(Encoding.UTF8)
 		{
-		}
-
-		public BufferColumns(Encoding encoding)
-		{
-			this.encoding = encoding;
 		}
 		#endregion //Constructors
 
@@ -35,29 +28,29 @@ namespace Innovoft.IO
 		#region Methods
 		public Action<byte[], int, int> AddLength()
 		{
-			var column = new BufferColumn(encoding);
+			var column = new BufferColumn();
 			var append = new Action<byte[], int, int>(column.AppendLength);
 			columns.Add(column);
 			return append;
 		}
 
-		public string[] ToArray()
+		public string[] ToArray(Encoding encoding)
 		{
 			var columns = new string[this.columns.Count];
 			for (var i = columns.Length - 1; i >= 0; --i)
 			{
-				var column = this.columns[i].ToString();
+				var column = this.columns[i].ToString(encoding);
 				columns[i] = column;
 			}
 			return columns;
 		}
 
-		public List<string> ToList()
+		public List<string> ToList(Encoding encoding)
 		{
 			var columns = new List<string>(this.columns.Count);
 			foreach (var column in this.columns)
 			{
-				var text = column.ToString();
+				var text = column.ToString(encoding);
 				columns.Add(text);
 			}
 			return columns;

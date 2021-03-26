@@ -23,7 +23,7 @@ namespace Innovoft.IO
 			{
 				Assert.IsTrue(reader.ReadColumnsLength(separator, actuals.AddLength), "!ReadColumns");
 				Assert.AreEqual(expecteds.Length, actuals.Count, "expecteds.Length != actuals.Count");
-				var actualsColumns = actuals.ToArray();
+				var actualsColumns = actuals.ToArray(Encoding.UTF8);
 				for (var i = expecteds.Length - 1; i >= 0; --i)
 				{
 					Assert.AreEqual(expecteds[i], actualsColumns[i], i.ToString());
@@ -40,12 +40,12 @@ namespace Innovoft.IO
 			var raw = Encoding.UTF8.GetBytes(text);
 			for (var i = expecteds.Length - 1; i >= 0; --i)
 			{
-				var actual = new BufferColumn(Encoding.UTF8);
+				var actual = new BufferColumn();
 				using (var readerStream = new MemoryStream(raw))
 				using (var reader = new BufferSplitReader(readerStream))
 				{
 					Assert.IsTrue(reader.ReadColumnsLength(separator, i, actual.AppendLength), "!ReadColumn");
-					Assert.AreEqual(expecteds[i], actual.ToString(), i.ToString());
+					Assert.AreEqual(expecteds[i], actual.ToString(Encoding.UTF8), i.ToString());
 				}
 			}
 		}
@@ -66,7 +66,7 @@ namespace Innovoft.IO
 			var appends = new Action<byte[], int, int>[expecteds.Length];
 			for (var i = actuals.Length - 1; i >= 0; --i)
 			{
-				var actual = new BufferColumn(Encoding.UTF8);
+				var actual = new BufferColumn();
 				actuals[i] = actual;
 				appends[i] = actual.AppendLength;
 			}
@@ -76,7 +76,7 @@ namespace Innovoft.IO
 				Assert.IsTrue(reader.ReadColumnsLength(separator, appends), "!ReadColumns");
 				for (var i = expecteds.Length - 1; i >= 0; --i)
 				{
-					Assert.AreEqual(expecteds[i], actuals[i].ToString(), i.ToString());
+					Assert.AreEqual(expecteds[i], actuals[i].ToString(Encoding.UTF8), i.ToString());
 				}
 			}
 		}
