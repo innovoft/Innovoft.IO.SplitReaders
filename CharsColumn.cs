@@ -47,10 +47,10 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var tempLength = 2 * capacity;
-				var temp = new char[tempLength];
+				var tempCapacity = 2 * capacity;
+				var temp = new char[tempCapacity];
 				Array.Copy(letters, 0, temp, 0, count);
-				capacity = tempLength;
+				capacity = tempCapacity;
 				letters = temp;
 			}
 			Array.Copy(append, offset, letters, count, length);
@@ -64,10 +64,10 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var tempLength = 2 * capacity;
-				var temp = new char[tempLength];
+				var tempCapacity = 2 * capacity;
+				var temp = new char[tempCapacity];
 				Array.Copy(letters, 0, temp, 0, count);
-				capacity = tempLength;
+				capacity = tempCapacity;
 				letters = temp;
 			}
 			Array.Copy(append, offset, letters, count, length);
