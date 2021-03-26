@@ -18,10 +18,10 @@ namespace Innovoft.IO
 		{
 		}
 
-		public CharsColumn(int length)
+		public CharsColumn(int capacity)
 		{
-			this.capacity = length;
-			this.letters = new char[length];
+			this.capacity = capacity;
+			this.letters = new char[capacity];
 			this.lettersOffset = 0;
 		}
 		#endregion //Constructors
