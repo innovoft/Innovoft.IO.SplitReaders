@@ -9,7 +9,7 @@ namespace Innovoft.IO
 		#region Fields
 		private int capacity;
 		private char[] letters;
-		private int lettersOffset;
+		private int count;
 		#endregion //Fields
 
 		#region Constructors
@@ -22,7 +22,7 @@ namespace Innovoft.IO
 		{
 			this.capacity = capacity;
 			this.letters = new char[capacity];
-			this.lettersOffset = 0;
+			this.count = 0;
 		}
 		#endregion //Constructors
 
@@ -33,22 +33,22 @@ namespace Innovoft.IO
 		#region Methods
 		public void AppendLength(char[] append, int offset, int length)
 		{
-			var size = lettersOffset + length;
+			var size = count + length;
 			if (size > capacity)
 			{
 				var tempLength = 2 * capacity;
 				var temp = new char[tempLength];
-				Buffer.BlockCopy(letters, 0, temp, 0, lettersOffset);
+				Buffer.BlockCopy(letters, 0, temp, 0, count);
 				capacity = tempLength;
 				letters = temp;
 			}
-			Array.Copy(append, offset, letters, lettersOffset, length);
-			lettersOffset += length;
+			Array.Copy(append, offset, letters, count, length);
+			count += length;
 		}
 
 		public override string ToString()
 		{
-			return new string(letters, 0, lettersOffset);
+			return new string(letters, 0, count);
 		}
 		#endregion //Methods
 	}
