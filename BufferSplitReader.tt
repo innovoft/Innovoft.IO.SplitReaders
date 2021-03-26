@@ -16,10 +16,12 @@
 		( Name: "Length", Math: "bufferOffset - offset"),
 		( Name: "Ending", Math: "bufferOffset"),
 	};
-	var appendsINDXs = new List<(string Type, bool Generic, string Size)>()
+	var appendss = new List<(string Type, bool Generic, string Name, string Get)>()
 	{
-		( Type: "Action<byte[], int, int>[]", Generic: false, Size: "Length" ),
-		( Type: "IList<Action<byte[], int, int>>", Generic: true, Size: "Count" ),
+		( Type: "Action<byte[], int, int>[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
+		( Type: "IList<Action<byte[], int, int>>", Generic: true, Name: "", Get: "append = column < appends.Count ? appends[column] : null" ),
+		( Type: "IDictionary<int, Action<byte[], int, int>>", Generic: true, Name: "Dictionary", Get: "appends.TryGetValue(column, out append)" ),
+		( Type: "Func<int, Action<byte[], int, int>>", Generic: false, Name: "", Get: "append = appends(column)" ),
 	};
 	bool line;
 #>
@@ -273,7 +275,7 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		foreach (var appends in appendsINDXs)
+		foreach (var appends in appendss)
 		{
 			foreach (var method in methods)
 			{
@@ -313,7 +315,7 @@ namespace Innovoft.IO
 					where = null;
 				}
 #>
-		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= appends.Generic ? "TAppends" : appends.Type #> appends)
+		public bool ReadColumns<#= method.Name #><#= appends.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= appends.Generic ? "TAppends" : appends.Type #> appends)
 <#
 				if (generic)
 				{
@@ -333,7 +335,8 @@ namespace Innovoft.IO
 			}
 			var offset = bufferOffset;
 			var column = 0;
-			var append = 0 < appends.<#= appends.Size #> ? appends[0] : null;
+			Action<byte[], int, int> append;
+			<#= appends.Get #>;
 			while (true)
 			{
 				var letter = buffer[bufferOffset];
@@ -369,7 +372,7 @@ namespace Innovoft.IO
 						append?.Invoke(buffer, offset, <#= method.Math #>);
 						offset = ++bufferOffset;
 						++column;
-						append = column < appends.<#= appends.Size #> ? appends[column] : null;
+						<#= appends.Get #>;
 						break;
 					}
 					else
