@@ -36,7 +36,7 @@ namespace Innovoft.IO
 
 		#region Indexes
 		public byte this[int offset] { get => buffer[offset]; set => buffer[offset] = value; }
-		#region Indexes
+		#endregion //Indexes
 
 		#region Methods
 		public void Clear()

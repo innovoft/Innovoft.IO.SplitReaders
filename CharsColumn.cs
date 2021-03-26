@@ -36,7 +36,7 @@ namespace Innovoft.IO
 
 		#region Indexes
 		public char this[int offset] { get => letters[offset]; set => letters[offset] = value; }
-		#region Indexes
+		#endregion //Indexes
 
 		#region Methods
 		public void Clear()
