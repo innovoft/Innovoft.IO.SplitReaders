@@ -7,7 +7,7 @@ namespace Innovoft.IO
 	public class CharsColumn
 	{
 		#region Fields
-		private int lettersLength;
+		private int capacity;
 		private char[] letters;
 		private int lettersOffset;
 		#endregion //Fields
@@ -20,22 +20,25 @@ namespace Innovoft.IO
 
 		public CharsColumn(int length)
 		{
-			this.lettersLength = length;
+			this.capacity = length;
 			this.letters = new char[length];
 			this.lettersOffset = 0;
 		}
 		#endregion //Constructors
 
+		#region Properties
+		#endregion //Properties
+
 		#region Methods
 		public void AppendLength(char[] append, int offset, int length)
 		{
 			var size = lettersOffset + length;
-			if (size > lettersLength)
+			if (size > capacity)
 			{
-				var tempLength = 2 * lettersLength;
+				var tempLength = 2 * capacity;
 				var temp = new char[tempLength];
 				Buffer.BlockCopy(letters, 0, temp, 0, lettersOffset);
-				lettersLength = tempLength;
+				capacity = tempLength;
 				letters = temp;
 			}
 			Array.Copy(append, offset, letters, lettersOffset, length);
