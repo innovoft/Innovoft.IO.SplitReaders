@@ -23,7 +23,7 @@ namespace Innovoft.IO
 		{
 			this.capacity = capacity;
 			this.letters = new char[capacity];
-			this.count = 0;
+			Clear();
 		}
 		#endregion //Constructors
 
