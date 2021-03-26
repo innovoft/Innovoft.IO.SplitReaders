@@ -16,6 +16,11 @@
 		( Name: "Length", Math: "bufferOffset - offset"),
 		( Name: "Ending", Math: "bufferOffset"),
 	};
+	var appendsINDXs = new List<(string Type, bool Generic, string Size)>()
+	{
+		( Type: "Action<byte[], int, int>[]", Generic: false, Size: "Length" ),
+		( Type: "IList<Action<byte[], int, int>>", Generic: true, Size: "Count" ),
+	};
 	bool line;
 #>
 using System;
@@ -262,6 +267,133 @@ namespace Innovoft.IO
 			}
 		}
 <#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var appends in appendsINDXs)
+		{
+			foreach (var method in methods)
+			{
+				if (line)
+				{
+#>
+
+<#
+				}
+				else
+				{
+					line = true;
+				}
+				var generic = separator.Generic || appends.Generic;
+				string parameters;
+				string where;
+				if (generic)
+				{
+					var parameterss = new List<string>(3);
+					var wheres = new List<string>(3);
+					if (separator.Generic)
+					{
+						parameterss.Add("TSeparator");
+						wheres.Add("where TSeparator: " + separator.Type);
+					}
+					if (appends.Generic)
+					{
+						parameterss.Add("TAppends");
+						wheres.Add("where TAppends: " + appends.Type);
+					}
+					parameters = "<" + string.Join(", ", parameterss) + ">";
+					where = string.Join(" ", wheres);
+				}
+				else
+				{
+					parameters = "";
+					where = null;
+				}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= appends.Generic ? "TAppends" : appends.Type #> appends)
+<#
+				if (generic)
+				{
+#>
+			<#= where #>
+<#
+				}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BufferSplitReader));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			var offset = bufferOffset;
+			var column = 0;
+			var append = 0 < appends.<#= appends.Size #> ? appends[0] : null;
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					//Column
+					append?.Invoke(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					//Column
+					append?.Invoke(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append?.Invoke(buffer, offset, <#= method.Math #>);
+						offset = ++bufferOffset;
+						++column;
+						append = column < appends.<#= appends.Size #> ? appends[column] : null;
+						break;
+					}
+					else
+					{
+						++bufferOffset;
+						break;
+					}
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (offset <= bufferOffset)
+					{
+						append?.Invoke(buffer, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+			}
 		}
 	}
 #>
