@@ -35,6 +35,12 @@ namespace Innovoft.IO
 		#endregion //Properties
 
 		#region Methods
+		public void Clear()
+		{
+			count = 0;
+			appended = false;
+		}
+
 		public void AppendLength(char[] append, int offset, int length)
 		{
 			appended = true;
