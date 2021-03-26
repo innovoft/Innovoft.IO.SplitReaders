@@ -34,6 +34,10 @@ namespace Innovoft.IO
 		public bool Appended => appended;
 		#endregion //Properties
 
+		#region Indexes
+		public char this[int offset] { get => letters[offset]; set => letters[offset] = value; }
+		#region Indexes
+
 		#region Methods
 		public void Clear()
 		{
