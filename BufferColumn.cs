@@ -80,15 +80,29 @@ namespace Innovoft.IO
 
 		public string ToString(Encoding encoding)
 		{
-			return encoding.GetString(buffer, 0, count);
+			if (appended)
+			{
+				return encoding.GetString(buffer, 0, count);
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		public string ToString(Decoder decoder)
 		{
-			var length = decoder.GetCharCount(buffer, 0, count);
-			var decoded = new char[length];
-			decoder.GetChars(buffer, 0, count, decoded, 0);
-			return new string(decoded);
+			if (appended)
+			{
+				var length = decoder.GetCharCount(buffer, 0, count);
+				var decoded = new char[length];
+				decoder.GetChars(buffer, 0, count, decoded, 0);
+				return new string(decoded);
+			}
+			else
+			{
+				return null;
+			}
 		}
 		#endregion //Methods
 	}
