@@ -76,7 +76,14 @@ namespace Innovoft.IO
 
 		public override string ToString()
 		{
-			return new string(letters, 0, count);
+			if (appended)
+			{
+				return new string(letters, 0, count);
+			}
+			else
+			{
+				return null;
+			}
 		}
 		#endregion //Methods
 	}
