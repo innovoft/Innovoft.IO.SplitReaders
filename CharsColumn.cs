@@ -27,6 +27,7 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Properties
+		public int Capacity => capacity;
 		#endregion //Properties
 
 		#region Methods
