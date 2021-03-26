@@ -34,8 +34,8 @@ namespace Innovoft.IO
 		#region Methods
 		public void AppendLength(char[] append, int offset, int length)
 		{
-			var size = count + length;
-			if (size > capacity)
+			var required = count + length;
+			if (required > capacity)
 			{
 				var tempLength = 2 * capacity;
 				var temp = new char[tempLength];
