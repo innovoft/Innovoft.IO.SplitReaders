@@ -51,11 +51,11 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var tempCapacity = 2 * capacity;
-				var temp = new byte[tempCapacity];
-				System.Buffer.BlockCopy(buffer, 0, temp, 0, count);
-				capacity = tempCapacity;
-				buffer = temp;
+				var enlargedCapacity = 2 * capacity;
+				var enlarged = new byte[enlargedCapacity];
+				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				capacity = enlargedCapacity;
+				buffer = enlarged;
 			}
 			System.Buffer.BlockCopy(append, offset, buffer, count, length);
 			count += length;
@@ -68,11 +68,11 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var tempCapacity = 2 * capacity;
-				var temp = new byte[tempCapacity];
-				System.Buffer.BlockCopy(buffer, 0, temp, 0, count);
-				capacity = tempCapacity;
-				buffer = temp;
+				var enlargedCapacity = 2 * capacity;
+				var enlarged = new byte[enlargedCapacity];
+				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				capacity = enlargedCapacity;
+				buffer = enlarged;
 			}
 			System.Buffer.BlockCopy(append, offset, buffer, count, length);
 			count += length;
