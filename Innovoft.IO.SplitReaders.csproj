@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+		<Version>1.1.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -17,7 +18,6 @@
 		<TransformOnBuild>true</TransformOnBuild>
 		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
 		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
-		<Version>1.1.0</Version>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
