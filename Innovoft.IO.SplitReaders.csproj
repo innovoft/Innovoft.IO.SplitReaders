@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 		<Version>1.1.0</Version>
+		<PackageId>Innovoft.IO.SplitReaders</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/innovoft/Innovoft.IO.SplitReaders</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
