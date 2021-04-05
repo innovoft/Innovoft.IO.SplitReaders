@@ -19,9 +19,16 @@
 	var appendsActions = new List<(string Type, bool Generic, string Name, string Get)>()
 	{
 		( Type: "Action<byte[], int, int>[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
-		( Type: "IList<Action<byte[], int, int>>", Generic: true, Name: "", Get: "append = column < appends.Count ? appends[column] : null" ),
-		( Type: "IDictionary<int, Action<byte[], int, int>>", Generic: true, Name: "Dictionary", Get: "appends.TryGetValue(column, out append)" ),
+		( Type: "IList<Action<byte[], int, int>>", Generic: true, Name: "ListAction", Get: "append = column < appends.Count ? appends[column] : null" ),
+		( Type: "IDictionary<int, Action<byte[], int, int>>", Generic: true, Name: "DictionaryAction", Get: "appends.TryGetValue(column, out append)" ),
 		( Type: "Converter<int, Action<byte[], int, int>>", Generic: false, Name: "", Get: "append = appends(column)" ),
+	};
+	var appendsColumns = new List<(string Type, bool Generic, string Name, string Get)>()
+	{
+		( Type: "BufferColumn[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
+		( Type: "IList<BufferColumn>", Generic: true, Name: "ListColumn", Get: "append = column < appends.Count ? appends[column] : null" ),
+		( Type: "IDictionary<int, BufferColumn>", Generic: true, Name: "DictionaryColumn", Get: "appends.TryGetValue(column, out append)" ),
+		( Type: "Func<int, BufferColumn>", Generic: false, Name: "", Get: "append = appends(column)" ),
 	};
 	bool line;
 #>
@@ -506,6 +513,134 @@ namespace Innovoft.IO
 			}
 		}
 <#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var appends in appendsColumns)
+		{
+			foreach (var method in methods)
+			{
+				if (line)
+				{
+#>
+
+<#
+				}
+				else
+				{
+					line = true;
+				}
+				var generic = separator.Generic || appends.Generic;
+				string parameters;
+				string where;
+				if (generic)
+				{
+					var parameterss = new List<string>(3);
+					var wheres = new List<string>(3);
+					if (separator.Generic)
+					{
+						parameterss.Add("TSeparator");
+						wheres.Add("where TSeparator: " + separator.Type);
+					}
+					if (appends.Generic)
+					{
+						parameterss.Add("TAppends");
+						wheres.Add("where TAppends: " + appends.Type);
+					}
+					parameters = "<" + string.Join(", ", parameterss) + ">";
+					where = string.Join(" ", wheres);
+				}
+				else
+				{
+					parameters = "";
+					where = null;
+				}
+#>
+		public bool ReadColumns<#= method.Name #><#= appends.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= appends.Generic ? "TAppends" : appends.Type #> appends)
+<#
+				if (generic)
+				{
+#>
+			<#= where #>
+<#
+				}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BufferSplitReader));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			var offset = bufferOffset;
+			var column = 0;
+			BufferColumn append;
+			<#= appends.Get #>;
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					//Column
+					append?.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					//Column
+					append?.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append?.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+						offset = ++bufferOffset;
+						++column;
+						<#= appends.Get #>;
+						break;
+					}
+					else
+					{
+						++bufferOffset;
+						break;
+					}
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (offset <= bufferOffset)
+					{
+						append?.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+			}
 		}
 	}
 #>
