@@ -19,9 +19,16 @@
 	var appendsActions = new List<(string Type, bool Generic, string Name, string Get)>()
 	{
 		( Type: "Action<char[], int, int>[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
-		( Type: "IList<Action<char[], int, int>>", Generic: true, Name: "", Get: "append = column < appends.Count ? appends[column] : null" ),
-		( Type: "IDictionary<int, Action<char[], int, int>>", Generic: true, Name: "Dictionary", Get: "appends.TryGetValue(column, out append)" ),
+		( Type: "IList<Action<char[], int, int>>", Generic: true, Name: "ListAction", Get: "append = column < appends.Count ? appends[column] : null" ),
+		( Type: "IDictionary<int, Action<char[], int, int>>", Generic: true, Name: "DictionaryAction", Get: "appends.TryGetValue(column, out append)" ),
 		( Type: "Converter<int, Action<char[], int, int>>", Generic: false, Name: "", Get: "append = appends(column)" ),
+	};
+	var appendsColumns = new List<(string Type, bool Generic, string Name, string Get)>()
+	{
+		( Type: "CharsColumn[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
+		( Type: "IList<CharsColumn>", Generic: true, Name: "ListColumn", Get: "append = column < appends.Count ? appends[column] : null" ),
+		( Type: "IDictionary<int, CharsColumn>", Generic: true, Name: "DictionaryColumn", Get: "appends.TryGetValue(column, out append)" ),
+		( Type: "Func<int, CharsColumn>", Generic: false, Name: "", Get: "append = appends(column)" ),
 	};
 	bool line;
 #>
@@ -506,6 +513,134 @@ namespace Innovoft.IO
 			}
 		}
 <#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var appends in appendsColumns)
+		{
+			foreach (var method in methods)
+			{
+				if (line)
+				{
+#>
+
+<#
+				}
+				else
+				{
+					line = true;
+				}
+				var generic = separator.Generic || appends.Generic;
+				string parameters;
+				string where;
+				if (generic)
+				{
+					var parameterss = new List<string>(3);
+					var wheres = new List<string>(3);
+					if (separator.Generic)
+					{
+						parameterss.Add("TSeparator");
+						wheres.Add("where TSeparator: " + separator.Type);
+					}
+					if (appends.Generic)
+					{
+						parameterss.Add("TAppends");
+						wheres.Add("where TAppends: " + appends.Type);
+					}
+					parameters = "<" + string.Join(", ", parameterss) + ">";
+					where = string.Join(" ", wheres);
+				}
+				else
+				{
+					parameters = "";
+					where = null;
+				}
+#>
+		public bool ReadColumns<#= method.Name #><#= appends.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= appends.Generic ? "TAppends" : appends.Type #> appends)
+<#
+				if (generic)
+				{
+#>
+			<#= where #>
+<#
+				}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(CharsSplitReader));
+			}
+			if (decodedOffset >= decodedLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = decodedOffset;
+			var column = 0;
+			CharsColumn append;
+			<#= appends.Get #>;
+			while (true)
+			{
+				var letter = decoded[decodedOffset];
+				switch (letter)
+				{
+				case CR:
+					//Column
+					append?.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					//LF
+					if (decodedOffset >= decodedLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (decoded[decodedOffset] == LF)
+					{
+						++decodedOffset;
+					}
+					return true;
+
+				case LF:
+					//Column
+					append?.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append?.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+						offset = ++decodedOffset;
+						++column;
+						<#= appends.Get #>;
+						break;
+					}
+					else
+					{
+						++decodedOffset;
+						break;
+					}
+				}
+				if (decodedOffset >= decodedLength)
+				{
+					if (offset <= decodedOffset)
+					{
+						append?.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+			}
 		}
 	}
 #>
