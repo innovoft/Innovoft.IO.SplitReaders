@@ -21,7 +21,7 @@
 		( Type: "Action<byte[], int, int>[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
 		( Type: "IList<Action<byte[], int, int>>", Generic: true, Name: "", Get: "append = column < appends.Count ? appends[column] : null" ),
 		( Type: "IDictionary<int, Action<byte[], int, int>>", Generic: true, Name: "Dictionary", Get: "appends.TryGetValue(column, out append)" ),
-		( Type: "Func<int, Action<byte[], int, int>>", Generic: false, Name: "", Get: "append = appends(column)" ),
+		( Type: "Converter<int, Action<byte[], int, int>>", Generic: false, Name: "", Get: "append = appends(column)" ),
 	};
 	bool line;
 #>
