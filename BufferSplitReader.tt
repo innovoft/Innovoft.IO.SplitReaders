@@ -16,7 +16,7 @@
 		( Name: "Length", Math: "bufferOffset - offset"),
 		( Name: "Ending", Math: "bufferOffset"),
 	};
-	var appendss = new List<(string Type, bool Generic, string Name, string Get)>()
+	var appendsActions = new List<(string Type, bool Generic, string Name, string Get)>()
 	{
 		( Type: "Action<byte[], int, int>[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
 		( Type: "IList<Action<byte[], int, int>>", Generic: true, Name: "", Get: "append = column < appends.Count ? appends[column] : null" ),
@@ -275,7 +275,7 @@ namespace Innovoft.IO
 <#
 	foreach (var separator in separators)
 	{
-		foreach (var appends in appendss)
+		foreach (var appends in appendsActions)
 		{
 			foreach (var method in methods)
 			{
