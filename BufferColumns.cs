@@ -20,6 +20,7 @@ namespace Innovoft.IO
 		#region Properties
 		public List<BufferColumn> Columns => columns;
 		public int Count => columns.Count;
+		public int Queued => queue.Count;
 		#endregion //Properties
 
 		#region Indexers
