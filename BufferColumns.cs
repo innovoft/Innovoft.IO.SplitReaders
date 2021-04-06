@@ -90,6 +90,7 @@ namespace Innovoft.IO
 		public Action<byte[], int, int> AddLength()
 		{
 			var column = Dequeue();
+			column.Clear();
 			columns.Add(column);
 			return column.AppendLength;
 		}
@@ -97,6 +98,7 @@ namespace Innovoft.IO
 		public Action<byte[], int, int> AddEnding()
 		{
 			var column = Dequeue();
+			column.Clear();
 			columns.Add(column);
 			return column.AppendEnding;
 		}
