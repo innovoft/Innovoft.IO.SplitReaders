@@ -79,6 +79,11 @@ namespace Innovoft.IO
 		}
 
 #if NETSTANDARD2_1
+		public Span<byte> ToSpan()
+		{
+			return new Span<byte>(buffer, 0, count);
+		}
+
 		public ReadOnlySpan<byte> ToReadOnlySpan()
 		{
 			return new ReadOnlySpan<byte>(buffer, 0, count);
