@@ -91,6 +91,15 @@ namespace Innovoft.IO
 				values.Add(value);
 			}
 		}
+
+		public void ToStringsAdd(Action<string> add)
+		{
+			foreach (var column in columns)
+			{
+				var value = column.ToString();
+				add(value);
+			}
+		}
 		#endregion //Methods
 	}
 }
