@@ -78,6 +78,13 @@ namespace Innovoft.IO
 			count += length;
 		}
 
+#if NETSTANDARD2_1
+		public ReadOnlySpan<byte> ToReadOnlySpan()
+		{
+			return new ReadOnlySpan<byte>(buffer, 0, count);
+		}
+#endif //NETSTANDARD2_1
+
 		public string ToString(Encoding encoding)
 		{
 			if (appended)
