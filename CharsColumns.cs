@@ -1,11 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
 {
 	public sealed class CharsColumns
 	{
+		#region Class Methods
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear(CharsColumn[] values)
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear<T>(T values)
+			where T: IList<CharsColumn>
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear(IEnumerable<CharsColumn> values)
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+		#endregion //Class Methods
+
 		#region Fields
 		private readonly List<CharsColumn> columns = new List<CharsColumn>();
 		private readonly Queue<CharsColumn> queue = new Queue<CharsColumn>();
