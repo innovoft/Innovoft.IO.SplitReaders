@@ -1,11 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
 {
 	public sealed class BufferColumns
 	{
+		#region Class Methods
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear(BufferColumn[] values)
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear<T>(T values)
+			where T: IList<BufferColumn>
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear(IEnumerable<BufferColumn> values)
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+		#endregion //Class Methods
+
 		#region Fields
 		private readonly List<BufferColumn> columns = new List<BufferColumn>();
 		private readonly Queue<BufferColumn> queue = new Queue<BufferColumn>();
