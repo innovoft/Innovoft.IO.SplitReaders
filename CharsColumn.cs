@@ -79,6 +79,11 @@ namespace Innovoft.IO
 		}
 
 #if NETSTANDARD2_1
+		public Span<char> ToSpan()
+		{
+			return new Span<char>(letters, 0, count);
+		}
+
 		public ReadOnlySpan<char> ToReadOnlySpan()
 		{
 			return new ReadOnlySpan<char>(letters, 0, count);
