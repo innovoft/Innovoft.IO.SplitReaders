@@ -45,6 +45,11 @@ namespace Innovoft.IO
 			appended = false;
 		}
 
+		public void AppendNothig()
+		{
+			appended = true;
+		}
+
 		public void AppendLength(byte[] append, int offset, int length)
 		{
 			appended = true;
