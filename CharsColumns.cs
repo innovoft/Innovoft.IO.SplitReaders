@@ -55,6 +55,33 @@ namespace Innovoft.IO
 			}
 		}
 
+		public void Enqueue<T>(T values)
+			where T: IList<CharsColumn>
+		{
+			foreach (var value in values)
+			{
+				if (value == null)
+				{
+					continue;
+				}
+
+				queue.Enqueue(value);
+			}
+		}
+
+		public void Enqueue(IEnumerable<CharsColumn> values)
+		{
+			foreach (var value in values)
+			{
+				if (value == null)
+				{
+					continue;
+				}
+
+				queue.Enqueue(value);
+			}
+		}
+
 		public CharsColumn Dequeue()
 		{
 			return queue.Count > 0 ? queue.Dequeue() : new CharsColumn();
