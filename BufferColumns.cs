@@ -42,6 +42,46 @@ namespace Innovoft.IO
 			queue.Enqueue(value);
 		}
 
+		public void Enqueue(BufferColumn[] values)
+		{
+			foreach (var value in values)
+			{
+				if (value == null)
+				{
+					continue;
+				}
+
+				queue.Enqueue(value);
+			}
+		}
+
+		public void Enqueue<T>(T values)
+			where T : IList<BufferColumn>
+		{
+			foreach (var value in values)
+			{
+				if (value == null)
+				{
+					continue;
+				}
+
+				queue.Enqueue(value);
+			}
+		}
+
+		public void Enqueue(IEnumerable<BufferColumn> values)
+		{
+			foreach (var value in values)
+			{
+				if (value == null)
+				{
+					continue;
+				}
+
+				queue.Enqueue(value);
+			}
+		}
+
 		public BufferColumn Dequeue()
 		{
 			return queue.Count > 0 ? queue.Dequeue() : new BufferColumn();
