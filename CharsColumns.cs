@@ -82,7 +82,8 @@ namespace Innovoft.IO
 			return values;
 		}
 
-		public void ToStringsAdd(List<string> values)
+		public void ToStringsAdd<T>(T values)
+			where T: IList<string>
 		{
 			foreach (var column in columns)
 			{
