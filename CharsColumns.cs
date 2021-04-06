@@ -62,11 +62,22 @@ namespace Innovoft.IO
 
 		public string[] ToStringsArray()
 		{
-			var values = new string[this.columns.Count];
+			var values = new string[columns.Count];
 			for (var i = values.Length - 1; i >= 0; --i)
 			{
 				var value = columns[i].ToString();
 				values[i] = value;
+			}
+			return values;
+		}
+
+		public List<string> ToStringsList()
+		{
+			var values = new List<string>(columns.Count);
+			foreach (var column in columns)
+			{
+				var value = column.ToString();
+				values.Add(value);
 			}
 			return values;
 		}
