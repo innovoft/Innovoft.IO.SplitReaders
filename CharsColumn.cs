@@ -78,6 +78,13 @@ namespace Innovoft.IO
 			count += length;
 		}
 
+#if NETSTANDARD2_1
+		public ReadOnlySpan<char> ToReadOnlySpan()
+		{
+			return new ReadOnlySpan<char>(letters, 0, count);
+		}
+#endif //NETSTANDARD2_1
+
 		public override string ToString()
 		{
 			if (appended)
@@ -89,6 +96,6 @@ namespace Innovoft.IO
 				return null;
 			}
 		}
-		#endregion //Methods
+#endregion //Methods
 	}
 }
