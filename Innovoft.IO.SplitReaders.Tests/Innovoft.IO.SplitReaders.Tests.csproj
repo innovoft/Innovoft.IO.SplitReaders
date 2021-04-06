@@ -42,7 +42,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BufferColumns.cs" />
     <Compile Include="BufferSplitReaderTests.cs" />
     <Compile Include="StringSplitReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
