@@ -23,7 +23,7 @@ namespace Innovoft.IO
 			{
 				Assert.IsTrue(reader.ReadColumnsLength(separator, actuals.AddLength), "!ReadColumns");
 				Assert.AreEqual(expecteds.Length, actuals.Count, "expecteds.Length != actuals.Count");
-				var actualsColumns = actuals.ToArray();
+				var actualsColumns = actuals.ToStringsArray();
 				for (var i = expecteds.Length - 1; i >= 0; --i)
 				{
 					Assert.AreEqual(expecteds[i], actualsColumns[i], i.ToString());
