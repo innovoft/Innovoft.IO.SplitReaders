@@ -45,7 +45,7 @@ namespace Innovoft.IO
 			appended = false;
 		}
 
-		public void AppendNothig()
+		public void AppendNothing()
 		{
 			appended = true;
 		}
