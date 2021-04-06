@@ -51,6 +51,7 @@ namespace Innovoft.IO
 		#region Properties
 		public List<CharsColumn> Columns => columns;
 		public int Count => columns.Count;
+		public Queue<CharsColumn> Queue => queue;
 		public int Queued => queue.Count;
 		#endregion //Properties
 
