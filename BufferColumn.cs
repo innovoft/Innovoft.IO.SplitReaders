@@ -43,6 +43,16 @@ namespace Innovoft.IO
 		#endregion //Indexes
 
 		#region Methods
+		public override int GetHashCode()
+		{
+			var hash = 0;
+			for (var offset = count - 1; offset >= 0; --offset)
+			{
+				hash ^= buffer[offset] << (offset & 0x3);
+			}
+			return hash;
+		}
+
 		public override bool Equals(object other)
 		{
 			return Equals(other as BufferColumn);
