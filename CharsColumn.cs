@@ -74,6 +74,23 @@ namespace Innovoft.IO
 			appended = true;
 		}
 
+		public void Append(string append)
+		{
+			appended = true;
+			var length = append.Length;
+			var required = count + length;
+			if (required > capacity)
+			{
+				var enlargedCapacity = 2 * capacity;
+				var enlarged = new char[enlargedCapacity];
+				Array.Copy(letters, 0, enlarged, 0, count);
+				capacity = enlargedCapacity;
+				letters = enlarged;
+			}
+			append.CopyTo(0, letters, count, length);
+			count += length;
+		}
+
 		public void AppendLength(char[] append, int offset, int length)
 		{
 			appended = true;
