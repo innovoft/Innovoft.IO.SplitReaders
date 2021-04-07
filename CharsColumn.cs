@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class CharsColumn
+	public class CharsColumn : IEquatable<CharsColumn>
 	{
 		#region Constants
 		public const int DefaultCapacity = 128;
