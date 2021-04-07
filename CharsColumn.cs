@@ -198,6 +198,24 @@ namespace Innovoft.IO
 			count += decodedLength;
 		}
 
+		public void AppendEnding(byte[] append, int offset, int ending, Decoder decoder)
+		{
+			appended = true;
+			var length = ending - offset;
+			var decodedLength = decoder.GetCharCount(append, offset, length);
+			var required = count + decodedLength;
+			if (required > capacity)
+			{
+				var enlargedCapacity = 2 * capacity;
+				var enlarged = new char[enlargedCapacity];
+				Array.Copy(letters, 0, enlarged, 0, count);
+				capacity = enlargedCapacity;
+				letters = enlarged;
+			}
+			decoder.GetChars(append, offset, length, letters, count);
+			count += decodedLength;
+		}
+
 		public void AppendLength(char[] append, int offset, int length)
 		{
 			appended = true;
