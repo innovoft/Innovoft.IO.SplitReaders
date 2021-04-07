@@ -7,6 +7,10 @@ namespace Innovoft.IO
 {
 	public sealed class BufferColumns
 	{
+		#region Constants
+		public const int DefaultCapacity = BufferColumn.DefaultCapacity;
+		#endregion //Constants
+
 		#region Class Methods
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void Clear(BufferColumn[] values)
@@ -40,11 +44,18 @@ namespace Innovoft.IO
 		#region Fields
 		private readonly List<BufferColumn> columns = new List<BufferColumn>();
 		private readonly Queue<BufferColumn> queue = new Queue<BufferColumn>();
+		private int capacity;
 		#endregion //Fields
 
 		#region Constructors
 		public BufferColumns()
+			: this(DefaultCapacity)
 		{
+		}
+
+		public BufferColumns(int capacity)
+		{
+			this.capacity = capacity;
 		}
 		#endregion //Constructors
 
@@ -53,6 +64,7 @@ namespace Innovoft.IO
 		public int Count => columns.Count;
 		public Queue<BufferColumn> Queue => queue;
 		public int Queued => queue.Count;
+		public int Capacity { get => capacity; set => capacity = value; }
 		#endregion //Properties
 
 		#region Indexers
@@ -129,7 +141,7 @@ namespace Innovoft.IO
 			}
 			else
 			{
-				return new BufferColumn();
+				return new BufferColumn(capacity);
 			}
 		}
 
