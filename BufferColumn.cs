@@ -46,11 +46,37 @@ namespace Innovoft.IO
 		public override int GetHashCode()
 		{
 			var hash = 0;
-			for (var offset = count - 1; offset >= 0; --offset)
+			for (var offset = 0; ; )
 			{
-				hash ^= buffer[offset] << (offset & 0x3);
+				//0
+				if (offset >= count)
+				{
+					return hash;
+				}
+				hash ^= buffer[offset];
+				++offset;
+				//1
+				if (offset >= count)
+				{
+					return hash;
+				}
+				hash ^= buffer[offset] << 8;
+				++offset;
+				//2
+				if (offset >= count)
+				{
+					return hash;
+				}
+				hash ^= buffer[offset] << 16;
+				++offset;
+				//3
+				if (offset >= count)
+				{
+					return hash;
+				}
+				hash ^= buffer[offset] << 24;
+				++offset;
 			}
-			return hash;
 		}
 
 		public override bool Equals(object other)
