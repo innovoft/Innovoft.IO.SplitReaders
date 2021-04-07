@@ -123,6 +123,24 @@ namespace Innovoft.IO
 			count += encodedLength;
 		}
 
+		public void AppendEnding(char[] append, int offset, int ending, Encoding encoding)
+		{
+			appended = true;
+			var length = ending - offset;
+			var encodedLength = encoding.GetByteCount(append, offset, length);
+			var required = count + encodedLength;
+			if (required > capacity)
+			{
+				var enlargedCapacity = 2 * capacity;
+				var enlarged = new byte[enlargedCapacity];
+				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				capacity = enlargedCapacity;
+				buffer = enlarged;
+			}
+			encoding.GetBytes(append, 0, append.Length, buffer, count);
+			count += encodedLength;
+		}
+
 		public void AppendLength(byte[] append, int offset, int length)
 		{
 			appended = true;
