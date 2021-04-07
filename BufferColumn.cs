@@ -43,6 +43,26 @@ namespace Innovoft.IO
 		#endregion //Indexes
 
 		#region Methods
+		public bool Equals(BufferColumn other)
+		{
+			if (other == null)
+			{
+				return false;
+			}
+			if (other.count != this.count)
+			{
+				return false;
+			}
+			for (var offset = count - 1; offset >= 0; --offset)
+			{
+				if (other.buffer[offset] != this.buffer[offset])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public void Clear()
 		{
 			count = 0;
