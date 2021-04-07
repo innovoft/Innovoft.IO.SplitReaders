@@ -23,11 +23,24 @@ namespace Innovoft.IO
 		{
 		}
 
+		public CharsColumn(string append)
+			: this(DefaultCapacity, append)
+		{
+		}
+
 		public CharsColumn(int capacity)
 		{
 			this.capacity = capacity;
 			this.letters = new char[capacity];
 			Clear();
+		}
+
+		public CharsColumn(int capacity, string append)
+		{
+			this.capacity = capacity;
+			this.letters = new char[capacity];
+			Clear();
+			Append(append);
 		}
 		#endregion //Constructors
 
