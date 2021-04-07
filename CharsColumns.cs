@@ -71,6 +71,11 @@ namespace Innovoft.IO
 
 		public void Enqueue(CharsColumn value)
 		{
+			if (value == null)
+			{
+				return;
+			}
+
 			queue.Enqueue(value);
 		}
 
