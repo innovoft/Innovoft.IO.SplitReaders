@@ -172,6 +172,21 @@ namespace Innovoft.IO
 				return null;
 			}
 		}
+
+		public char[] ToChars(Decoder decoder)
+		{
+			if (appended)
+			{
+				var length = decoder.GetCharCount(buffer, 0, count);
+				var decoded = new char[length];
+				decoder.GetChars(buffer, 0, count, decoded, 0);
+				return decoded;
+			}
+			else
+			{
+				return null;
+			}
+		}
 		#endregion //Methods
 	}
 }
