@@ -7,6 +7,10 @@ namespace Innovoft.IO
 {
 	public sealed class CharsColumns
 	{
+		#region Constants
+		public const int DefaultCapacity = CharsColumn.DefaultCapacity;
+		#endregion //Constants
+
 		#region Class Methods
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void Clear(CharsColumn[] values)
@@ -40,11 +44,18 @@ namespace Innovoft.IO
 		#region Fields
 		private readonly List<CharsColumn> columns = new List<CharsColumn>();
 		private readonly Queue<CharsColumn> queue = new Queue<CharsColumn>();
+		private int capacity;
 		#endregion //Fields
 
 		#region Constructors
 		public CharsColumns()
+			: this(DefaultCapacity)
 		{
+		}
+
+		public CharsColumns(int capacity)
+		{
+			this.capacity = capacity;
 		}
 		#endregion //Constructors
 
@@ -53,6 +64,7 @@ namespace Innovoft.IO
 		public int Count => columns.Count;
 		public Queue<CharsColumn> Queue => queue;
 		public int Queued => queue.Count;
+		public int Capacity { get => capacity; set => capacity = value; }
 		#endregion //Properties
 
 		#region Indexers
@@ -129,7 +141,7 @@ namespace Innovoft.IO
 			}
 			else
 			{
-				return new CharsColumn();
+				return new CharsColumn(capacity);
 			}
 		}
 
