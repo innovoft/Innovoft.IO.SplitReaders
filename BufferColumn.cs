@@ -160,6 +160,18 @@ namespace Innovoft.IO
 				return null;
 			}
 		}
+
+		public char[] ToChars(Encoding encoding)
+		{
+			if (appended)
+			{
+				return encoding.GetChars(buffer, 0, count);
+			}
+			else
+			{
+				return null;
+			}
+		}
 		#endregion //Methods
 	}
 }
