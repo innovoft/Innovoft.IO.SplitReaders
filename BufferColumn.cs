@@ -6,6 +6,10 @@ namespace Innovoft.IO
 {
 	public class BufferColumn
 	{
+		#region Constants
+		public const int DefaultCapacity = 128;
+		#endregion //Constants
+
 		#region Fields
 		private int capacity;
 		private byte[] buffer;
@@ -15,7 +19,7 @@ namespace Innovoft.IO
 
 		#region Constructors
 		public BufferColumn()
-			: this(128)
+			: this(DefaultCapacity)
 		{
 		}
 
