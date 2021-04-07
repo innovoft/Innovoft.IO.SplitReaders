@@ -89,6 +89,23 @@ namespace Innovoft.IO
 			appended = true;
 		}
 
+		public void Append(string append, Encoding encoding)
+		{
+			appended = true;
+			var length = encoding.GetByteCount(append);
+			var required = count + length;
+			if (required > capacity)
+			{
+				var enlargedCapacity = 2 * capacity;
+				var enlarged = new byte[enlargedCapacity];
+				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				capacity = enlargedCapacity;
+				buffer = enlarged;
+			}
+			encoding.GetBytes(append, 0, append.Length, buffer, count);
+			count += length;
+		}
+
 		public void AppendLength(byte[] append, int offset, int length)
 		{
 			appended = true;
