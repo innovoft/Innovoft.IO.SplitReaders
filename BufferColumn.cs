@@ -122,7 +122,7 @@ namespace Innovoft.IO
 			count += length;
 		}
 
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public Span<byte> ToSpan()
 		{
 			return new Span<byte>(buffer, 0, count);
@@ -132,7 +132,7 @@ namespace Innovoft.IO
 		{
 			return new ReadOnlySpan<byte>(buffer, 0, count);
 		}
-#endif //NETSTANDARD2_1
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 		public string ToString(Encoding encoding)
 		{
