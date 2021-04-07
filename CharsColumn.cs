@@ -65,11 +65,23 @@ namespace Innovoft.IO
 		public override int GetHashCode()
 		{
 			var hash = 0;
-			for (var offset = count - 1; offset >= 0; --offset)
+			for (var offset = 0; ;)
 			{
-				hash ^= letters[offset] << (offset & 0x2);
+				//0
+				if (offset >= count)
+				{
+					return hash;
+				}
+				hash ^= letters[offset];
+				++offset;
+				//1
+				if (offset >= count)
+				{
+					return hash;
+				}
+				hash ^= letters[offset] << 16;
+				++offset;
 			}
-			return hash;
 		}
 #endif //NET5_0_OR_GREATER
 
