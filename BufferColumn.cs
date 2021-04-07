@@ -43,6 +43,11 @@ namespace Innovoft.IO
 		#endregion //Indexes
 
 		#region Methods
+		public override bool Equals(object other)
+		{
+			return Equals(other as BufferColumn);
+		}
+
 		public bool Equals(BufferColumn other)
 		{
 			if (other == null)
