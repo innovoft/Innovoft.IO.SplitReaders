@@ -42,7 +42,13 @@ namespace Innovoft.IO
 		public char this[int offset] { get => letters[offset]; set => letters[offset] = value; }
 		#endregion //Indexes
 
-		#region Methods
+#region Methods
+#if NET5_0_OR_GREATER
+		public override int GetHashCode()
+		{
+			return string.GetHashCode(ToReadOnlySpan());
+		}
+#else //NET5_0_OR_GREATER
 		public override int GetHashCode()
 		{
 			var hash = 0;
@@ -52,6 +58,7 @@ namespace Innovoft.IO
 			}
 			return hash;
 		}
+#endif //NET5_0_OR_GREATER
 
 		public override bool Equals(object other)
 		{
@@ -172,7 +179,7 @@ namespace Innovoft.IO
 			count += length;
 		}
 
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public Span<char> ToSpan()
 		{
 			return new Span<char>(letters, 0, count);
@@ -182,9 +189,9 @@ namespace Innovoft.IO
 		{
 			return new ReadOnlySpan<char>(letters, 0, count);
 		}
-#endif //NETSTANDARD2_1
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
 		{
 			return bool.Parse(ToReadOnlySpan());
@@ -239,7 +246,7 @@ namespace Innovoft.IO
 		{
 			return ulong.Parse(ToReadOnlySpan());
 		}
-#else //NETSTANDARD2_1
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
 		{
 			return bool.Parse(ToString());
@@ -294,7 +301,7 @@ namespace Innovoft.IO
 		{
 			return ulong.Parse(ToString());
 		}
-#endif //NETSTANDARD2_1
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 		public sealed override string ToString()
 		{
