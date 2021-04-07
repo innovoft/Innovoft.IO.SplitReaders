@@ -116,13 +116,21 @@ namespace Innovoft.IO
 
 		public BufferColumn Dequeue()
 		{
-			return queue.Count > 0 ? queue.Dequeue() : new BufferColumn();
+			if (queue.Count > 0)
+			{
+				var value = queue.Dequeue();
+				value.Clear();
+				return value;
+			}
+			else
+			{
+				return new BufferColumn();
+			}
 		}
 
 		public Action<byte[], int, int> AddLength()
 		{
 			var column = Dequeue();
-			column.Clear();
 			columns.Add(column);
 			return column.AppendLength;
 		}
@@ -130,7 +138,6 @@ namespace Innovoft.IO
 		public Action<byte[], int, int> AddEnding()
 		{
 			var column = Dequeue();
-			column.Clear();
 			columns.Add(column);
 			return column.AppendEnding;
 		}
