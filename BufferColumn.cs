@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class BufferColumn
+	public class BufferColumn : IEquatable<BufferColumn>
 	{
 		#region Constants
 		public const int DefaultCapacity = 128;
