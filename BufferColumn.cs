@@ -134,6 +134,228 @@ namespace Innovoft.IO
 		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public bool ToBoolean(Encoding encoding)
+		{
+			return bool.Parse(ToChars(encoding));
+		}
+
+		public bool ToBoolean(Decoder decoder)
+		{
+			return bool.Parse(ToChars(decoder));
+		}
+
+		public DateTime ToDateTime(Encoding encoding)
+		{
+			return DateTime.Parse(ToChars(encoding));
+		}
+
+		public DateTime ToDateTime(Decoder decoder)
+		{
+			return DateTime.Parse(ToChars(decoder));
+		}
+
+		public decimal ToDecimal(Encoding encoding)
+		{
+			return decimal.Parse(ToChars(encoding));
+		}
+
+		public decimal ToDecimal(Decoder decoder)
+		{
+			return decimal.Parse(ToChars(decoder));
+		}
+
+		public double ToDouble(Encoding encoding)
+		{
+			return double.Parse(ToChars(encoding));
+		}
+
+		public double ToDouble(Decoder decoder)
+		{
+			return double.Parse(ToChars(decoder));
+		}
+
+		public short ToInt16(Encoding encoding)
+		{
+			return short.Parse(ToChars(encoding));
+		}
+
+		public short ToInt16(Decoder decoder)
+		{
+			return short.Parse(ToChars(decoder));
+		}
+
+		public int ToInt32(Encoding encoding)
+		{
+			return int.Parse(ToChars(encoding));
+		}
+
+		public int ToInt32(Decoder decoder)
+		{
+			return int.Parse(ToChars(decoder));
+		}
+
+		public long ToInt64(Encoding encoding)
+		{
+			return long.Parse(ToChars(encoding));
+		}
+
+		public long ToInt64(Decoder decoder)
+		{
+			return long.Parse(ToChars(decoder));
+		}
+
+		public float ToSingle(Encoding encoding)
+		{
+			return float.Parse(ToChars(encoding));
+		}
+
+		public float ToSingle(Decoder decoder)
+		{
+			return float.Parse(ToChars(decoder));
+		}
+
+		public ushort ToUInt16(Encoding encoding)
+		{
+			return ushort.Parse(ToChars(encoding));
+		}
+
+		public ushort ToUInt16(Decoder decoder)
+		{
+			return ushort.Parse(ToChars(decoder));
+		}
+
+		public uint ToUInt32(Encoding encoding)
+		{
+			return uint.Parse(ToChars(encoding));
+		}
+
+		public uint ToUInt32(Decoder decoder)
+		{
+			return uint.Parse(ToChars(decoder));
+		}
+
+		public ulong ToUInt64(Encoding encoding)
+		{
+			return ulong.Parse(ToChars(encoding));
+		}
+
+		public ulong ToUInt64(Decoder decoder)
+		{
+			return ulong.Parse(ToChars(decoder));
+		}
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public bool ToBoolean(Encoding encoding)
+		{
+			return bool.Parse(ToString(encoding));
+		}
+
+		public bool ToBoolean(Decoder decoder)
+		{
+			return bool.Parse(ToString(decoder));
+		}
+
+		public DateTime ToDateTime(Encoding encoding)
+		{
+			return DateTime.Parse(ToString(encoding));
+		}
+
+		public DateTime ToDateTime(Decoder decoder)
+		{
+			return DateTime.Parse(ToString(decoder));
+		}
+
+		public decimal ToDecimal(Encoding encoding)
+		{
+			return decimal.Parse(ToString(encoding));
+		}
+
+		public decimal ToDecimal(Decoder decoder)
+		{
+			return decimal.Parse(ToString(decoder));
+		}
+
+		public double ToDouble(Encoding encoding)
+		{
+			return double.Parse(ToString(encoding));
+		}
+
+		public double ToDouble(Decoder decoder)
+		{
+			return double.Parse(ToString(decoder));
+		}
+
+		public short ToInt16(Encoding encoding)
+		{
+			return short.Parse(ToString(encoding));
+		}
+
+		public short ToInt16(Decoder decoder)
+		{
+			return short.Parse(ToString(decoder));
+		}
+
+		public int ToInt32(Encoding encoding)
+		{
+			return int.Parse(ToString(encoding));
+		}
+
+		public int ToInt32(Decoder decoder)
+		{
+			return int.Parse(ToString(decoder));
+		}
+
+		public long ToInt64(Encoding encoding)
+		{
+			return long.Parse(ToString(encoding));
+		}
+
+		public long ToInt64(Decoder decoder)
+		{
+			return long.Parse(ToString(decoder));
+		}
+
+		public float ToSingle(Encoding encoding)
+		{
+			return float.Parse(ToString(encoding));
+		}
+
+		public float ToSingle(Decoder decoder)
+		{
+			return float.Parse(ToString(decoder));
+		}
+
+		public ushort ToUInt16(Encoding encoding)
+		{
+			return ushort.Parse(ToString(encoding));
+		}
+
+		public ushort ToUInt16(Decoder decoder)
+		{
+			return ushort.Parse(ToString(decoder));
+		}
+
+		public uint ToUInt32(Encoding encoding)
+		{
+			return uint.Parse(ToString(encoding));
+		}
+
+		public uint ToUInt32(Decoder decoder)
+		{
+			return uint.Parse(ToString(decoder));
+		}
+
+		public ulong ToUInt64(Encoding encoding)
+		{
+			return ulong.Parse(ToString(encoding));
+		}
+
+		public ulong ToUInt64(Decoder decoder)
+		{
+			return ulong.Parse(ToString(decoder));
+		}
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
+
 		public string ToString(Encoding encoding)
 		{
 			if (appended)
