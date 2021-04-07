@@ -95,7 +95,119 @@ namespace Innovoft.IO
 		}
 #endif //NETSTANDARD2_1
 
-		public override string ToString()
+#if NETSTANDARD2_1
+		public bool ToBoolean()
+		{
+			return bool.Parse(ToReadOnlySpan());
+		}
+
+		public DateTime ToDateTime()
+		{
+			return DateTime.Parse(ToReadOnlySpan());
+		}
+
+		public decimal ToDecimal()
+		{
+			return decimal.Parse(ToReadOnlySpan());
+		}
+
+		public double ToDouble()
+		{
+			return double.Parse(ToReadOnlySpan());
+		}
+
+		public short ToInt16()
+		{
+			return short.Parse(ToReadOnlySpan());
+		}
+
+		public int ToInt32()
+		{
+			return int.Parse(ToReadOnlySpan());
+		}
+
+		public long ToInt64()
+		{
+			return long.Parse(ToReadOnlySpan());
+		}
+
+		public float ToSingle()
+		{
+			return float.Parse(ToReadOnlySpan());
+		}
+
+		public ushort ToUInt16()
+		{
+			return ushort.Parse(ToReadOnlySpan());
+		}
+
+		public uint ToUInt32()
+		{
+			return uint.Parse(ToReadOnlySpan());
+		}
+
+		public ulong ToUInt64()
+		{
+			return ulong.Parse(ToReadOnlySpan());
+		}
+#else //NETSTANDARD2_1
+		public bool ToBoolean()
+		{
+			return bool.Parse(ToString());
+		}
+
+		public DateTime ToDateTime()
+		{
+			return DateTime.Parse(ToString());
+		}
+
+		public decimal ToDecimal()
+		{
+			return decimal.Parse(ToString());
+		}
+
+		public double ToDouble()
+		{
+			return double.Parse(ToString());
+		}
+
+		public short ToInt16()
+		{
+			return short.Parse(ToString());
+		}
+
+		public int ToInt32()
+		{
+			return int.Parse(ToString());
+		}
+
+		public long ToInt64()
+		{
+			return long.Parse(ToString());
+		}
+
+		public float ToSingle()
+		{
+			return float.Parse(ToString());
+		}
+
+		public ushort ToUInt16()
+		{
+			return ushort.Parse(ToString());
+		}
+
+		public uint ToUInt32()
+		{
+			return uint.Parse(ToString());
+		}
+
+		public ulong ToUInt64()
+		{
+			return ulong.Parse(ToString());
+		}
+#endif //NETSTANDARD2_1
+
+		public sealed override string ToString()
 		{
 			if (appended)
 			{
