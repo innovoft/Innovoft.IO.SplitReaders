@@ -90,6 +90,13 @@ namespace Innovoft.IO
 			}
 		}
 
+		public long Seek(long offset, SeekOrigin origin)
+		{
+			decodedOffset = 0;
+			decodedLength = 0;
+			return stream.Seek(offset, origin);
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected static bool Contains(char[] values, char value)
 		{
