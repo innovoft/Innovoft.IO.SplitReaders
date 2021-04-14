@@ -36,32 +36,11 @@ namespace Innovoft.IO
 		}
 		#endregion //Constructors
 
-		#region Finalizer
-		~DecodeSplitReader()
-		{
-			Dispose(disposing: false);
-		}
-		#endregion //Finalizer
-
 		#region Properties
 		public Encoding Encoding => encoding;
 		#endregion //Properties
 
 		#region Methods
-		#region Dispose
-		public void Dispose()
-		{
-			Dispose(disposing: true);
-			GC.SuppressFinalize(this);
-		}
-
-		private void Dispose(bool disposing)
-		{
-			Interlocked.Exchange(ref stream, null)?.Dispose();
-			streamRead = null;
-		}
-		#endregion //Dispose
-
 		public bool ReadColumns()
 		{
 			if (stream == null)
