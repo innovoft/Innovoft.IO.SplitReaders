@@ -27,6 +27,13 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Methods
+		public long Seek(long offset, SeekOrigin origin)
+		{
+			bufferOffset = 0;
+			bufferLength = 0;
+			return stream.Seek(offset, origin);
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool Contains(byte[] values, byte value)
 		{
