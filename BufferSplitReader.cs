@@ -27,6 +27,55 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Methods
+		public bool ReadColumns()
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BufferSplitReader));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					++bufferOffset;
+					return true;
+
+				default:
+					++bufferOffset;
+					break;
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+				}
+			}
+		}
+
 		public long Seek(long offset, SeekOrigin origin)
 		{
 			bufferOffset = 0;
