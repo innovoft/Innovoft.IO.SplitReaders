@@ -241,6 +241,11 @@ namespace Innovoft.IO
 			return new Span<byte>(buffer, 0, count);
 		}
 
+		public static implicit operator Span<byte>(BufferColumn value)
+		{
+			return value.ToSpan();
+		}
+
 		public ReadOnlySpan<byte> ToRead()
 		{
 			return new ReadOnlySpan<byte>(buffer, 0, count);
