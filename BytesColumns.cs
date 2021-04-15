@@ -142,6 +142,11 @@ namespace Innovoft.IO
 			}
 		}
 
+		public void ToStringsAdd(Action<string> add)
+		{
+			ToStringsAdd(Encoding.UTF8, add);
+		}
+
 		public void ToStringsAdd(Encoding encoding, Action<string> add)
 		{
 			foreach (var column in columns)
