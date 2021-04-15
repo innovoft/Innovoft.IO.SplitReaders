@@ -1,4 +1,7 @@
 ﻿using System;
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+using System.Buffers.Text;
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 using System.Collections.Generic;
 using System.Text;
 
@@ -258,6 +261,15 @@ namespace Innovoft.IO
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public bool ToBoolean()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out bool value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public bool ToBoolean(Encoding encoding)
 		{
 			return bool.Parse(ToChars(encoding));
