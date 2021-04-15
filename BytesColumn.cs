@@ -21,6 +21,12 @@ namespace Innovoft.IO
 			Append(append, Encoding.UTF8);
 		}
 
+		public BytesColumn(string append, Encoding encoding)
+			: base()
+		{
+			Append(append, encoding);
+		}
+
 		public BytesColumn(int capacity)
 			: base(capacity)
 		{
