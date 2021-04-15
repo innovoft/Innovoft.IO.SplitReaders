@@ -268,6 +268,11 @@ namespace Innovoft.IO
 		{
 			return value.ToMemory();
 		}
+
+		public ReadOnlyMemory<byte> ToReadOnlyMemory()
+		{
+			return new Memory<byte>(buffer, 0, count);
+		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
