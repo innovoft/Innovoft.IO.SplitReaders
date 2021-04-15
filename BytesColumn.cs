@@ -132,6 +132,19 @@ namespace Innovoft.IO
 			encoding.GetBytes(append, new Span<byte>(values, count, length));
 			count += length;
 		}
+
+		public void Append(ReadOnlySpan<char> append, Encoder encoder, bool flush)
+		{
+			appended = true;
+			var length = encoder.GetByteCount(append, flush);
+			var required = count + length;
+			if (required > capacity)
+			{
+				Enlarge();
+			}
+			encoder.GetBytes(append, new Span<byte>(values, count, length), flush);
+			count += length;
+		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 		public void AppendLength(string append, int offset, int length, Encoding encoding)
@@ -172,8 +185,7 @@ namespace Innovoft.IO
 		public void AppendLength(string append, int offset, int length, Encoder encoder, bool flush)
 		{
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
-			//TODO: use ReadOnlySpan
-			AppendLength(append.ToCharArray(), offset, length, encoder, flush);
+			Append(append.AsSpan(offset, length), encoder, flush);
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 			AppendLength(append.ToCharArray(), offset, length, encoder, flush);
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
@@ -182,8 +194,8 @@ namespace Innovoft.IO
 		public void AppendEnding(string append, int offset, int ending, Encoder encoder, bool flush)
 		{
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
-			//TODO: use ReadOnlySpan
-			AppendEnding(append.ToCharArray(), offset, ending, encoder, flush);
+			var length = ending - offset;
+			Append(append.AsSpan(offset, length), encoder, flush);
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 			AppendEnding(append.ToCharArray(), offset, ending, encoder, flush);
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
