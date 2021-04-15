@@ -115,6 +115,7 @@ namespace Innovoft.IO
 
 		public void AppendLength(string append, int offset, int length, Encoding encoding)
 		{
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 			appended = true;
 			var encodedLength = encoding.GetByteCount(append, offset, length);
 			var required = count + encodedLength;
@@ -124,6 +125,27 @@ namespace Innovoft.IO
 			}
 			encoding.GetBytes(append, offset, length, values, count);
 			count += length;
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
+			AppendLength(append.ToCharArray(), offset, length, encoding);
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
+		}
+
+		public void AppendEnding(string append, int offset, int ending, Encoding encoding)
+		{
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+			appended = true;
+			var length = ending - offset;
+			var encodedLength = encoding.GetByteCount(append, offset, length);
+			var required = count + encodedLength;
+			if (required > capacity)
+			{
+				Enlarge();
+			}
+			encoding.GetBytes(append, offset, length, values, count);
+			count += length;
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
+			AppendEnding(append.ToCharArray(), offset, ending, encoding);
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		}
 
 		public void AppendLength(char[] append, int offset, int length, Encoding encoding)
@@ -554,6 +576,6 @@ namespace Innovoft.IO
 				return null;
 			}
 		}
-		#endregion //Methods
+#endregion //Methods
 	}
 }
