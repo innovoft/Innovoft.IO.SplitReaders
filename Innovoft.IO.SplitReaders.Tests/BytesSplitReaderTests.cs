@@ -11,7 +11,7 @@ namespace Innovoft.IO
 	public class BytesSplitReaderTests
 	{
 		[TestMethod]
-		public void ReadColumnsAddTest()
+		public void ReadColumnsAddFuncTest()
 		{
 			const byte separator = BytesSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
