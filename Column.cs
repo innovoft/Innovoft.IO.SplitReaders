@@ -44,7 +44,17 @@ namespace Innovoft.IO
 		public T this[int offset] { get => values[offset]; set => values[offset] = value; }
 		#endregion //Indexes
 
-#region Methods
+		#region Methods
+		public override int GetHashCode()
+		{
+			var hash = 0;
+			for (var offset = 0; offset < count; ++offset)
+			{
+				hash ^= values[offset].GetHashCode();
+			}
+			return hash;
+		}
+
 		public override bool Equals(object other)
 		{
 			return Equals(other as Column<T>);
