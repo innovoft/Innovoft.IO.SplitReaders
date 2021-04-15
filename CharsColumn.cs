@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class CharsColumn : Column<char>, IEquatable<CharsColumn>
+	public class CharsColumn : SplitColumn<char>, IEquatable<CharsColumn>
 	{
 		#region Constructors
 		public CharsColumn()

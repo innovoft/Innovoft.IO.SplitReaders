@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class BytesColumn : Column<byte>, IEquatable<BytesColumn>
+	public class BytesColumn : SplitColumn<byte>, IEquatable<BytesColumn>
 	{
 		#region Constructors
 		public BytesColumn()

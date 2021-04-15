@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class Column<T> : IEquatable<Column<T>>
+	public class SplitColumn<T> : IEquatable<SplitColumn<T>>
 		where T: IEquatable<T>
 	{
 		#region Constants
@@ -20,12 +20,12 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
-		public Column()
+		public SplitColumn()
 			: this(DefaultCapacity)
 		{
 		}
 
-		public Column(int capacity)
+		public SplitColumn(int capacity)
 		{
 			this.capacity = capacity;
 			this.values = new T[capacity];
@@ -57,10 +57,10 @@ namespace Innovoft.IO
 
 		public override bool Equals(object other)
 		{
-			return Equals(other as Column<T>);
+			return Equals(other as SplitColumn<T>);
 		}
 
-		public bool Equals(Column<T> other)
+		public bool Equals(SplitColumn<T> other)
 		{
 			if (other == null)
 			{
@@ -132,7 +132,7 @@ namespace Innovoft.IO
 			return new Span<T>(values, 0, count);
 		}
 
-		public static implicit operator Span<T>(Column<T> value)
+		public static implicit operator Span<T>(SplitColumn<T> value)
 		{
 			return value.ToSpan();
 		}
@@ -142,7 +142,7 @@ namespace Innovoft.IO
 			return new ReadOnlySpan<T>(values, 0, count);
 		}
 
-		public static implicit operator ReadOnlySpan<T>(Column<T> value)
+		public static implicit operator ReadOnlySpan<T>(SplitColumn<T> value)
 		{
 			return value.ToReadOnlySpan();
 		}
@@ -152,7 +152,7 @@ namespace Innovoft.IO
 			return new Memory<T>(values, 0, count);
 		}
 
-		public static implicit operator Memory<T>(Column<T> value)
+		public static implicit operator Memory<T>(SplitColumn<T> value)
 		{
 			return value.ToMemory();
 		}
@@ -162,7 +162,7 @@ namespace Innovoft.IO
 			return new ReadOnlyMemory<T>(values, 0, count);
 		}
 
-		public static implicit operator ReadOnlyMemory<T>(Column<T> value)
+		public static implicit operator ReadOnlyMemory<T>(SplitColumn<T> value)
 		{
 			return value.ToReadOnlyMemory();
 		}
