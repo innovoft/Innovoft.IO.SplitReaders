@@ -159,6 +159,11 @@ namespace Innovoft.IO
 			AppendLength(append.ToCharArray(), offset, length, encoder, flush);
 		}
 
+		public void AppendEnding(string append, int offset, int ending, Encoder encoder, bool flush)
+		{
+			AppendEnding(append.ToCharArray(), offset, ending, encoder, flush);
+		}
+
 		public void AppendLength(char[] append, int offset, int length, Encoding encoding)
 		{
 			appended = true;
