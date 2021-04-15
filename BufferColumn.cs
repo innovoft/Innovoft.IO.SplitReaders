@@ -263,6 +263,11 @@ namespace Innovoft.IO
 		{
 			return new Memory<byte>(buffer, 0, count);
 		}
+
+		public static implicit operator Memory<byte>(BufferColumn value)
+		{
+			return value.ToMemory();
+		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
