@@ -7,43 +7,19 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class BytesColumn : IEquatable<BytesColumn>
+	public class BytesColumn : Column<byte>, IEquatable<BytesColumn>
 	{
-		#region Constants
-		public const int DefaultCapacity = 128;
-		#endregion //Constants
-
-		#region Fields
-		private int capacity;
-		private byte[] values;
-		private int count;
-		private bool appended;
-		#endregion //Fields
-
 		#region Constructors
 		public BytesColumn()
-			: this(DefaultCapacity)
+			: base()
 		{
 		}
 
-		public BytesColumn(int length)
+		public BytesColumn(int capacity)
+			: base(capacity)
 		{
-			this.capacity = length;
-			this.values = new byte[length];
-			this.count = 0;
 		}
 		#endregion //Constructors
-
-		#region Properties
-		public int Capacity => capacity;
-		public byte[] Values => values;
-		public int Count => count;
-		public bool Appended => appended;
-		#endregion //Properties
-
-		#region Indexes
-		public byte this[int offset] { get => values[offset]; set => values[offset] = value; }
-		#endregion //Indexes
 
 		#region Methods
 		public override int GetHashCode()
@@ -107,17 +83,6 @@ namespace Innovoft.IO
 			return true;
 		}
 
-		public void Clear()
-		{
-			count = 0;
-			appended = false;
-		}
-
-		public void Append()
-		{
-			appended = true;
-		}
-
 		public void Append(string append, Encoding encoding)
 		{
 			appended = true;
@@ -125,11 +90,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoding.GetBytes(append, 0, append.Length, values, count);
 			count += length;
@@ -142,11 +103,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoding.GetBytes(append, 0, append.Length, values, count);
 			count += encodedLength;
@@ -160,11 +117,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoding.GetBytes(append, 0, append.Length, values, count);
 			count += encodedLength;
@@ -177,11 +130,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoder.GetBytes(append, 0, append.Length, values, count, flush);
 			count += encodedLength;
@@ -195,90 +144,11 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoder.GetBytes(append, 0, append.Length, values, count, flush);
 			count += encodedLength;
 		}
-
-		public void AppendLength(byte[] append, int offset, int length)
-		{
-			appended = true;
-			var required = count + length;
-			if (required > capacity)
-			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
-			}
-			System.Buffer.BlockCopy(append, offset, values, count, length);
-			count += length;
-		}
-
-		public void AppendEnding(byte[] append, int offset, int ending)
-		{
-			appended = true;
-			var length = ending - offset;
-			var required = count + length;
-			if (required > capacity)
-			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
-			}
-			System.Buffer.BlockCopy(append, offset, values, count, length);
-			count += length;
-		}
-
-#if NETSTANDARD2_1 || NET5_0_OR_GREATER
-		public Span<byte> ToSpan()
-		{
-			return new Span<byte>(values, 0, count);
-		}
-
-		public static implicit operator Span<byte>(BytesColumn value)
-		{
-			return value.ToSpan();
-		}
-
-		public ReadOnlySpan<byte> ToReadOnlySpan()
-		{
-			return new ReadOnlySpan<byte>(values, 0, count);
-		}
-
-		public static implicit operator ReadOnlySpan<byte>(BytesColumn value)
-		{
-			return value.ToReadOnlySpan();
-		}
-
-		public Memory<byte> ToMemory()
-		{
-			return new Memory<byte>(values, 0, count);
-		}
-
-		public static implicit operator Memory<byte>(BytesColumn value)
-		{
-			return value.ToMemory();
-		}
-
-		public ReadOnlyMemory<byte> ToReadOnlyMemory()
-		{
-			return new Memory<byte>(values, 0, count);
-		}
-
-		public static implicit operator ReadOnlyMemory<byte>(BytesColumn value)
-		{
-			return value.ToReadOnlyMemory();
-		}
-#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
