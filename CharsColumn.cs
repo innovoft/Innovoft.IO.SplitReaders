@@ -4,56 +4,31 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class CharsColumn : IEquatable<CharsColumn>
+	public class CharsColumn : Column<char>, IEquatable<CharsColumn>
 	{
-		#region Constants
-		public const int DefaultCapacity = 128;
-		#endregion //Constants
-
-		#region Fields
-		private int capacity;
-		private char[] values;
-		private int count;
-		private bool appended;
-		#endregion //Fields
-
 		#region Constructors
 		public CharsColumn()
-			: this(DefaultCapacity)
+			: base()
 		{
 		}
 
 		public CharsColumn(string append)
-			: this(DefaultCapacity, append)
+			: base(DefaultCapacity)
 		{
+			Append(append);
 		}
 
 		public CharsColumn(int capacity)
+			: base(capacity)
 		{
-			this.capacity = capacity;
-			this.values = new char[capacity];
-			Clear();
 		}
 
 		public CharsColumn(int capacity, string append)
+			: base(capacity)
 		{
-			this.capacity = capacity;
-			this.values = new char[capacity];
-			Clear();
 			Append(append);
 		}
 		#endregion //Constructors
-
-		#region Properties
-		public int Capacity => capacity;
-		public char[] Values => values;
-		public int Count => count;
-		public bool Appended => appended;
-		#endregion //Properties
-
-		#region Indexes
-		public char this[int offset] { get => values[offset]; set => values[offset] = value; }
-		#endregion //Indexes
 
 #region Methods
 #if NET5_0_OR_GREATER
@@ -110,17 +85,6 @@ namespace Innovoft.IO
 			return true;
 		}
 
-		public void Clear()
-		{
-			count = 0;
-			appended = false;
-		}
-
-		public void Append()
-		{
-			appended = true;
-		}
-
 		public void Append(string append)
 		{
 			appended = true;
@@ -128,11 +92,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			append.CopyTo(0, values, count, length);
 			count += length;
@@ -144,11 +104,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			append.CopyTo(offset, values, count, length);
 			count += length;
@@ -161,11 +117,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			append.CopyTo(offset, values, count, length);
 			count += length;
@@ -178,11 +130,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoding.GetChars(append, offset, length, values, count);
 			count += decodedLength;
@@ -196,11 +144,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			encoding.GetChars(append, offset, length, values, count);
 			count += decodedLength;
@@ -213,11 +157,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			decoder.GetChars(append, offset, length, values, count);
 			count += decodedLength;
@@ -231,90 +171,11 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			decoder.GetChars(append, offset, length, values, count);
 			count += decodedLength;
 		}
-
-		public void AppendLength(char[] append, int offset, int length)
-		{
-			appended = true;
-			var required = count + length;
-			if (required > capacity)
-			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
-			}
-			Array.Copy(append, offset, values, count, length);
-			count += length;
-		}
-
-		public void AppendEnding(char[] append, int offset, int ending)
-		{
-			appended = true;
-			var length = ending - offset;
-			var required = count + length;
-			if (required > capacity)
-			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new char[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
-			}
-			Array.Copy(append, offset, values, count, length);
-			count += length;
-		}
-
-#if NETSTANDARD2_1 || NET5_0_OR_GREATER
-		public Span<char> ToSpan()
-		{
-			return new Span<char>(values, 0, count);
-		}
-
-		public static implicit operator Span<char>(CharsColumn value)
-		{
-			return value.ToSpan();
-		}
-
-		public ReadOnlySpan<char> ToReadOnlySpan()
-		{
-			return new ReadOnlySpan<char>(values, 0, count);
-		}
-
-		public static implicit operator ReadOnlySpan<char>(CharsColumn value)
-		{
-			return value.ToReadOnlySpan();
-		}
-
-		public Memory<char> ToMemory()
-		{
-			return new Memory<char>(values, 0, count);
-		}
-
-		public static implicit operator Memory<char>(CharsColumn value)
-		{
-			return value.ToMemory();
-		}
-
-		public ReadOnlyMemory<char> ToReadOnlyMemory()
-		{
-			return new ReadOnlyMemory<char>(values, 0, count);
-		}
-
-		public static implicit operator ReadOnlyMemory<char>(CharsColumn value)
-		{
-			return value.ToReadOnlyMemory();
-		}
-#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
