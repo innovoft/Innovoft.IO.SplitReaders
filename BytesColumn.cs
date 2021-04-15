@@ -113,6 +113,19 @@ namespace Innovoft.IO
 			AppendLength(append.ToCharArray(), 0, append.Length, encoder, flush);
 		}
 
+		public void AppendLength(string append, int offset, int length, Encoding encoding)
+		{
+			appended = true;
+			var encodedLength = encoding.GetByteCount(append, offset, length);
+			var required = count + encodedLength;
+			if (required > capacity)
+			{
+				Enlarge();
+			}
+			encoding.GetBytes(append, offset, length, values, count);
+			count += length;
+		}
+
 		public void AppendLength(char[] append, int offset, int length, Encoding encoding)
 		{
 			appended = true;
