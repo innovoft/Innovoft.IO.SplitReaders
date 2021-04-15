@@ -16,6 +16,11 @@
 		( Name: "Length", Math: "decodedOffset - offset"),
 		( Name: "Ending", Math: "decodedOffset"),
 	};
+	var adds = new List<(string Type, string Create)>()
+	{
+		( Type: "CharsColumns", Create: "add.Dequeue()" ),
+		( Type: "Func<CharsColumn>", Create: "add()" ),
+	};
 	var appendsActions = new List<(string Type, bool Generic, string Name, string Get)>()
 	{
 		( Type: "Action<char[], int, int>[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
@@ -43,6 +48,116 @@ namespace Innovoft.IO
 		#region Methods
 <#
 	line = false;
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			foreach (var add in adds)
+			{
+				if (line)
+				{
+#>
+
+<#
+				}
+				else
+				{
+					line = true;
+				}
+				string parameters;
+				string where;
+				if (separator.Generic)
+				{
+					parameters = "<TSeparator>";
+					where = "where TSeparator: " + separator.Type;
+				}
+				else
+				{
+					parameters = "";
+					where = null;
+				}
+#>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, <#= add.Type #> add)
+<#
+				if (separator.Generic)
+				{
+#>
+			<#= where #>
+<#
+				}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(CharsSplitReader));
+			}
+			if (decodedOffset >= decodedLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = decodedOffset;
+			var append = <#= add.Create #>;
+			while (true)
+			{
+				var letter = decoded[decodedOffset];
+				switch (letter)
+				{
+				case CR:
+					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					//LF
+					if (decodedOffset >= decodedLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (decoded[decodedOffset] == LF)
+					{
+						++decodedOffset;
+					}
+					return true;
+
+				case LF:
+					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+						offset = ++decodedOffset;
+						append = <#= add.Create #>;
+						break;
+					}
+					else
+					{
+						++decodedOffset;
+					}
+					break;
+				}
+				if (decodedOffset >= decodedLength)
+				{
+					if (offset <= decodedOffset)
+					{
+						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+			}
+		}
+	}
 #>
 <#
 	foreach (var separator in separators)
@@ -138,220 +253,6 @@ namespace Innovoft.IO
 					if (offset <= decodedOffset)
 					{
 						append(decoded, offset, <#= method.Math #>);
-					}
-					if (!ReadBuffers())
-					{
-						return true;
-					}
-					offset = 0;
-				}
-			}
-		}
-<#
-		}
-	}
-#>
-<#
-	foreach (var separator in separators)
-	{
-		foreach (var method in methods)
-		{
-			if (line)
-			{
-#>
-
-<#
-			}
-			else
-			{
-				line = true;
-			}
-			string parameters;
-			string where;
-			if (separator.Generic)
-			{
-				parameters = "<TSeparator>";
-				where = "where TSeparator: " + separator.Type;
-			}
-			else
-			{
-				parameters = "";
-				where = null;
-			}
-#>
-		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, Func<CharsColumn> add)
-<#
-			if (separator.Generic)
-			{
-#>
-			<#= where #>
-<#
-			}
-#>
-		{
-			if (stream == null)
-			{
-				throw new ObjectDisposedException(nameof(CharsSplitReader));
-			}
-			if (decodedOffset >= decodedLength && !ReadBuffers())
-			{
-				return false;
-			}
-			var offset = decodedOffset;
-			var append = add();
-			while (true)
-			{
-				var letter = decoded[decodedOffset];
-				switch (letter)
-				{
-				case CR:
-					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-					++decodedOffset;
-					//LF
-					if (decodedOffset >= decodedLength)
-					{
-						if (!ReadBuffers())
-						{
-							return true;
-						}
-					}
-					if (decoded[decodedOffset] == LF)
-					{
-						++decodedOffset;
-					}
-					return true;
-
-				case LF:
-					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-					++decodedOffset;
-					return true;
-
-				default:
-					if (<#= separator.Test #>)
-					{
-						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-						offset = ++decodedOffset;
-						append = add();
-						break;
-					}
-					else
-					{
-						++decodedOffset;
-					}
-					break;
-				}
-				if (decodedOffset >= decodedLength)
-				{
-					if (offset <= decodedOffset)
-					{
-						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-					}
-					if (!ReadBuffers())
-					{
-						return true;
-					}
-					offset = 0;
-				}
-			}
-		}
-<#
-		}
-	}
-#>
-<#
-	foreach (var separator in separators)
-	{
-		foreach (var method in methods)
-		{
-			if (line)
-			{
-#>
-
-<#
-			}
-			else
-			{
-				line = true;
-			}
-			string parameters;
-			string where;
-			if (separator.Generic)
-			{
-				parameters = "<TSeparator>";
-				where = "where TSeparator: " + separator.Type;
-			}
-			else
-			{
-				parameters = "";
-				where = null;
-			}
-#>
-		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, CharsColumns add)
-<#
-			if (separator.Generic)
-			{
-#>
-			<#= where #>
-<#
-			}
-#>
-		{
-			if (stream == null)
-			{
-				throw new ObjectDisposedException(nameof(CharsSplitReader));
-			}
-			if (decodedOffset >= decodedLength && !ReadBuffers())
-			{
-				return false;
-			}
-			var offset = decodedOffset;
-			var append = add.Dequeue();
-			while (true)
-			{
-				var letter = decoded[decodedOffset];
-				switch (letter)
-				{
-				case CR:
-					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-					++decodedOffset;
-					//LF
-					if (decodedOffset >= decodedLength)
-					{
-						if (!ReadBuffers())
-						{
-							return true;
-						}
-					}
-					if (decoded[decodedOffset] == LF)
-					{
-						++decodedOffset;
-					}
-					return true;
-
-				case LF:
-					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-					++decodedOffset;
-					return true;
-
-				default:
-					if (<#= separator.Test #>)
-					{
-						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
-						offset = ++decodedOffset;
-						append = add.Dequeue();
-						break;
-					}
-					else
-					{
-						++decodedOffset;
-					}
-					break;
-				}
-				if (decodedOffset >= decodedLength)
-				{
-					if (offset <= decodedOffset)
-					{
-						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
 					}
 					if (!ReadBuffers())
 					{
