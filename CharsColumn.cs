@@ -294,6 +294,11 @@ namespace Innovoft.IO
 		{
 			return value.ToReadOnlySpan();
 		}
+
+		public Memory<char> ToMemory()
+		{
+			return new Memory<char>(letters, 0, count);
+		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
