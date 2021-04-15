@@ -356,6 +356,15 @@ namespace Innovoft.IO
 			return short.Parse(ToChars(decoder));
 		}
 
+		public int ToInt32()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out int value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public int ToInt32(Encoding encoding)
 		{
 			return int.Parse(ToChars(encoding));
