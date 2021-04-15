@@ -451,6 +451,15 @@ namespace Innovoft.IO
 			return uint.Parse(ToChars(decoder));
 		}
 
+		public ulong ToUInt64()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out ulong value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public ulong ToUInt64(Encoding encoding)
 		{
 			return ulong.Parse(ToChars(encoding));
