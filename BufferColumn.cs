@@ -280,6 +280,15 @@ namespace Innovoft.IO
 			return bool.Parse(ToChars(decoder));
 		}
 
+		public DateTime ToDateTime()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out DateTime value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public DateTime ToDateTime(Encoding encoding)
 		{
 			return DateTime.Parse(ToChars(encoding));
