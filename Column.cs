@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
@@ -60,11 +61,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new T[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			Array.Copy(append, offset, values, count, length);
 			count += length;
@@ -77,14 +74,20 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				var enlargedCapacity = 2 * capacity;
-				var enlarged = new T[enlargedCapacity];
-				Array.Copy(values, 0, enlarged, 0, count);
-				capacity = enlargedCapacity;
-				values = enlarged;
+				Enlarge();
 			}
 			Array.Copy(append, offset, values, count, length);
 			count += length;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void Enlarge()
+		{
+			var enlargedCapacity = 2 * capacity;
+			var enlarged = new T[enlargedCapacity];
+			Array.Copy(values, 0, enlarged, 0, count);
+			capacity = enlargedCapacity;
+			values = enlarged;
 		}
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
