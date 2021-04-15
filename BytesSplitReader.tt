@@ -179,6 +179,113 @@ namespace Innovoft.IO
 				where = null;
 			}
 #>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, Func<BytesColumn> add)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(BytesColumn));
+			}
+			if (bufferOffset >= bufferLength && !ReadBuffer())
+			{
+				return false;
+			}
+			var offset = bufferOffset;
+			var append = add();
+			while (true)
+			{
+				var letter = buffer[bufferOffset];
+				switch (letter)
+				{
+				case CR:
+					append.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					//LF
+					if (bufferOffset >= bufferLength)
+					{
+						if (!ReadBuffer())
+						{
+							return true;
+						}
+					}
+					if (buffer[bufferOffset] == LF)
+					{
+						++bufferOffset;
+					}
+					return true;
+
+				case LF:
+					append.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+					++bufferOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+						offset = ++bufferOffset;
+						append = add();
+						break;
+					}
+					else
+					{
+						++bufferOffset;
+					}
+					break;
+				}
+				if (bufferOffset >= bufferLength)
+				{
+					if (offset <= bufferOffset)
+					{
+						append.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffer())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
 		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, BytesColumns add)
 <#
 			if (separator.Generic)
