@@ -413,6 +413,15 @@ namespace Innovoft.IO
 			return float.Parse(ToChars(decoder));
 		}
 
+		public ushort ToUInt16()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out ushort value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public ushort ToUInt16(Encoding encoding)
 		{
 			return ushort.Parse(ToChars(encoding));
