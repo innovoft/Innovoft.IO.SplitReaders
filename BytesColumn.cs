@@ -580,6 +580,11 @@ namespace Innovoft.IO
 		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
+		public sealed override string ToString()
+		{
+			return ToString(Encoding.UTF8);
+		}
+
 		public string ToString(Encoding encoding)
 		{
 			if (appended)
