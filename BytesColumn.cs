@@ -119,6 +119,21 @@ namespace Innovoft.IO
 			AppendLength(append.ToCharArray(), 0, append.Length, encoder, flush);
 		}
 
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public void Append(ReadOnlySpan<char> append, Encoding encoding)
+		{
+			appended = true;
+			var length = encoding.GetByteCount(append);
+			var required = count + length;
+			if (required > capacity)
+			{
+				Enlarge();
+			}
+			encoding.GetBytes(append, new Span<byte>(values, count, length));
+			count += length;
+		}
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
+
 		public void AppendLength(string append, int offset, int length, Encoding encoding)
 		{
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
