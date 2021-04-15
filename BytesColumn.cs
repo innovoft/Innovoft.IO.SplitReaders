@@ -154,6 +154,11 @@ namespace Innovoft.IO
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		}
 
+		public void AppendLength(string append, int offset, int length, Encoder encoder, bool flush)
+		{
+			AppendLength(append.ToCharArray(), offset, length, encoder, flush);
+		}
+
 		public void AppendLength(char[] append, int offset, int length, Encoding encoding)
 		{
 			appended = true;
