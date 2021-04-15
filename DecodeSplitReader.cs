@@ -10,6 +10,7 @@ namespace Innovoft.IO
 	public abstract class DecodeSplitReader : SplitReader
 	{
 		#region Constants
+		public const char Tab = '\t';
 		public const char CR = '\r';
 		public const char LF = '\n';
 		public const char Space = ' ';
