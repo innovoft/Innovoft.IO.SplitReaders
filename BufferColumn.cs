@@ -394,6 +394,15 @@ namespace Innovoft.IO
 			return long.Parse(ToChars(decoder));
 		}
 
+		public float ToSingle()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out float value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public float ToSingle(Encoding encoding)
 		{
 			return float.Parse(ToChars(encoding));
