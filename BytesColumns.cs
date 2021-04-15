@@ -5,45 +5,13 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public sealed class BytesColumns
+	public sealed class BytesColumns : SplitColumns<BytesColumn, byte>
 	{
 		#region Constants
 		public const int DefaultCapacity = BytesColumn.DefaultCapacity;
 		#endregion //Constants
 
-		#region Class Methods
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear(BytesColumn[] values)
-		{
-			foreach (var value in values)
-			{
-				value?.Clear();
-			}
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear<T>(T values)
-			where T: IList<BytesColumn>
-		{
-			foreach (var value in values)
-			{
-				value?.Clear();
-			}
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear(IEnumerable<BytesColumn> values)
-		{
-			foreach (var value in values)
-			{
-				value?.Clear();
-			}
-		}
-		#endregion //Class Methods
-
 		#region Fields
-		private readonly List<BytesColumn> columns = new List<BytesColumn>();
-		private readonly Queue<BytesColumn> queue = new Queue<BytesColumn>();
 		private int capacity;
 		#endregion //Fields
 
@@ -54,83 +22,17 @@ namespace Innovoft.IO
 		}
 
 		public BytesColumns(int capacity)
+			: base()
 		{
 			this.capacity = capacity;
 		}
 		#endregion //Constructors
 
 		#region Properties
-		public List<BytesColumn> Columns => columns;
-		public int Count => columns.Count;
-		public Queue<BytesColumn> Queue => queue;
-		public int Queued => queue.Count;
 		public int Capacity { get => capacity; set => capacity = value; }
 		#endregion //Properties
 
-		#region Indexers
-		public BytesColumn this[int i] => columns[i];
-		#endregion //Indexers
-
 		#region Methods
-		public void Clear()
-		{
-			foreach (var column in columns)
-			{
-				queue.Enqueue(column);
-			}
-			columns.Clear();
-		}
-
-		public void Enqueue(BytesColumn value)
-		{
-			if (value == null)
-			{
-				return;
-			}
-
-			queue.Enqueue(value);
-		}
-
-		public void Enqueue(BytesColumn[] values)
-		{
-			foreach (var value in values)
-			{
-				if (value == null)
-				{
-					continue;
-				}
-
-				queue.Enqueue(value);
-			}
-		}
-
-		public void Enqueue<T>(T values)
-			where T : IList<BytesColumn>
-		{
-			foreach (var value in values)
-			{
-				if (value == null)
-				{
-					continue;
-				}
-
-				queue.Enqueue(value);
-			}
-		}
-
-		public void Enqueue(IEnumerable<BytesColumn> values)
-		{
-			foreach (var value in values)
-			{
-				if (value == null)
-				{
-					continue;
-				}
-
-				queue.Enqueue(value);
-			}
-		}
-
 		public BytesColumn Dequeue()
 		{
 			if (queue.Count > 0)
