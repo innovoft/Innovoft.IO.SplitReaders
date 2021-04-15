@@ -59,7 +59,7 @@ namespace Innovoft.IO
 #if NET5_0_OR_GREATER
 		public override int GetHashCode()
 		{
-			return string.GetHashCode(ToReadOnlySpan());
+			return string.GetHashCode(ToRead());
 		}
 #else //NET5_0_OR_GREATER
 		public override int GetHashCode()
@@ -280,7 +280,7 @@ namespace Innovoft.IO
 			return new Span<char>(letters, 0, count);
 		}
 
-		public ReadOnlySpan<char> ToReadOnlySpan()
+		public ReadOnlySpan<char> ToRead()
 		{
 			return new ReadOnlySpan<char>(letters, 0, count);
 		}
@@ -289,57 +289,57 @@ namespace Innovoft.IO
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
 		{
-			return bool.Parse(ToReadOnlySpan());
+			return bool.Parse(ToRead());
 		}
 
 		public DateTime ToDateTime()
 		{
-			return DateTime.Parse(ToReadOnlySpan());
+			return DateTime.Parse(ToRead());
 		}
 
 		public decimal ToDecimal()
 		{
-			return decimal.Parse(ToReadOnlySpan());
+			return decimal.Parse(ToRead());
 		}
 
 		public double ToDouble()
 		{
-			return double.Parse(ToReadOnlySpan());
+			return double.Parse(ToRead());
 		}
 
 		public short ToInt16()
 		{
-			return short.Parse(ToReadOnlySpan());
+			return short.Parse(ToRead());
 		}
 
 		public int ToInt32()
 		{
-			return int.Parse(ToReadOnlySpan());
+			return int.Parse(ToRead());
 		}
 
 		public long ToInt64()
 		{
-			return long.Parse(ToReadOnlySpan());
+			return long.Parse(ToRead());
 		}
 
 		public float ToSingle()
 		{
-			return float.Parse(ToReadOnlySpan());
+			return float.Parse(ToRead());
 		}
 
 		public ushort ToUInt16()
 		{
-			return ushort.Parse(ToReadOnlySpan());
+			return ushort.Parse(ToRead());
 		}
 
 		public uint ToUInt32()
 		{
-			return uint.Parse(ToReadOnlySpan());
+			return uint.Parse(ToRead());
 		}
 
 		public ulong ToUInt64()
 		{
-			return ulong.Parse(ToReadOnlySpan());
+			return ulong.Parse(ToRead());
 		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()

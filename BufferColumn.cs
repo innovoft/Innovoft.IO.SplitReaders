@@ -241,7 +241,7 @@ namespace Innovoft.IO
 			return new Span<byte>(buffer, 0, count);
 		}
 
-		public ReadOnlySpan<byte> ToReadOnlySpan()
+		public ReadOnlySpan<byte> ToRead()
 		{
 			return new ReadOnlySpan<byte>(buffer, 0, count);
 		}
