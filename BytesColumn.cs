@@ -15,7 +15,7 @@ namespace Innovoft.IO
 
 		#region Fields
 		private int capacity;
-		private byte[] buffer;
+		private byte[] bytes;
 		private int count;
 		private bool appended;
 		#endregion //Fields
@@ -29,20 +29,20 @@ namespace Innovoft.IO
 		public BytesColumn(int length)
 		{
 			this.capacity = length;
-			this.buffer = new byte[length];
+			this.bytes = new byte[length];
 			this.count = 0;
 		}
 		#endregion //Constructors
 
 		#region Properties
 		public int Capacity => capacity;
-		public byte[] Buffer => buffer;
+		public byte[] Bytes => bytes;
 		public int Count => count;
 		public bool Appended => appended;
 		#endregion //Properties
 
 		#region Indexes
-		public byte this[int offset] { get => buffer[offset]; set => buffer[offset] = value; }
+		public byte this[int offset] { get => bytes[offset]; set => bytes[offset] = value; }
 		#endregion //Indexes
 
 		#region Methods
@@ -56,28 +56,28 @@ namespace Innovoft.IO
 				{
 					return hash;
 				}
-				hash ^= buffer[offset];
+				hash ^= bytes[offset];
 				++offset;
 				//1
 				if (offset >= count)
 				{
 					return hash;
 				}
-				hash ^= buffer[offset] << 8;
+				hash ^= bytes[offset] << 8;
 				++offset;
 				//2
 				if (offset >= count)
 				{
 					return hash;
 				}
-				hash ^= buffer[offset] << 16;
+				hash ^= bytes[offset] << 16;
 				++offset;
 				//3
 				if (offset >= count)
 				{
 					return hash;
 				}
-				hash ^= buffer[offset] << 24;
+				hash ^= bytes[offset] << 24;
 				++offset;
 			}
 		}
@@ -99,7 +99,7 @@ namespace Innovoft.IO
 			}
 			for (var offset = count - 1; offset >= 0; --offset)
 			{
-				if (other.buffer[offset] != this.buffer[offset])
+				if (other.bytes[offset] != this.bytes[offset])
 				{
 					return false;
 				}
@@ -127,11 +127,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			encoding.GetBytes(append, 0, append.Length, buffer, count);
+			encoding.GetBytes(append, 0, append.Length, bytes, count);
 			count += length;
 		}
 
@@ -144,11 +144,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			encoding.GetBytes(append, 0, append.Length, buffer, count);
+			encoding.GetBytes(append, 0, append.Length, bytes, count);
 			count += encodedLength;
 		}
 
@@ -162,11 +162,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			encoding.GetBytes(append, 0, append.Length, buffer, count);
+			encoding.GetBytes(append, 0, append.Length, bytes, count);
 			count += encodedLength;
 		}
 
@@ -179,11 +179,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			encoder.GetBytes(append, 0, append.Length, buffer, count, flush);
+			encoder.GetBytes(append, 0, append.Length, bytes, count, flush);
 			count += encodedLength;
 		}
 
@@ -197,11 +197,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			encoder.GetBytes(append, 0, append.Length, buffer, count, flush);
+			encoder.GetBytes(append, 0, append.Length, bytes, count, flush);
 			count += encodedLength;
 		}
 
@@ -213,11 +213,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			System.Buffer.BlockCopy(append, offset, buffer, count, length);
+			System.Buffer.BlockCopy(append, offset, bytes, count, length);
 			count += length;
 		}
 
@@ -230,18 +230,18 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new byte[enlargedCapacity];
-				System.Buffer.BlockCopy(buffer, 0, enlarged, 0, count);
+				System.Buffer.BlockCopy(bytes, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				buffer = enlarged;
+				bytes = enlarged;
 			}
-			System.Buffer.BlockCopy(append, offset, buffer, count, length);
+			System.Buffer.BlockCopy(append, offset, bytes, count, length);
 			count += length;
 		}
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public Span<byte> ToSpan()
 		{
-			return new Span<byte>(buffer, 0, count);
+			return new Span<byte>(bytes, 0, count);
 		}
 
 		public static implicit operator Span<byte>(BytesColumn value)
@@ -251,7 +251,7 @@ namespace Innovoft.IO
 
 		public ReadOnlySpan<byte> ToReadOnlySpan()
 		{
-			return new ReadOnlySpan<byte>(buffer, 0, count);
+			return new ReadOnlySpan<byte>(bytes, 0, count);
 		}
 
 		public static implicit operator ReadOnlySpan<byte>(BytesColumn value)
@@ -261,7 +261,7 @@ namespace Innovoft.IO
 
 		public Memory<byte> ToMemory()
 		{
-			return new Memory<byte>(buffer, 0, count);
+			return new Memory<byte>(bytes, 0, count);
 		}
 
 		public static implicit operator Memory<byte>(BytesColumn value)
@@ -271,7 +271,7 @@ namespace Innovoft.IO
 
 		public ReadOnlyMemory<byte> ToReadOnlyMemory()
 		{
-			return new Memory<byte>(buffer, 0, count);
+			return new Memory<byte>(bytes, 0, count);
 		}
 
 		public static implicit operator ReadOnlyMemory<byte>(BytesColumn value)
@@ -605,7 +605,7 @@ namespace Innovoft.IO
 		{
 			if (appended)
 			{
-				return encoding.GetString(buffer, 0, count);
+				return encoding.GetString(bytes, 0, count);
 			}
 			else
 			{
@@ -617,9 +617,9 @@ namespace Innovoft.IO
 		{
 			if (appended)
 			{
-				var length = decoder.GetCharCount(buffer, 0, count);
+				var length = decoder.GetCharCount(bytes, 0, count);
 				var decoded = new char[length];
-				decoder.GetChars(buffer, 0, count, decoded, 0);
+				decoder.GetChars(bytes, 0, count, decoded, 0);
 				return new string(decoded);
 			}
 			else
@@ -632,7 +632,7 @@ namespace Innovoft.IO
 		{
 			if (appended)
 			{
-				return encoding.GetChars(buffer, 0, count);
+				return encoding.GetChars(bytes, 0, count);
 			}
 			else
 			{
@@ -644,9 +644,9 @@ namespace Innovoft.IO
 		{
 			if (appended)
 			{
-				var length = decoder.GetCharCount(buffer, 0, count);
+				var length = decoder.GetCharCount(bytes, 0, count);
 				var decoded = new char[length];
-				decoder.GetChars(buffer, 0, count, decoded, 0);
+				decoder.GetChars(bytes, 0, count, decoded, 0);
 				return decoded;
 			}
 			else
