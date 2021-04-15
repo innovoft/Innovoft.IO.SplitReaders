@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class Column<T>
+	public class Column<T> : IEquatable<Column<T>>
 		where T: IEquatable<T>
 	{
 		#region Constants
