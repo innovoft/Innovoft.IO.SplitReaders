@@ -284,6 +284,11 @@ namespace Innovoft.IO
 		{
 			return new ReadOnlySpan<char>(letters, 0, count);
 		}
+
+		public static implicit operator ReadOnlySpan<char>(CharsColumn value)
+		{
+			return value.ToRead();
+		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
