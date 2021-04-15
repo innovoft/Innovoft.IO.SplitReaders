@@ -280,6 +280,11 @@ namespace Innovoft.IO
 			return new Span<char>(letters, 0, count);
 		}
 
+		public static implicit operator Span<char>(CharsColumn value)
+		{
+			return value.ToSpan();
+		}
+
 		public ReadOnlySpan<char> ToRead()
 		{
 			return new ReadOnlySpan<char>(letters, 0, count);
