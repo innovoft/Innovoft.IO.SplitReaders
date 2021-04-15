@@ -612,6 +612,11 @@ namespace Innovoft.IO
 			}
 		}
 
+		public char[] ToChars()
+		{
+			return ToChars(Encoding.UTF8);
+		}
+
 		public char[] ToChars(Encoding encoding)
 		{
 			if (appended)
