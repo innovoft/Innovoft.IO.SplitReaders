@@ -13,7 +13,7 @@ namespace Innovoft.IO
 		[TestMethod]
 		public void ReadColumnsAddTest()
 		{
-			const char separator = ',';
+			const char separator = StringSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(separator.ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
@@ -33,7 +33,7 @@ namespace Innovoft.IO
 		[TestMethod]
 		public void ReadColumnTest()
 		{
-			const char separator = ',';
+			const char separator = StringSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(separator.ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
@@ -51,7 +51,7 @@ namespace Innovoft.IO
 		[TestMethod]
 		public void ReadColumnsSetTest()
 		{
-			const char separator = ',';
+			const char separator = StringSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(separator.ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
