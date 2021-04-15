@@ -12,6 +12,7 @@ namespace Innovoft.IO
 		#region Constants
 		public const char CR = '\r';
 		public const char LF = '\n';
+		public const char Comma = ',';
 		#endregion //Constants
 
 		#region Fields
