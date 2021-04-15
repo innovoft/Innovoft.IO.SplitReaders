@@ -309,6 +309,11 @@ namespace Innovoft.IO
 		{
 			return new ReadOnlyMemory<char>(letters, 0, count);
 		}
+
+		public static implicit operator ReadOnlyMemory<char>(CharsColumn value)
+		{
+			return value.ToReadOnlyMemory();
+		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
