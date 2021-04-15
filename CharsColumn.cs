@@ -59,7 +59,7 @@ namespace Innovoft.IO
 #if NET5_0_OR_GREATER
 		public override int GetHashCode()
 		{
-			return string.GetHashCode(ToRead());
+			return string.GetHashCode(ToReadOnlySpan());
 		}
 #else //NET5_0_OR_GREATER
 		public override int GetHashCode()
@@ -285,71 +285,71 @@ namespace Innovoft.IO
 			return value.ToSpan();
 		}
 
-		public ReadOnlySpan<char> ToRead()
+		public ReadOnlySpan<char> ToReadOnlySpan()
 		{
 			return new ReadOnlySpan<char>(letters, 0, count);
 		}
 
 		public static implicit operator ReadOnlySpan<char>(CharsColumn value)
 		{
-			return value.ToRead();
+			return value.ToReadOnlySpan();
 		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
 		{
-			return bool.Parse(ToRead());
+			return bool.Parse(ToReadOnlySpan());
 		}
 
 		public DateTime ToDateTime()
 		{
-			return DateTime.Parse(ToRead());
+			return DateTime.Parse(ToReadOnlySpan());
 		}
 
 		public decimal ToDecimal()
 		{
-			return decimal.Parse(ToRead());
+			return decimal.Parse(ToReadOnlySpan());
 		}
 
 		public double ToDouble()
 		{
-			return double.Parse(ToRead());
+			return double.Parse(ToReadOnlySpan());
 		}
 
 		public short ToInt16()
 		{
-			return short.Parse(ToRead());
+			return short.Parse(ToReadOnlySpan());
 		}
 
 		public int ToInt32()
 		{
-			return int.Parse(ToRead());
+			return int.Parse(ToReadOnlySpan());
 		}
 
 		public long ToInt64()
 		{
-			return long.Parse(ToRead());
+			return long.Parse(ToReadOnlySpan());
 		}
 
 		public float ToSingle()
 		{
-			return float.Parse(ToRead());
+			return float.Parse(ToReadOnlySpan());
 		}
 
 		public ushort ToUInt16()
 		{
-			return ushort.Parse(ToRead());
+			return ushort.Parse(ToReadOnlySpan());
 		}
 
 		public uint ToUInt32()
 		{
-			return uint.Parse(ToRead());
+			return uint.Parse(ToReadOnlySpan());
 		}
 
 		public ulong ToUInt64()
 		{
-			return ulong.Parse(ToRead());
+			return ulong.Parse(ToReadOnlySpan());
 		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()

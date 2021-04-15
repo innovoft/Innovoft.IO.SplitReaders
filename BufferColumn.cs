@@ -249,14 +249,14 @@ namespace Innovoft.IO
 			return value.ToSpan();
 		}
 
-		public ReadOnlySpan<byte> ToRead()
+		public ReadOnlySpan<byte> ToReadOnlySpan()
 		{
 			return new ReadOnlySpan<byte>(buffer, 0, count);
 		}
 
 		public static implicit operator ReadOnlySpan<byte>(BufferColumn value)
 		{
-			return value.ToRead();
+			return value.ToReadOnlySpan();
 		}
 
 		public Memory<byte> ToMemory()
@@ -283,7 +283,7 @@ namespace Innovoft.IO
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out bool value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out bool value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -302,7 +302,7 @@ namespace Innovoft.IO
 
 		public DateTime ToDateTime()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out DateTime value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out DateTime value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -321,7 +321,7 @@ namespace Innovoft.IO
 
 		public decimal ToDecimal()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out decimal value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out decimal value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -340,7 +340,7 @@ namespace Innovoft.IO
 
 		public double ToDouble()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out double value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out double value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -359,7 +359,7 @@ namespace Innovoft.IO
 
 		public short ToInt16()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out short value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out short value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -378,7 +378,7 @@ namespace Innovoft.IO
 
 		public int ToInt32()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out int value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out int value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -397,7 +397,7 @@ namespace Innovoft.IO
 
 		public long ToInt64()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out long value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out long value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -416,7 +416,7 @@ namespace Innovoft.IO
 
 		public float ToSingle()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out float value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out float value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -435,7 +435,7 @@ namespace Innovoft.IO
 
 		public ushort ToUInt16()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out ushort value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out ushort value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -454,7 +454,7 @@ namespace Innovoft.IO
 
 		public uint ToUInt32()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out uint value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out uint value, out var consumed))
 			{
 				throw new FormatException();
 			}
@@ -473,7 +473,7 @@ namespace Innovoft.IO
 
 		public ulong ToUInt64()
 		{
-			if (!Utf8Parser.TryParse(ToRead(), out ulong value, out var consumed))
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out ulong value, out var consumed))
 			{
 				throw new FormatException();
 			}
