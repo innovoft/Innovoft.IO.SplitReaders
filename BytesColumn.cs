@@ -116,7 +116,11 @@ namespace Innovoft.IO
 
 		public void Append(string append, Encoder encoder, bool flush)
 		{
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+			Append(append.AsSpan(), encoder, flush);
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 			AppendLength(append.ToCharArray(), 0, append.Length, encoder, flush);
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		}
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
