@@ -12,7 +12,7 @@ namespace Innovoft.IO
 
 		#region Fields
 		private int capacity;
-		private char[] letters;
+		private char[] chars;
 		private int count;
 		private bool appended;
 		#endregion //Fields
@@ -31,14 +31,14 @@ namespace Innovoft.IO
 		public CharsColumn(int capacity)
 		{
 			this.capacity = capacity;
-			this.letters = new char[capacity];
+			this.chars = new char[capacity];
 			Clear();
 		}
 
 		public CharsColumn(int capacity, string append)
 		{
 			this.capacity = capacity;
-			this.letters = new char[capacity];
+			this.chars = new char[capacity];
 			Clear();
 			Append(append);
 		}
@@ -46,13 +46,13 @@ namespace Innovoft.IO
 
 		#region Properties
 		public int Capacity => capacity;
-		public char[] Letters => letters;
+		public char[] Chars => chars;
 		public int Count => count;
 		public bool Appended => appended;
 		#endregion //Properties
 
 		#region Indexes
-		public char this[int offset] { get => letters[offset]; set => letters[offset] = value; }
+		public char this[int offset] { get => chars[offset]; set => chars[offset] = value; }
 		#endregion //Indexes
 
 #region Methods
@@ -72,14 +72,14 @@ namespace Innovoft.IO
 				{
 					return hash;
 				}
-				hash ^= letters[offset];
+				hash ^= chars[offset];
 				++offset;
 				//1
 				if (offset >= count)
 				{
 					return hash;
 				}
-				hash ^= letters[offset] << 16;
+				hash ^= chars[offset] << 16;
 				++offset;
 			}
 		}
@@ -102,7 +102,7 @@ namespace Innovoft.IO
 			}
 			for (var offset = count - 1; offset >= 0; --offset)
 			{
-				if (other.letters[offset] != this.letters[offset])
+				if (other.chars[offset] != this.chars[offset])
 				{
 					return false;
 				}
@@ -130,11 +130,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			append.CopyTo(0, letters, count, length);
+			append.CopyTo(0, chars, count, length);
 			count += length;
 		}
 
@@ -146,11 +146,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			append.CopyTo(offset, letters, count, length);
+			append.CopyTo(offset, chars, count, length);
 			count += length;
 		}
 
@@ -163,11 +163,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			append.CopyTo(offset, letters, count, length);
+			append.CopyTo(offset, chars, count, length);
 			count += length;
 		}
 
@@ -180,11 +180,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			encoding.GetChars(append, offset, length, letters, count);
+			encoding.GetChars(append, offset, length, chars, count);
 			count += decodedLength;
 		}
 
@@ -198,11 +198,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			encoding.GetChars(append, offset, length, letters, count);
+			encoding.GetChars(append, offset, length, chars, count);
 			count += decodedLength;
 		}
 
@@ -215,11 +215,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			decoder.GetChars(append, offset, length, letters, count);
+			decoder.GetChars(append, offset, length, chars, count);
 			count += decodedLength;
 		}
 
@@ -233,11 +233,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			decoder.GetChars(append, offset, length, letters, count);
+			decoder.GetChars(append, offset, length, chars, count);
 			count += decodedLength;
 		}
 
@@ -249,11 +249,11 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			Array.Copy(append, offset, letters, count, length);
+			Array.Copy(append, offset, chars, count, length);
 			count += length;
 		}
 
@@ -266,18 +266,18 @@ namespace Innovoft.IO
 			{
 				var enlargedCapacity = 2 * capacity;
 				var enlarged = new char[enlargedCapacity];
-				Array.Copy(letters, 0, enlarged, 0, count);
+				Array.Copy(chars, 0, enlarged, 0, count);
 				capacity = enlargedCapacity;
-				letters = enlarged;
+				chars = enlarged;
 			}
-			Array.Copy(append, offset, letters, count, length);
+			Array.Copy(append, offset, chars, count, length);
 			count += length;
 		}
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public Span<char> ToSpan()
 		{
-			return new Span<char>(letters, 0, count);
+			return new Span<char>(chars, 0, count);
 		}
 
 		public static implicit operator Span<char>(CharsColumn value)
@@ -287,7 +287,7 @@ namespace Innovoft.IO
 
 		public ReadOnlySpan<char> ToReadOnlySpan()
 		{
-			return new ReadOnlySpan<char>(letters, 0, count);
+			return new ReadOnlySpan<char>(chars, 0, count);
 		}
 
 		public static implicit operator ReadOnlySpan<char>(CharsColumn value)
@@ -297,7 +297,7 @@ namespace Innovoft.IO
 
 		public Memory<char> ToMemory()
 		{
-			return new Memory<char>(letters, 0, count);
+			return new Memory<char>(chars, 0, count);
 		}
 
 		public static implicit operator Memory<char>(CharsColumn value)
@@ -307,7 +307,7 @@ namespace Innovoft.IO
 
 		public ReadOnlyMemory<char> ToReadOnlyMemory()
 		{
-			return new ReadOnlyMemory<char>(letters, 0, count);
+			return new ReadOnlyMemory<char>(chars, 0, count);
 		}
 
 		public static implicit operator ReadOnlyMemory<char>(CharsColumn value)
@@ -432,7 +432,7 @@ namespace Innovoft.IO
 		{
 			if (appended)
 			{
-				return new string(letters, 0, count);
+				return new string(chars, 0, count);
 			}
 			else
 			{
