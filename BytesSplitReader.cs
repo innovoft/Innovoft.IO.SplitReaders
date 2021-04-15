@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public sealed partial class BufferSplitReader : SplitReader
+	public sealed partial class BytesSplitReader : SplitReader
 	{
 		#region Constants
 		public const byte CR = 0x0D;
@@ -20,7 +20,7 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
-		public BufferSplitReader(Stream stream)
+		public BytesSplitReader(Stream stream)
 			: base(stream)
 		{
 		}
@@ -31,7 +31,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(BufferSplitReader));
+				throw new ObjectDisposedException(nameof(BytesSplitReader));
 			}
 			if (bufferOffset >= bufferLength && !ReadBuffer())
 			{

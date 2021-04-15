@@ -25,10 +25,10 @@
 	};
 	var appendsColumns = new List<(string Type, bool Generic, string Name, string Get)>()
 	{
-		( Type: "BufferColumn[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
-		( Type: "IList<BufferColumn>", Generic: true, Name: "ListColumn", Get: "append = column < appends.Count ? appends[column] : null" ),
-		( Type: "IDictionary<int, BufferColumn>", Generic: true, Name: "DictionaryColumn", Get: "appends.TryGetValue(column, out append)" ),
-		( Type: "Func<int, BufferColumn>", Generic: false, Name: "", Get: "append = appends(column)" ),
+		( Type: "BytesColumn[]", Generic: false, Name: "", Get: "append = column < appends.Length ? appends[column] : null" ),
+		( Type: "IList<BytesColumn>", Generic: true, Name: "ListColumn", Get: "append = column < appends.Count ? appends[column] : null" ),
+		( Type: "IDictionary<int, BytesColumn>", Generic: true, Name: "DictionaryColumn", Get: "appends.TryGetValue(column, out append)" ),
+		( Type: "Func<int, BytesColumn>", Generic: false, Name: "", Get: "append = appends(column)" ),
 	};
 	bool line;
 #>
@@ -38,7 +38,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	partial class BufferSplitReader
+	partial class BytesSplitReader
 	{
 		#region Methods
 <#
@@ -84,7 +84,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(BufferSplitReader));
+				throw new ObjectDisposedException(nameof(BytesColumn));
 			}
 			if (bufferOffset >= bufferLength && !ReadBuffer())
 			{
@@ -191,7 +191,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(BufferSplitReader));
+				throw new ObjectDisposedException(nameof(BytesColumn));
 			}
 			if (bufferOffset >= bufferLength && !ReadBuffer())
 			{
@@ -334,7 +334,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(BufferSplitReader));
+				throw new ObjectDisposedException(nameof(BytesColumn));
 			}
 			if (bufferOffset >= bufferLength && !ReadBuffer())
 			{
@@ -447,7 +447,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(BufferSplitReader));
+				throw new ObjectDisposedException(nameof(BytesColumn));
 			}
 			if (bufferOffset >= bufferLength && !ReadBuffer())
 			{
@@ -571,7 +571,7 @@ namespace Innovoft.IO
 		{
 			if (stream == null)
 			{
-				throw new ObjectDisposedException(nameof(BufferSplitReader));
+				throw new ObjectDisposedException(nameof(BytesColumn));
 			}
 			if (bufferOffset >= bufferLength && !ReadBuffer())
 			{
@@ -579,7 +579,7 @@ namespace Innovoft.IO
 			}
 			var offset = bufferOffset;
 			var column = 0;
-			BufferColumn append;
+			BytesColumn append;
 			<#= appends.Get #>;
 			while (true)
 			{

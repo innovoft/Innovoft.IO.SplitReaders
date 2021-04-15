@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public sealed class BufferColumns
+	public sealed class BytesColumns
 	{
 		#region Constants
-		public const int DefaultCapacity = BufferColumn.DefaultCapacity;
+		public const int DefaultCapacity = BytesColumn.DefaultCapacity;
 		#endregion //Constants
 
 		#region Class Methods
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear(BufferColumn[] values)
+		public static void Clear(BytesColumn[] values)
 		{
 			foreach (var value in values)
 			{
@@ -23,7 +23,7 @@ namespace Innovoft.IO
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void Clear<T>(T values)
-			where T: IList<BufferColumn>
+			where T: IList<BytesColumn>
 		{
 			foreach (var value in values)
 			{
@@ -32,7 +32,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear(IEnumerable<BufferColumn> values)
+		public static void Clear(IEnumerable<BytesColumn> values)
 		{
 			foreach (var value in values)
 			{
@@ -42,33 +42,33 @@ namespace Innovoft.IO
 		#endregion //Class Methods
 
 		#region Fields
-		private readonly List<BufferColumn> columns = new List<BufferColumn>();
-		private readonly Queue<BufferColumn> queue = new Queue<BufferColumn>();
+		private readonly List<BytesColumn> columns = new List<BytesColumn>();
+		private readonly Queue<BytesColumn> queue = new Queue<BytesColumn>();
 		private int capacity;
 		#endregion //Fields
 
 		#region Constructors
-		public BufferColumns()
+		public BytesColumns()
 			: this(DefaultCapacity)
 		{
 		}
 
-		public BufferColumns(int capacity)
+		public BytesColumns(int capacity)
 		{
 			this.capacity = capacity;
 		}
 		#endregion //Constructors
 
 		#region Properties
-		public List<BufferColumn> Columns => columns;
+		public List<BytesColumn> Columns => columns;
 		public int Count => columns.Count;
-		public Queue<BufferColumn> Queue => queue;
+		public Queue<BytesColumn> Queue => queue;
 		public int Queued => queue.Count;
 		public int Capacity { get => capacity; set => capacity = value; }
 		#endregion //Properties
 
 		#region Indexers
-		public BufferColumn this[int i] => columns[i];
+		public BytesColumn this[int i] => columns[i];
 		#endregion //Indexers
 
 		#region Methods
@@ -81,7 +81,7 @@ namespace Innovoft.IO
 			columns.Clear();
 		}
 
-		public void Enqueue(BufferColumn value)
+		public void Enqueue(BytesColumn value)
 		{
 			if (value == null)
 			{
@@ -91,7 +91,7 @@ namespace Innovoft.IO
 			queue.Enqueue(value);
 		}
 
-		public void Enqueue(BufferColumn[] values)
+		public void Enqueue(BytesColumn[] values)
 		{
 			foreach (var value in values)
 			{
@@ -105,7 +105,7 @@ namespace Innovoft.IO
 		}
 
 		public void Enqueue<T>(T values)
-			where T : IList<BufferColumn>
+			where T : IList<BytesColumn>
 		{
 			foreach (var value in values)
 			{
@@ -118,7 +118,7 @@ namespace Innovoft.IO
 			}
 		}
 
-		public void Enqueue(IEnumerable<BufferColumn> values)
+		public void Enqueue(IEnumerable<BytesColumn> values)
 		{
 			foreach (var value in values)
 			{
@@ -131,7 +131,7 @@ namespace Innovoft.IO
 			}
 		}
 
-		public BufferColumn Dequeue()
+		public BytesColumn Dequeue()
 		{
 			if (queue.Count > 0)
 			{
@@ -141,7 +141,7 @@ namespace Innovoft.IO
 			}
 			else
 			{
-				return new BufferColumn(capacity);
+				return new BytesColumn(capacity);
 			}
 		}
 

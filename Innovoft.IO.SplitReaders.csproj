@@ -69,15 +69,15 @@
 	</ItemGroup>
 
   <ItemGroup>
-		<T4Transform Include="BufferSplitReader.tt">
-			<Link>BufferSplitReader.tt</Link>
+		<T4Transform Include="BytesSplitReader.tt">
+			<Link>BytesSplitReader.tt</Link>
 			<OutputFilePath>$(ProjectDir)</OutputFilePath>
-			<OutputFileName>BufferSplitReader.tt.cs</OutputFileName>
-			<LastGenOutput>$(ProjectDir)BufferSplitReader.tt.cs</LastGenOutput>
+			<OutputFileName>BytesSplitReader.tt.cs</OutputFileName>
+			<LastGenOutput>$(ProjectDir)BytesSplitReader.tt.cs</LastGenOutput>
 		</T4Transform>
-		<None Include="BufferSplitReader.tt.cs">
+		<None Include="BytesSplitReader.tt.cs">
 			<AutoGen>True</AutoGen>
-			<DependentUpon>BufferSplitReader.tt</DependentUpon>
+			<DependentUpon>BytesSplitReader.tt</DependentUpon>
 		</None>
 	</ItemGroup>
 

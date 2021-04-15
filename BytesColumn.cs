@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public class BufferColumn : IEquatable<BufferColumn>
+	public class BytesColumn : IEquatable<BytesColumn>
 	{
 		#region Constants
 		public const int DefaultCapacity = 128;
@@ -21,12 +21,12 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
-		public BufferColumn()
+		public BytesColumn()
 			: this(DefaultCapacity)
 		{
 		}
 
-		public BufferColumn(int length)
+		public BytesColumn(int length)
 		{
 			this.capacity = length;
 			this.buffer = new byte[length];
@@ -84,10 +84,10 @@ namespace Innovoft.IO
 
 		public override bool Equals(object other)
 		{
-			return Equals(other as BufferColumn);
+			return Equals(other as BytesColumn);
 		}
 
-		public bool Equals(BufferColumn other)
+		public bool Equals(BytesColumn other)
 		{
 			if (other == null)
 			{
@@ -244,7 +244,7 @@ namespace Innovoft.IO
 			return new Span<byte>(buffer, 0, count);
 		}
 
-		public static implicit operator Span<byte>(BufferColumn value)
+		public static implicit operator Span<byte>(BytesColumn value)
 		{
 			return value.ToSpan();
 		}
@@ -254,7 +254,7 @@ namespace Innovoft.IO
 			return new ReadOnlySpan<byte>(buffer, 0, count);
 		}
 
-		public static implicit operator ReadOnlySpan<byte>(BufferColumn value)
+		public static implicit operator ReadOnlySpan<byte>(BytesColumn value)
 		{
 			return value.ToReadOnlySpan();
 		}
@@ -264,7 +264,7 @@ namespace Innovoft.IO
 			return new Memory<byte>(buffer, 0, count);
 		}
 
-		public static implicit operator Memory<byte>(BufferColumn value)
+		public static implicit operator Memory<byte>(BytesColumn value)
 		{
 			return value.ToMemory();
 		}
@@ -274,7 +274,7 @@ namespace Innovoft.IO
 			return new Memory<byte>(buffer, 0, count);
 		}
 
-		public static implicit operator ReadOnlyMemory<byte>(BufferColumn value)
+		public static implicit operator ReadOnlyMemory<byte>(BytesColumn value)
 		{
 			return value.ToReadOnlyMemory();
 		}

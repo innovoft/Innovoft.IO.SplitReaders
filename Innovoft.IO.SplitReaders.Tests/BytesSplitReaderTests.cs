@@ -8,18 +8,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Innovoft.IO
 {
 	[TestClass]
-	public class BufferSplitReaderTests
+	public class BytesSplitReaderTests
 	{
 		[TestMethod]
 		public void ReadColumnsAddTest()
 		{
-			const byte separator = BufferSplitReader.Comma;
+			const byte separator = BytesSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(((char)separator).ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
-			var actuals = new BufferColumns();
+			var actuals = new BytesColumns();
 			using (var readerStream = new MemoryStream(raw))
-			using (var reader = new BufferSplitReader(readerStream))
+			using (var reader = new BytesSplitReader(readerStream))
 			{
 				Assert.IsTrue(reader.ReadColumnsLength(separator, actuals.AddLength), "!ReadColumns");
 				Assert.AreEqual(expecteds.Length, actuals.Count, "expecteds.Length != actuals.Count");
@@ -34,15 +34,15 @@ namespace Innovoft.IO
 		[TestMethod]
 		public void ReadColumnTest()
 		{
-			const byte separator = BufferSplitReader.Comma;
+			const byte separator = BytesSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(((char)separator).ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
 			for (var i = expecteds.Length - 1; i >= 0; --i)
 			{
-				var actual = new BufferColumn();
+				var actual = new BytesColumn();
 				using (var readerStream = new MemoryStream(raw))
-				using (var reader = new BufferSplitReader(readerStream))
+				using (var reader = new BytesSplitReader(readerStream))
 				{
 					Assert.IsTrue(reader.ReadColumnsLength(separator, i, actual.AppendLength), "!ReadColumn");
 					Assert.AreEqual(expecteds[i], actual.ToString(Encoding.UTF8), i.ToString());
@@ -53,7 +53,7 @@ namespace Innovoft.IO
 		[TestMethod]
 		public void ReadColumnsSetTest()
 		{
-			const byte separator = BufferSplitReader.Comma;
+			const byte separator = BytesSplitReader.Comma;
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
 			var text = string.Join(((char)separator).ToString(), expecteds);
 			var raw = Encoding.UTF8.GetBytes(text);
@@ -62,16 +62,16 @@ namespace Innovoft.IO
 			{
 				columns[column] = column;
 			}
-			var actuals = new BufferColumn[expecteds.Length];
+			var actuals = new BytesColumn[expecteds.Length];
 			var appends = new Action<byte[], int, int>[expecteds.Length];
 			for (var i = actuals.Length - 1; i >= 0; --i)
 			{
-				var actual = new BufferColumn();
+				var actual = new BytesColumn();
 				actuals[i] = actual;
 				appends[i] = actual.AppendLength;
 			}
 			using (var readerStream = new MemoryStream(raw))
-			using (var reader = new BufferSplitReader(readerStream))
+			using (var reader = new BytesSplitReader(readerStream))
 			{
 				Assert.IsTrue(reader.ReadColumnsLength(separator, appends), "!ReadColumns");
 				for (var i = expecteds.Length - 1; i >= 0; --i)
