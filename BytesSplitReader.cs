@@ -9,6 +9,7 @@ namespace Innovoft.IO
 	public sealed partial class BytesSplitReader : SplitReader
 	{
 		#region Constants
+		public const byte Tab = 0x09;
 		public const byte CR = 0x0D;
 		public const byte LF = 0x0A;
 		public const byte Space = 0x20;
