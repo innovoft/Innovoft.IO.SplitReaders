@@ -299,6 +299,15 @@ namespace Innovoft.IO
 			return DateTime.Parse(ToChars(decoder));
 		}
 
+		public decimal ToDecimal()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out decimal value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public decimal ToDecimal(Encoding encoding)
 		{
 			return decimal.Parse(ToChars(encoding));
