@@ -156,12 +156,22 @@ namespace Innovoft.IO
 
 		public void AppendLength(string append, int offset, int length, Encoder encoder, bool flush)
 		{
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+			//TODO: use ReadOnlySpan
 			AppendLength(append.ToCharArray(), offset, length, encoder, flush);
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
+			AppendLength(append.ToCharArray(), offset, length, encoder, flush);
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		}
 
 		public void AppendEnding(string append, int offset, int ending, Encoder encoder, bool flush)
 		{
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+			//TODO: use ReadOnlySpan
 			AppendEnding(append.ToCharArray(), offset, ending, encoder, flush);
+#else //NETSTANDARD2_1 || NET5_0_OR_GREATER
+			AppendEnding(append.ToCharArray(), offset, ending, encoder, flush);
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		}
 
 		public void AppendLength(char[] append, int offset, int length, Encoding encoding)
