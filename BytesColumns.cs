@@ -62,6 +62,11 @@ namespace Innovoft.IO
 			return value.AppendEnding;
 		}
 
+		public string[] ToStringsArray()
+		{
+			return ToStringsArray(Encoding.UTF8);
+		}
+
 		public string[] ToStringsArray(Encoding encoding)
 		{
 			var values = new string[columns.Count];
