@@ -5,45 +5,13 @@ using System.Text;
 
 namespace Innovoft.IO
 {
-	public sealed class CharsColumns
+	public sealed class CharsColumns : SplitColumns<CharsColumn, char>
 	{
 		#region Constants
 		public const int DefaultCapacity = CharsColumn.DefaultCapacity;
 		#endregion //Constants
 
-		#region Class Methods
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear(CharsColumn[] values)
-		{
-			foreach (var value in values)
-			{
-				value?.Clear();
-			}
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear<T>(T values)
-			where T: IList<CharsColumn>
-		{
-			foreach (var value in values)
-			{
-				value?.Clear();
-			}
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Clear(IEnumerable<CharsColumn> values)
-		{
-			foreach (var value in values)
-			{
-				value?.Clear();
-			}
-		}
-		#endregion //Class Methods
-
 		#region Fields
-		private readonly List<CharsColumn> columns = new List<CharsColumn>();
-		private readonly Queue<CharsColumn> queue = new Queue<CharsColumn>();
 		private int capacity;
 		#endregion //Fields
 
@@ -54,83 +22,17 @@ namespace Innovoft.IO
 		}
 
 		public CharsColumns(int capacity)
+			: base()
 		{
 			this.capacity = capacity;
 		}
 		#endregion //Constructors
 
 		#region Properties
-		public List<CharsColumn> Columns => columns;
-		public int Count => columns.Count;
-		public Queue<CharsColumn> Queue => queue;
-		public int Queued => queue.Count;
 		public int Capacity { get => capacity; set => capacity = value; }
 		#endregion //Properties
 
-		#region Indexers
-		public CharsColumn this[int i] => columns[i];
-		#endregion //Indexers
-
 		#region Methods
-		public void Clear()
-		{
-			foreach (var column in columns)
-			{
-				queue.Enqueue(column);
-			}
-			columns.Clear();
-		}
-
-		public void Enqueue(CharsColumn value)
-		{
-			if (value == null)
-			{
-				return;
-			}
-
-			queue.Enqueue(value);
-		}
-
-		public void Enqueue(CharsColumn[] values)
-		{
-			foreach (var value in values)
-			{
-				if (value == null)
-				{
-					continue;
-				}
-
-				queue.Enqueue(value);
-			}
-		}
-
-		public void Enqueue<T>(T values)
-			where T: IList<CharsColumn>
-		{
-			foreach (var value in values)
-			{
-				if (value == null)
-				{
-					continue;
-				}
-
-				queue.Enqueue(value);
-			}
-		}
-
-		public void Enqueue(IEnumerable<CharsColumn> values)
-		{
-			foreach (var value in values)
-			{
-				if (value == null)
-				{
-					continue;
-				}
-
-				queue.Enqueue(value);
-			}
-		}
-
 		public CharsColumn Dequeue()
 		{
 			if (queue.Count > 0)
