@@ -89,6 +89,11 @@ namespace Innovoft.IO
 			return values;
 		}
 
+		public List<string> ToStringsList()
+		{
+			return ToStringsList(Encoding.UTF8);
+		}
+
 		public List<string> ToStringsList(Encoding encoding)
 		{
 			var values = new List<string>(columns.Count);
