@@ -179,6 +179,113 @@ namespace Innovoft.IO
 				where = null;
 			}
 #>
+		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, CharsColumns add)
+<#
+			if (separator.Generic)
+			{
+#>
+			<#= where #>
+<#
+			}
+#>
+		{
+			if (stream == null)
+			{
+				throw new ObjectDisposedException(nameof(CharsSplitReader));
+			}
+			if (decodedOffset >= decodedLength && !ReadBuffers())
+			{
+				return false;
+			}
+			var offset = decodedOffset;
+			var append = add.Dequeue();
+			while (true)
+			{
+				var letter = decoded[decodedOffset];
+				switch (letter)
+				{
+				case CR:
+					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					//LF
+					if (decodedOffset >= decodedLength)
+					{
+						if (!ReadBuffers())
+						{
+							return true;
+						}
+					}
+					if (decoded[decodedOffset] == LF)
+					{
+						++decodedOffset;
+					}
+					return true;
+
+				case LF:
+					append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					++decodedOffset;
+					return true;
+
+				default:
+					if (<#= separator.Test #>)
+					{
+						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+						offset = ++decodedOffset;
+						append = add.Dequeue();
+						break;
+					}
+					else
+					{
+						++decodedOffset;
+					}
+					break;
+				}
+				if (decodedOffset >= decodedLength)
+				{
+					if (offset <= decodedOffset)
+					{
+						append.Append<#= method.Name #>(decoded, offset, <#= method.Math #>);
+					}
+					if (!ReadBuffers())
+					{
+						return true;
+					}
+					offset = 0;
+				}
+			}
+		}
+<#
+		}
+	}
+#>
+<#
+	foreach (var separator in separators)
+	{
+		foreach (var method in methods)
+		{
+			if (line)
+			{
+#>
+
+<#
+			}
+			else
+			{
+				line = true;
+			}
+			string parameters;
+			string where;
+			if (separator.Generic)
+			{
+				parameters = "<TSeparator>";
+				where = "where TSeparator: " + separator.Type;
+			}
+			else
+			{
+				parameters = "";
+				where = null;
+			}
+#>
 		public bool ReadColumns<#= method.Name #><#= parameters #>(<#= separator.Generic ? "TSeparator" : separator.Type #> separator, int column, Action<char[], int, int> append)
 <#
 			if (separator.Generic)
