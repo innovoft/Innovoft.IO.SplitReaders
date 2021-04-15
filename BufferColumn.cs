@@ -375,6 +375,15 @@ namespace Innovoft.IO
 			return int.Parse(ToChars(decoder));
 		}
 
+		public long ToInt64()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out long value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public long ToInt64(Encoding encoding)
 		{
 			return long.Parse(ToChars(encoding));
