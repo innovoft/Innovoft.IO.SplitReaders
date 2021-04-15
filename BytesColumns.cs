@@ -39,26 +39,27 @@ namespace Innovoft.IO
 			{
 				var value = queue.Dequeue();
 				value.Clear();
+				columns.Add(value);
 				return value;
 			}
 			else
 			{
-				return new BytesColumn(capacity);
+				var value = new BytesColumn(capacity);
+				columns.Add(value);
+				return value;
 			}
 		}
 
 		public Action<byte[], int, int> AddLength()
 		{
-			var column = Dequeue();
-			columns.Add(column);
-			return column.AppendLength;
+			var value = Dequeue();
+			return value.AppendLength;
 		}
 
 		public Action<byte[], int, int> AddEnding()
 		{
-			var column = Dequeue();
-			columns.Add(column);
-			return column.AppendEnding;
+			var value = Dequeue();
+			return value.AppendEnding;
 		}
 
 		public string[] ToStringsArray(Encoding encoding)
