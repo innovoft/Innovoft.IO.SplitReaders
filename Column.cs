@@ -45,15 +45,9 @@ namespace Innovoft.IO
 		#endregion //Indexes
 
 #region Methods
-		public void Clear()
+		public override bool Equals(object other)
 		{
-			count = 0;
-			appended = false;
-		}
-
-		public void Append()
-		{
-			appended = true;
+			return Equals(other as Column<T>);
 		}
 
 		public bool Equals(Column<T> other)
@@ -74,6 +68,17 @@ namespace Innovoft.IO
 				}
 			}
 			return true;
+		}
+
+		public void Clear()
+		{
+			count = 0;
+			appended = false;
+		}
+
+		public void Append()
+		{
+			appended = true;
 		}
 
 		public void AppendLength(T[] append, int offset, int length)
