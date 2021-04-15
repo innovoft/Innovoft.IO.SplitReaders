@@ -11,7 +11,7 @@ namespace Innovoft.IO
 	public class CharsSplitReaderTests
 	{
 		[TestMethod]
-		public void ReadColumnsAddTest()
+		public void ReadColumnsAddFuncTest()
 		{
 			const char separator = ',';
 			var expecteds = new string[] { "A", "B", "C", "D", "", };
