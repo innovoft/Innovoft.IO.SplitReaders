@@ -6,6 +6,7 @@ using System.Text;
 namespace Innovoft.IO
 {
 	public class Column<T>
+		where T: IEquatable<T>
 	{
 		#region Constants
 		public const int DefaultCapacity = 128;
@@ -53,6 +54,26 @@ namespace Innovoft.IO
 		public void Append()
 		{
 			appended = true;
+		}
+
+		public bool Equals(Column<T> other)
+		{
+			if (other == null)
+			{
+				return false;
+			}
+			if (other.count != this.count)
+			{
+				return false;
+			}
+			for (var offset = count - 1; offset >= 0; --offset)
+			{
+				if (!this.values[offset].Equals(other.values[offset]))
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 
 		public void AppendLength(T[] append, int offset, int length)
