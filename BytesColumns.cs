@@ -116,6 +116,12 @@ namespace Innovoft.IO
 			return values;
 		}
 
+		public void ToStringsAdd<T>(T values)
+			where T: IList<string>
+		{
+			ToStringsAdd(values, Encoding.UTF8);
+		}
+
 		public void ToStringsAdd<T>(T values, Encoding encoding)
 			where T: IList<string>
 		{
