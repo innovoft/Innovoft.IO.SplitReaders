@@ -318,6 +318,15 @@ namespace Innovoft.IO
 			return decimal.Parse(ToChars(decoder));
 		}
 
+		public double ToDouble()
+		{
+			if (!Utf8Parser.TryParse(ToRead(), out double value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
 		public double ToDouble(Encoding encoding)
 		{
 			return double.Parse(ToChars(encoding));
