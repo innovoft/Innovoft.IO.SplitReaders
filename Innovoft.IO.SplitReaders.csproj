@@ -32,7 +32,7 @@
 		</Exec>
 	</Target>
 
-	<Target Name="MetadataAttributes" AfterTargets="InitializeSourceControlInformation">
+	<Target Name="RevisionAttribute" AfterTargets="InitializeSourceControlInformation">
 		<ItemGroup>
 			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition="$(SourceRevisionId) != ''">
 				<_Parameter1>Revision</_Parameter1>
