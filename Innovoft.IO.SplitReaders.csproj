@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 	
-	<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
+	<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation" Condition="$(SourceRevisionId) == ''">
 		<Exec Command="git rev-parse HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False">
 			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
 		</Exec>
