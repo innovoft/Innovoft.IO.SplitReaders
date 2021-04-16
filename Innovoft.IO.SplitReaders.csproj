@@ -31,6 +31,15 @@
 			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
 		</Exec>
 	</Target>
+
+	<Target Name="MetadataAttributes" AfterTargets="InitializeSourceControlInformation">
+		<ItemGroup>
+			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition="$(SourceRevisionId) != ''">
+				<_Parameter1>Revision</_Parameter1>
+				<_Parameter2>$(SourceRevisionId)</_Parameter2>
+			</AssemblyAttribute>
+		</ItemGroup>
+	</Target>
 	
   <ItemGroup>
     <Compile Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
