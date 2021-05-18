@@ -57,7 +57,7 @@ namespace Innovoft.IO
 		#endregion //Properties
 
 		#region Indexers
-		public TColumn this[int i] => columns[i];
+		public TColumn this[int offset] => columns[offset];
 		#endregion //Indexers
 
 		#region Methods
