@@ -70,6 +70,20 @@ namespace Innovoft.IO
 			columns.Clear();
 		}
 
+		public bool TryGetColumn(int offset, out TColumn column)
+		{
+			if (offset < columns.Count)
+			{
+				column = columns[offset];
+				return true;
+			}
+			else
+			{
+				column = null;
+				return false;
+			}
+		}
+
 		public void Enqueue(TColumn value)
 		{
 			if (value == null)
