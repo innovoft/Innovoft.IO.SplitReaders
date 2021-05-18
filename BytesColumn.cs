@@ -629,16 +629,16 @@ namespace Innovoft.IO
 			}
 		}
 
-		public int ToChars(Encoding encoding, ref char[] chars)
+		public int ToChars(Encoding encoding, ref char[] decoded)
 		{
 			if (appended)
 			{
 				var length = encoding.GetCharCount(values, 0, count);
-				if (length < chars.Length)
+				if (length < decoded.Length)
 				{
-					Array.Resize(ref chars, length);
+					Array.Resize(ref decoded, length);
 				}
-				encoding.GetChars(values, 0, count, chars, 0);
+				encoding.GetChars(values, 0, count, decoded, 0);
 				return length;
 			}
 			else
@@ -659,6 +659,24 @@ namespace Innovoft.IO
 			else
 			{
 				return null;
+			}
+		}
+
+		public int ToChars(Decoder decoder, ref char[] decoded)
+		{
+			if (appended)
+			{
+				var length = decoder.GetCharCount(values, 0, count);
+				if (length < decoded.Length)
+				{
+					Array.Resize(ref decoded, length);
+				}
+				decoder.GetChars(values, 0, count, decoded, 0);
+				return length;
+			}
+			else
+			{
+				return -1;
 			}
 		}
 #endregion //Methods
