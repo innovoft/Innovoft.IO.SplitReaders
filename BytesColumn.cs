@@ -629,6 +629,24 @@ namespace Innovoft.IO
 			}
 		}
 
+		public int ToChars(Encoding encoding, ref char[] chars)
+		{
+			if (appended)
+			{
+				var length = encoding.GetCharCount(values, 0, count);
+				if (length < chars.Length)
+				{
+					Array.Resize(ref chars, length);
+				}
+				encoding.GetChars(values, 0, count, chars, 0);
+				return length;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+
 		public char[] ToChars(Decoder decoder)
 		{
 			if (appended)
