@@ -639,7 +639,7 @@ namespace Innovoft.IO
 			if (appended)
 			{
 				var length = encoding.GetCharCount(values, 0, count);
-				if (length < decoded.Length)
+				if (length > decoded.Length)
 				{
 					Array.Resize(ref decoded, 2 * decoded.Length);
 				}
@@ -672,7 +672,7 @@ namespace Innovoft.IO
 			if (appended)
 			{
 				var length = decoder.GetCharCount(values, 0, count);
-				if (length < decoded.Length)
+				if (length > decoded.Length)
 				{
 					Array.Resize(ref decoded, 2 * decoded.Length);
 				}
