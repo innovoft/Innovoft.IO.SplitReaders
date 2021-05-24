@@ -4,6 +4,7 @@ using System.Buffers.Text;
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
@@ -280,6 +281,12 @@ namespace Innovoft.IO
 			return bool.Parse(ToChars(decoder));
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out bool value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public DateTime ToDateTime()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out DateTime value, out var consumed))
@@ -297,6 +304,12 @@ namespace Innovoft.IO
 		public DateTime ToDateTime(Decoder decoder)
 		{
 			return DateTime.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out DateTime value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
 		public decimal ToDecimal()
@@ -318,6 +331,12 @@ namespace Innovoft.IO
 			return decimal.Parse(ToChars(decoder));
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out decimal value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public double ToDouble()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out double value, out var consumed))
@@ -335,6 +354,12 @@ namespace Innovoft.IO
 		public double ToDouble(Decoder decoder)
 		{
 			return double.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out double value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
 		public short ToInt16()
@@ -356,6 +381,12 @@ namespace Innovoft.IO
 			return short.Parse(ToChars(decoder));
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out short value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public int ToInt32()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out int value, out var consumed))
@@ -373,6 +404,12 @@ namespace Innovoft.IO
 		public int ToInt32(Decoder decoder)
 		{
 			return int.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out int value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
 		public long ToInt64()
@@ -394,6 +431,12 @@ namespace Innovoft.IO
 			return long.Parse(ToChars(decoder));
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out long value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public float ToSingle()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out float value, out var consumed))
@@ -411,6 +454,12 @@ namespace Innovoft.IO
 		public float ToSingle(Decoder decoder)
 		{
 			return float.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out float value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
 		public ushort ToUInt16()
@@ -432,6 +481,12 @@ namespace Innovoft.IO
 			return ushort.Parse(ToChars(decoder));
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out ushort value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public uint ToUInt32()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out uint value, out var consumed))
@@ -451,6 +506,12 @@ namespace Innovoft.IO
 			return uint.Parse(ToChars(decoder));
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out uint value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public ulong ToUInt64()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out ulong value, out var consumed))
@@ -468,6 +529,12 @@ namespace Innovoft.IO
 		public ulong ToUInt64(Decoder decoder)
 		{
 			return ulong.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out ulong value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean(Encoding encoding)
