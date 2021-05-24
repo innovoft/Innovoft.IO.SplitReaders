@@ -685,6 +685,15 @@ namespace Innovoft.IO
 				return -1;
 			}
 		}
-#endregion //Methods
+
+		public void Write(TextWriter writer, Encoding encoding, ref char[] decoded)
+		{
+			var length = ToChars(ref decoded);
+			if (length > 0)
+			{
+				writer.Write(decoded, 0, length);
+			}
+		}
+		#endregion //Methods
 	}
 }
