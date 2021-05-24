@@ -3,6 +3,7 @@
 using System.Buffers.Text;
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Innovoft.IO
@@ -617,11 +618,6 @@ namespace Innovoft.IO
 			return ToChars(Encoding.UTF8);
 		}
 
-		public int ToChars(ref char[] decoded)
-		{
-			return ToChars(Encoding.UTF8, ref decoded);
-		}
-
 		public char[] ToChars(Encoding encoding)
 		{
 			if (appended)
@@ -632,6 +628,11 @@ namespace Innovoft.IO
 			{
 				return null;
 			}
+		}
+
+		public int ToChars(ref char[] decoded)
+		{
+			return ToChars(Encoding.UTF8, ref decoded);
 		}
 
 		public int ToChars(Encoding encoding, ref char[] decoded)
