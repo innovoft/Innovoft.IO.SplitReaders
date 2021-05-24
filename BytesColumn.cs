@@ -537,6 +537,11 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public bool ToBoolean()
+		{
+			return bool.Parse(ToString());
+		}
+
 		public bool ToBoolean(Encoding encoding)
 		{
 			return bool.Parse(ToString(encoding));
@@ -545,6 +550,11 @@ namespace Innovoft.IO
 		public bool ToBoolean(Decoder decoder)
 		{
 			return bool.Parse(ToString(decoder));
+		}
+
+		public DateTime ToDateTime()
+		{
+			return DateTime.Parse(ToString());
 		}
 
 		public DateTime ToDateTime(Encoding encoding)
@@ -557,6 +567,11 @@ namespace Innovoft.IO
 			return DateTime.Parse(ToString(decoder));
 		}
 
+		public decimal ToDecimal()
+		{
+			return decimal.Parse(ToString());
+		}
+
 		public decimal ToDecimal(Encoding encoding)
 		{
 			return decimal.Parse(ToString(encoding));
@@ -565,6 +580,11 @@ namespace Innovoft.IO
 		public decimal ToDecimal(Decoder decoder)
 		{
 			return decimal.Parse(ToString(decoder));
+		}
+
+		public double ToDouble()
+		{
+			return double.Parse(ToString());
 		}
 
 		public double ToDouble(Encoding encoding)
@@ -577,6 +597,11 @@ namespace Innovoft.IO
 			return double.Parse(ToString(decoder));
 		}
 
+		public short ToInt16()
+		{
+			return short.Parse(ToString());
+		}
+
 		public short ToInt16(Encoding encoding)
 		{
 			return short.Parse(ToString(encoding));
@@ -585,6 +610,11 @@ namespace Innovoft.IO
 		public short ToInt16(Decoder decoder)
 		{
 			return short.Parse(ToString(decoder));
+		}
+
+		public int ToInt32()
+		{
+			return int.Parse(ToString());
 		}
 
 		public int ToInt32(Encoding encoding)
@@ -597,6 +627,11 @@ namespace Innovoft.IO
 			return int.Parse(ToString(decoder));
 		}
 
+		public long ToInt64()
+		{
+			return long.Parse(ToString());
+		}
+
 		public long ToInt64(Encoding encoding)
 		{
 			return long.Parse(ToString(encoding));
@@ -605,6 +640,11 @@ namespace Innovoft.IO
 		public long ToInt64(Decoder decoder)
 		{
 			return long.Parse(ToString(decoder));
+		}
+
+		public float ToSingle()
+		{
+			return float.Parse(ToString());
 		}
 
 		public float ToSingle(Encoding encoding)
@@ -617,6 +657,11 @@ namespace Innovoft.IO
 			return float.Parse(ToString(decoder));
 		}
 
+		public ushort ToUInt16()
+		{
+			return ushort.Parse(ToString());
+		}
+
 		public ushort ToUInt16(Encoding encoding)
 		{
 			return ushort.Parse(ToString(encoding));
@@ -627,6 +672,11 @@ namespace Innovoft.IO
 			return ushort.Parse(ToString(decoder));
 		}
 
+		public uint ToUInt32()
+		{
+			return uint.Parse(ToString());
+		}
+
 		public uint ToUInt32(Encoding encoding)
 		{
 			return uint.Parse(ToString(encoding));
@@ -635,6 +685,11 @@ namespace Innovoft.IO
 		public uint ToUInt32(Decoder decoder)
 		{
 			return uint.Parse(ToString(decoder));
+		}
+
+		public ulong ToUInt64()
+		{
+			return ulong.Parse(ToString());
 		}
 
 		public ulong ToUInt64(Encoding encoding)
