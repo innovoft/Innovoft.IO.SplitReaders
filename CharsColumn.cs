@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
@@ -184,9 +185,21 @@ namespace Innovoft.IO
 			return bool.Parse(ToReadOnlySpan());
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out bool value)
+		{
+			return bool.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public DateTime ToDateTime()
 		{
 			return DateTime.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out DateTime value)
+		{
+			return DateTime.TryParse(ToReadOnlySpan(), out value);
 		}
 
 		public decimal ToDecimal()
@@ -194,9 +207,21 @@ namespace Innovoft.IO
 			return decimal.Parse(ToReadOnlySpan());
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out decimal value)
+		{
+			return decimal.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public double ToDouble()
 		{
 			return double.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out double value)
+		{
+			return double.TryParse(ToReadOnlySpan(), out value);
 		}
 
 		public short ToInt16()
@@ -204,9 +229,21 @@ namespace Innovoft.IO
 			return short.Parse(ToReadOnlySpan());
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out short value)
+		{
+			return short.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public int ToInt32()
 		{
 			return int.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out int value)
+		{
+			return int.TryParse(ToReadOnlySpan(), out value);
 		}
 
 		public long ToInt64()
@@ -214,9 +251,21 @@ namespace Innovoft.IO
 			return long.Parse(ToReadOnlySpan());
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out long value)
+		{
+			return long.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public float ToSingle()
 		{
 			return float.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out float value)
+		{
+			return float.TryParse(ToReadOnlySpan(), out value);
 		}
 
 		public ushort ToUInt16()
@@ -224,14 +273,32 @@ namespace Innovoft.IO
 			return ushort.Parse(ToReadOnlySpan());
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out ushort value)
+		{
+			return ushort.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public uint ToUInt32()
 		{
 			return uint.Parse(ToReadOnlySpan());
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out uint value)
+		{
+			return uint.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public ulong ToUInt64()
 		{
 			return ulong.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out ulong value)
+		{
+			return ulong.TryParse(ToReadOnlySpan(), out value);
 		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
