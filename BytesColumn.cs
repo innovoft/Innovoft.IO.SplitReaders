@@ -421,7 +421,7 @@ namespace Innovoft.IO
 			}
 			return value;
 		}
-
+		
 		public ushort ToUInt16(Encoding encoding)
 		{
 			return ushort.Parse(ToChars(encoding));
