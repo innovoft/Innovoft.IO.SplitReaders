@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Innovoft.IO
@@ -298,6 +299,14 @@ namespace Innovoft.IO
 			else
 			{
 				return null;
+			}
+		}
+
+		public void Write(TextWriter writer)
+		{
+			if (count > 0)
+			{
+				writer.Write(values, 0, count);
 			}
 		}
 #endregion //Methods
