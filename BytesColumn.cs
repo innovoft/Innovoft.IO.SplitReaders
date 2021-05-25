@@ -20,7 +20,7 @@ namespace Innovoft.IO
 		public BytesColumn(string append)
 			: base()
 		{
-			Append(append, Encoding.UTF8);
+			Append(append);
 		}
 
 		public BytesColumn(string append, Encoding encoding)
