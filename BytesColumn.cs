@@ -116,6 +116,11 @@ namespace Innovoft.IO
 			count += length;
 		}
 
+		public void Append(string append)
+		{
+			Append(append, Encoding.UTF8);
+		}
+
 		public void Append(string append, Encoder encoder, bool flush)
 		{
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
