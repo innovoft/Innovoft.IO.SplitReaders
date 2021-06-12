@@ -87,6 +87,19 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		public void Append(CharsColumn append)
+		{
+			appended = true;
+			var appendCount = append.count;
+			var required = count + appendCount;
+			if (required > capacity)
+			{
+				Enlarge();
+			}
+			Array.Copy(append.values, 0, values, count, appendCount);
+			count += appendCount;
+		}
+
 		public void Append(string append)
 		{
 			appended = true;
