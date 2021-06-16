@@ -138,6 +138,11 @@ namespace Innovoft.IO
 			return value;
 		}
 
+		public void Copy(T[] value, int offset)
+		{
+			Array.Copy(values, 0, value, offset, count);
+		}
+
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public Span<T> ToSpan()
 		{
