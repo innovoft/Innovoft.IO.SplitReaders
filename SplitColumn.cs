@@ -126,6 +126,18 @@ namespace Innovoft.IO
 			values = enlarged;
 		}
 
+		public T[] ToArray()
+		{
+			if (!appended)
+			{
+				return null;
+			}
+
+			var value = new T[count];
+			Array.Copy(values, 0, value, 0, count);
+			return value;
+		}
+
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public Span<T> ToSpan()
 		{
