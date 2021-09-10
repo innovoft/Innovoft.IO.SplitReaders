@@ -456,5 +456,75 @@ namespace Innovoft.IO
 			}
 		}
 		#endregion //Methods
+
+		#region Operators
+		public static bool operator ==(char[] x, CharsColumn y)
+		{
+			if (x.Length != y.count)
+			{
+				return false;
+			}
+			var v = y.values;
+			for (var i = y.count - 1; i >= 0; --i)
+			{
+				if (x[i] != v[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public static bool operator ==(CharsColumn x, char[] y)
+		{
+			if (x.count != y.Length)
+			{
+				return false;
+			}
+			var v = x.values;
+			for (var i = x.count - 1; i >= 0; --i)
+			{
+				if (v[i] != y[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public static bool operator !=(char[] x, CharsColumn y)
+		{
+			if (x.Length != y.count)
+			{
+				return true;
+			}
+			var v = y.values;
+			for (var i = y.count - 1; i >= 0; --i)
+			{
+				if (x[i] != v[i])
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool operator !=(CharsColumn x, char[] y)
+		{
+			if (x.count != y.Length)
+			{
+				return true;
+			}
+			var v = x.values;
+			for (var i = x.count - 1; i >= 0; --i)
+			{
+				if (v[i] != y[i])
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		#endregion //Operators
 	}
 }
