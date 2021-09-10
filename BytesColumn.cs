@@ -85,7 +85,7 @@ namespace Innovoft.IO
 
 		public bool Equals(BytesColumn other)
 		{
-			if (other == null)
+			if (object.ReferenceEquals(other, null))
 			{
 				return false;
 			}
