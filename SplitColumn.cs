@@ -6,7 +6,7 @@ using System.Text;
 namespace Innovoft.IO
 {
 	public class SplitColumn<T> : IEquatable<SplitColumn<T>>
-		where T: IEquatable<T>
+		where T : IEquatable<T>
 	{
 		#region Constants
 		public const int DefaultCapacity = 128;
@@ -184,6 +184,6 @@ namespace Innovoft.IO
 			return value.ToReadOnlyMemory();
 		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
-#endregion //Methods
+		#endregion //Methods
 	}
 }
