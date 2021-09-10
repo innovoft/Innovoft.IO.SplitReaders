@@ -921,16 +921,34 @@ namespace Innovoft.IO
 		#endregion //Methods
 
 		#region Operators
+		public static bool operator ==(BytesColumn x, BytesColumn y)
+		{
+			if (x.count != y.count)
+			{
+				return false;
+			}
+			var xv = x.values;
+			var yv = y.values;
+			for (var i = y.count - 1; i >= 0; --i)
+			{
+				if (xv[i] != yv[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public static bool operator ==(byte[] x, BytesColumn y)
 		{
 			if (x.Length != y.count)
 			{
 				return false;
 			}
-			var v = y.values;
+			var yv = y.values;
 			for (var i = y.count - 1; i >= 0; --i)
 			{
-				if (x[i] != v[i])
+				if (x[i] != yv[i])
 				{
 					return false;
 				}
@@ -944,15 +962,33 @@ namespace Innovoft.IO
 			{
 				return false;
 			}
-			var v = x.values;
+			var xv = x.values;
 			for (var i = x.count - 1; i >= 0; --i)
 			{
-				if (v[i] != y[i])
+				if (xv[i] != y[i])
 				{
 					return false;
 				}
 			}
 			return true;
+		}
+
+		public static bool operator !=(BytesColumn x, BytesColumn y)
+		{
+			if (x.count != y.count)
+			{
+				return true;
+			}
+			var xv = x.values;
+			var yv = y.values;
+			for (var i = y.count - 1; i >= 0; --i)
+			{
+				if (xv[i] != yv[i])
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public static bool operator !=(byte[] x, BytesColumn y)
@@ -961,10 +997,10 @@ namespace Innovoft.IO
 			{
 				return true;
 			}
-			var v = y.values;
+			var yv = y.values;
 			for (var i = y.count - 1; i >= 0; --i)
 			{
-				if (x[i] != v[i])
+				if (x[i] != yv[i])
 				{
 					return true;
 				}
@@ -978,10 +1014,10 @@ namespace Innovoft.IO
 			{
 				return true;
 			}
-			var v = x.values;
+			var xv = x.values;
 			for (var i = x.count - 1; i >= 0; --i)
 			{
-				if (v[i] != y[i])
+				if (xv[i] != y[i])
 				{
 					return true;
 				}
