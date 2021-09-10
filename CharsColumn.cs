@@ -69,7 +69,7 @@ namespace Innovoft.IO
 
 		public bool Equals(CharsColumn other)
 		{
-			if (other == null)
+			if (object.ReferenceEquals(other, null))
 			{
 				return false;
 			}
