@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
@@ -19,10 +20,9 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
-		protected SplitReader(Stream stream)
+		protected SplitReader()
 		{
 			this.buffer = new byte[length];
-			OpenOnly(stream);
 		}
 		#endregion //Constructors
 
@@ -48,7 +48,8 @@ namespace Innovoft.IO
 		}
 		#endregion //Dispose
 
-		public virtual void OpenOnly(Stream stream)
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void OpenOnly(Stream stream)
 		{
 			if (stream == null)
 			{

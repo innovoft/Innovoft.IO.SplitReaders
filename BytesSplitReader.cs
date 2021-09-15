@@ -23,19 +23,21 @@ namespace Innovoft.IO
 
 		#region Constructors
 		public BytesSplitReader(Stream stream)
-			: base(stream)
+			: base()
 		{
+			OpenOnly(stream);
 		}
 		#endregion //Constructors
 
 		#region Methods
-		public override void OpenOnly(Stream stream)
+		public new void OpenOnly(Stream stream)
 		{
 			base.OpenOnly(stream);
 
 			bufferOffset = 0;
 			bufferLength = 0;
 		}
+
 		public bool ReadColumns()
 		{
 			if (stream == null)

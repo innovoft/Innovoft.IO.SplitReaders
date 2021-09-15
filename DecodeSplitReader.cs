@@ -28,12 +28,14 @@ namespace Innovoft.IO
 
 		#region Constructors
 		protected DecodeSplitReader(Stream stream)
-			: base(stream)
+			: base()
 		{
 			this.encoding = System.Text.Encoding.UTF8;
 			this.decoder = encoding.GetDecoder();
 			this.decoderGetChars = decoder.GetChars;
 			this.decoded = new char[length];
+
+			OpenOnly(stream);
 		}
 		#endregion //Constructors
 
@@ -42,7 +44,7 @@ namespace Innovoft.IO
 		#endregion //Properties
 
 		#region Methods
-		public override void OpenOnly(Stream stream)
+		private new void OpenOnly(Stream stream)
 		{
 			base.OpenOnly(stream);
 
