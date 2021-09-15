@@ -34,8 +34,6 @@ namespace Innovoft.IO
 			this.decoder = encoding.GetDecoder();
 			this.decoderGetChars = decoder.GetChars;
 			this.decoded = new char[length];
-
-			OpenOnly(stream);
 		}
 		#endregion //Constructors
 
