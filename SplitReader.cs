@@ -21,8 +21,8 @@ namespace Innovoft.IO
 		#region Constructors
 		protected SplitReader(Stream stream)
 		{
-			OpenOnly(stream);
 			this.buffer = new byte[length];
+			OpenOnly(stream);
 		}
 		#endregion //Constructors
 
