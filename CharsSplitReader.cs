@@ -9,9 +9,17 @@ namespace Innovoft.IO
 	{
 		#region Constructors
 		public CharsSplitReader(Stream stream)
-			: base(stream)
+			: base()
 		{
+			OpenOnly(stream);
 		}
 		#endregion //Constructors
+
+		#region Methods
+		private new void OpenOnly(Stream stream)
+		{
+			base.OpenOnly(stream);
+		}
+		#endregion //Methods
 	}
 }

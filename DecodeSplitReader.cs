@@ -27,7 +27,7 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
-		protected DecodeSplitReader(Stream stream)
+		protected DecodeSplitReader()
 			: base()
 		{
 			this.encoding = System.Text.Encoding.UTF8;
@@ -44,7 +44,8 @@ namespace Innovoft.IO
 		#endregion //Properties
 
 		#region Methods
-		private new void OpenOnly(Stream stream)
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected new void OpenOnly(Stream stream)
 		{
 			base.OpenOnly(stream);
 

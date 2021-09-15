@@ -13,9 +13,19 @@ namespace Innovoft.IO
 
 		#region Constructors
 		public StringSplitReader(Stream stream)
-			: base(stream)
+			: base()
 		{
+			OpenOnly(stream);
 		}
 		#endregion //Constructors
+
+		#region Methods
+		private new void OpenOnly(Stream stream)
+		{
+			base.OpenOnly(stream);
+
+			builder.Clear();
+		}
+		#endregion //Methods
 	}
 }
