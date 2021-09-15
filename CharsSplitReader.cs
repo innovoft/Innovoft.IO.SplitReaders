@@ -11,14 +11,14 @@ namespace Innovoft.IO
 		public CharsSplitReader(Stream stream)
 			: base()
 		{
-			OpenOnly(stream);
+			OpenOnly(stream, streamDispose: true);
 		}
 		#endregion //Constructors
 
 		#region Methods
-		private new void OpenOnly(Stream stream)
+		private new void OpenOnly(Stream stream, bool streamDispose)
 		{
-			base.OpenOnly(stream);
+			base.OpenOnly(stream, streamDispose);
 		}
 		#endregion //Methods
 	}

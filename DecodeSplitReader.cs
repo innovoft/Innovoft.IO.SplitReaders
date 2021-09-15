@@ -43,9 +43,9 @@ namespace Innovoft.IO
 
 		#region Methods
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		protected new void OpenOnly(Stream stream)
+		protected new void OpenOnly(Stream stream, bool streamDispose)
 		{
-			base.OpenOnly(stream);
+			base.OpenOnly(stream, streamDispose);
 
 			decodedOffset = 0;
 			decodedLength = 0;
