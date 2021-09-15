@@ -921,6 +921,7 @@ namespace Innovoft.IO
 		#endregion //Methods
 
 		#region Operators
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator ==(BytesColumn x, BytesColumn y)
 		{
 			if (x.count != y.count)
@@ -939,6 +940,7 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator ==(byte[] x, BytesColumn y)
 		{
 			if (x.Length != y.count)
@@ -956,6 +958,7 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator ==(BytesColumn x, byte[] y)
 		{
 			if (x.count != y.Length)
@@ -973,6 +976,7 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(BytesColumn x, BytesColumn y)
 		{
 			if (x.count != y.count)
@@ -991,6 +995,7 @@ namespace Innovoft.IO
 			return false;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(byte[] x, BytesColumn y)
 		{
 			if (x.Length != y.count)
@@ -1008,6 +1013,7 @@ namespace Innovoft.IO
 			return false;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(BytesColumn x, byte[] y)
 		{
 			if (x.count != y.Length)
