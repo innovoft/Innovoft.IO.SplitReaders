@@ -458,6 +458,7 @@ namespace Innovoft.IO
 		#endregion //Methods
 
 		#region Operators
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator ==(CharsColumn x, CharsColumn y)
 		{
 			if (x.count != y.count)
@@ -476,6 +477,7 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator ==(char[] x, CharsColumn y)
 		{
 			if (x.Length != y.count)
@@ -493,6 +495,7 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator ==(CharsColumn x, char[] y)
 		{
 			if (x.count != y.Length)
@@ -510,6 +513,7 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(CharsColumn x, CharsColumn y)
 		{
 			if (x.count != y.count)
@@ -528,6 +532,7 @@ namespace Innovoft.IO
 			return false;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(char[] x, CharsColumn y)
 		{
 			if (x.Length != y.count)
@@ -545,6 +550,7 @@ namespace Innovoft.IO
 			return false;
 		}
 
+		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(CharsColumn x, char[] y)
 		{
 			if (x.count != y.Length)
