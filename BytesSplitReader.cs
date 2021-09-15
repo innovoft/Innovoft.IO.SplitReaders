@@ -22,6 +22,11 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
+		public BytesSplitReader()
+			: base()
+		{
+		}
+
 		public BytesSplitReader(Stream stream)
 			: base()
 		{
