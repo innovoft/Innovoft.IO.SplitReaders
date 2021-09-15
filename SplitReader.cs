@@ -43,8 +43,11 @@ namespace Innovoft.IO
 
 		private void Dispose(bool disposing)
 		{
-			Interlocked.Exchange(ref stream, null)?.Dispose();
-			streamRead = null;
+			if (disposing)
+			{
+				Interlocked.Exchange(ref stream, null)?.Dispose();
+				streamRead = null;
+			}
 		}
 		#endregion //Dispose
 
