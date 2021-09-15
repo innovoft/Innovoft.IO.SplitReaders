@@ -8,10 +8,13 @@ namespace Innovoft.IO
 {
 	public abstract class SplitReader : IDisposable
 	{
+		#region Constants
+		protected const int length = 4096;
+		#endregion //Constants
+
 		#region Fields
 		protected Stream stream;
 		protected Func<byte[], int, int, int> streamRead;
-		protected readonly int length;
 		protected readonly byte[] buffer;
 		#endregion //Fields
 
@@ -28,7 +31,6 @@ namespace Innovoft.IO
 			}
 			this.stream = stream;
 			this.streamRead = stream.Read;
-			this.length = 4096;
 			this.buffer = new byte[length];
 		}
 		#endregion //Constructors
