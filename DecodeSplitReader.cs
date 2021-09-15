@@ -34,8 +34,6 @@ namespace Innovoft.IO
 			this.decoder = encoding.GetDecoder();
 			this.decoderGetChars = decoder.GetChars;
 			this.decoded = new char[length];
-			this.decodedOffset = 0;
-			this.decodedLength = 0;
 		}
 		#endregion //Constructors
 
@@ -44,6 +42,14 @@ namespace Innovoft.IO
 		#endregion //Properties
 
 		#region Methods
+		public override void OpenOnly(Stream stream)
+		{
+			base.OpenOnly(stream);
+
+			decodedOffset = 0;
+			decodedLength = 0;
+		}
+
 		public bool ReadColumns()
 		{
 			if (stream == null)
