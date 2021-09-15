@@ -29,6 +29,13 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Methods
+		public override void OpenOnly(Stream stream)
+		{
+			base.OpenOnly(stream);
+
+			bufferOffset = 0;
+			bufferLength = 0;
+		}
 		public bool ReadColumns()
 		{
 			if (stream == null)
