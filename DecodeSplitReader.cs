@@ -33,7 +33,7 @@ namespace Innovoft.IO
 			this.encoding = System.Text.Encoding.UTF8;
 			this.decoder = encoding.GetDecoder();
 			this.decoderGetChars = decoder.GetChars;
-			this.decoded = new char[this.length];
+			this.decoded = new char[length];
 			this.decodedOffset = 0;
 			this.decodedLength = 0;
 		}
