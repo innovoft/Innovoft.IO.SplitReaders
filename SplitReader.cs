@@ -21,16 +21,7 @@ namespace Innovoft.IO
 		#region Constructors
 		protected SplitReader(Stream stream)
 		{
-			if (stream == null)
-			{
-				throw new ArgumentNullException(nameof(stream));
-			}
-			if (!stream.CanRead)
-			{
-				throw new ArgumentException("!stream.CanRead");
-			}
-			this.stream = stream;
-			this.streamRead = stream.Read;
+			OpenOnly(stream);
 			this.buffer = new byte[length];
 		}
 		#endregion //Constructors
@@ -56,6 +47,20 @@ namespace Innovoft.IO
 			streamRead = null;
 		}
 		#endregion //Dispose
+
+		public virtual void OpenOnly(Stream stream)
+		{
+			if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
+			if (!stream.CanRead)
+			{
+				throw new ArgumentException("!stream.CanRead");
+			}
+			this.stream = stream;
+			this.streamRead = stream.Read;
+		}
 		#endregion //Methods
 	}
 }
