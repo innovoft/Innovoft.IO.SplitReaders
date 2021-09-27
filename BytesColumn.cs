@@ -380,6 +380,31 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		public Guid ToGUID()
+		{
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out Guid value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
+		public Guid ToGUID(Encoding encoding)
+		{
+			return Guid.Parse(ToChars(encoding));
+		}
+
+		public Guid ToGUID(Decoder decoder)
+		{
+			return Guid.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out Guid value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public short ToInt16()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out short value, out var consumed))
@@ -637,6 +662,27 @@ namespace Innovoft.IO
 		public bool TryParse(out double value)
 		{
 			return double.TryParse(ToString(), out value);
+		}
+
+		public Guid ToGUID()
+		{
+			return Guid.Parse(ToString());
+		}
+
+		public Guid ToGUID(Encoding encoding)
+		{
+			return Guid.Parse(ToString(encoding));
+		}
+
+		public Guid ToGUID(Decoder decoder)
+		{
+			return Guid.Parse(ToString(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out Guid value)
+		{
+			return Guid.TryParse(ToString(), out value);
 		}
 
 		public short ToInt16()
