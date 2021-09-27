@@ -12,6 +12,16 @@ namespace Innovoft.IO
 		public const int DefaultCapacity = 128;
 		#endregion //Constants
 
+		#region Class Methods
+		public static void Clear(SplitColumn<T>[] values)
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
+		#endregion //Class Methods
+
 		#region Fields
 		protected int capacity;
 		protected T[] values;
