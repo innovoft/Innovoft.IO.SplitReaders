@@ -505,6 +505,31 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		public TimeSpan ToTimeSpan()
+		{
+			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out TimeSpan value, out var consumed))
+			{
+				throw new FormatException();
+			}
+			return value;
+		}
+
+		public TimeSpan ToTimeSpan(Encoding encoding)
+		{
+			return TimeSpan.Parse(ToChars(encoding));
+		}
+
+		public TimeSpan ToTimeSpan(Decoder decoder)
+		{
+			return TimeSpan.Parse(ToChars(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out TimeSpan value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
 		public ushort ToUInt16()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out ushort value, out var consumed))
@@ -767,6 +792,27 @@ namespace Innovoft.IO
 		public bool TryParse(out float value)
 		{
 			return float.TryParse(ToString(), out value);
+		}
+
+		public TimeSpan ToTimeSpan()
+		{
+			return TimeSpan.Parse(ToString());
+		}
+
+		public TimeSpan ToTimeSpan(Encoding encoding)
+		{
+			return TimeSpan.Parse(ToString(encoding));
+		}
+
+		public TimeSpan ToTimeSpan(Decoder decoder)
+		{
+			return TimeSpan.Parse(ToString(decoder));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out TimeSpan value)
+		{
+			return TimeSpan.TryParse(ToString(), out value);
 		}
 
 		public ushort ToUInt16()
