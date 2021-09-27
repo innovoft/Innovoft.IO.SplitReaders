@@ -292,6 +292,17 @@ namespace Innovoft.IO
 			return float.TryParse(ToReadOnlySpan(), out value);
 		}
 
+		public TimeSpan ToTimeSpan()
+		{
+			return TimeSpan.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out TimeSpan value)
+		{
+			return TimeSpan.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public ushort ToUInt16()
 		{
 			return ushort.Parse(ToReadOnlySpan());
@@ -422,6 +433,17 @@ namespace Innovoft.IO
 		public bool TryParse(out float value)
 		{
 			return float.TryParse(ToString(), out value);
+		}
+
+		public TimeSpan ToTimeSpan()
+		{
+			return TimeSpan.Parse(ToString());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out TimeSpan value)
+		{
+			return TimeSpan.TryParse(ToString(), out value);
 		}
 
 		public ushort ToUInt16()
