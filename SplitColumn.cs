@@ -13,6 +13,7 @@ namespace Innovoft.IO
 		#endregion //Constants
 
 		#region Class Methods
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void Clear(SplitColumn<T>[] values)
 		{
 			foreach (var value in values)
@@ -21,6 +22,7 @@ namespace Innovoft.IO
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void Clear(IEnumerable<SplitColumn<T>> values)
 		{
 			foreach (var value in values)
