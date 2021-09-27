@@ -237,6 +237,17 @@ namespace Innovoft.IO
 			return double.TryParse(ToReadOnlySpan(), out value);
 		}
 
+		public Guid ToGUID()
+		{
+			return Guid.Parse(ToReadOnlySpan());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out Guid value)
+		{
+			return Guid.TryParse(ToReadOnlySpan(), out value);
+		}
+
 		public short ToInt16()
 		{
 			return short.Parse(ToReadOnlySpan());
@@ -356,6 +367,17 @@ namespace Innovoft.IO
 		public bool TryParse(out double value)
 		{
 			return double.TryParse(ToString(), out value);
+		}
+
+		public Guid ToGUID()
+		{
+			return Guid.Parse(ToString());
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out Guid value)
+		{
+			return Guid.TryParse(ToString(), out value);
 		}
 
 		public short ToInt16()
