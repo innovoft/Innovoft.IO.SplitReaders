@@ -20,6 +20,14 @@ namespace Innovoft.IO
 				value?.Clear();
 			}
 		}
+
+		public static void Clear(IEnumerable<SplitColumn<T>> values)
+		{
+			foreach (var value in values)
+			{
+				value?.Clear();
+			}
+		}
 		#endregion //Class Methods
 
 		#region Fields
