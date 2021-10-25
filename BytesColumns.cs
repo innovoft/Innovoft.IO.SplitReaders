@@ -50,6 +50,21 @@ namespace Innovoft.IO
 			}
 		}
 
+		public BytesColumn Remove()
+		{
+			if (queue.Count > 0)
+			{
+				var value = queue.Dequeue();
+				value.Clear();
+				return value;
+			}
+			else
+			{
+				var value = new BytesColumn(capacity);
+				return value;
+			}
+		}
+
 		public Action<byte[], int, int> AddLength()
 		{
 			var value = Dequeue();
