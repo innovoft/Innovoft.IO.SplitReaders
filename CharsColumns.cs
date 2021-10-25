@@ -50,6 +50,21 @@ namespace Innovoft.IO
 			}
 		}
 
+		public CharsColumn Remove()
+		{
+			if (queue.Count > 0)
+			{
+				var value = queue.Dequeue();
+				value.Clear();
+				return value;
+			}
+			else
+			{
+				var value = new CharsColumn(capacity);
+				return value;
+			}
+		}
+
 		public Action<char[], int, int> AddLength()
 		{
 			var value = Dequeue();
