@@ -51,6 +51,15 @@ namespace Innovoft.IO
 			decodedLength = 0;
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected new void OpenOnly(Stream stream, Action dispose)
+		{
+			base.OpenOnly(stream, dispose);
+
+			decodedOffset = 0;
+			decodedLength = 0;
+		}
+
 		public bool ReadColumns()
 		{
 			if (stream == null)
