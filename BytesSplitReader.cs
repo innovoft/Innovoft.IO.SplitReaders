@@ -43,6 +43,14 @@ namespace Innovoft.IO
 			bufferLength = 0;
 		}
 
+		public new void OpenOnly(Stream stream, Action dispose)
+		{
+			base.OpenOnly(stream, dispose);
+
+			bufferOffset = 0;
+			bufferLength = 0;
+		}
+
 		public bool ReadColumns()
 		{
 			if (stream == null)
