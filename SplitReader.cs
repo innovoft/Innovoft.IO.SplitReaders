@@ -71,6 +71,22 @@ namespace Innovoft.IO
 			this.dispose = dispose ? stream.Dispose : default(Action);
 			this.streamRead = stream.Read;
 		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void OpenOnly(Stream stream, Action dispose)
+		{
+			if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
+			if (!stream.CanRead)
+			{
+				throw new ArgumentException("!stream.CanRead");
+			}
+			this.stream = stream;
+			this.dispose = dispose;
+			this.streamRead = stream.Read;
+		}
 		#endregion //Methods
 	}
 }
