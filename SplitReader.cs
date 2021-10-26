@@ -15,7 +15,7 @@ namespace Innovoft.IO
 
 		#region Fields
 		protected Stream stream;
-		protected bool streamDispose;
+		protected Action dispose;
 		protected Func<byte[], int, int, int> streamRead;
 		protected readonly byte[] buffer;
 		#endregion //Fields
@@ -44,23 +44,20 @@ namespace Innovoft.IO
 
 		private void Dispose(bool disposing)
 		{
-			if (disposing)
+			if (!disposing)
 			{
-				if (stream != null)
-				{
-					if (streamDispose)
-					{
-						stream.Dispose();
-					}
-					stream = null;
-				}
-				streamRead = null;
+				return;
 			}
+
+			dispose?.Invoke();
+			dispose = null;
+			stream = null;
+			streamRead = null;
 		}
 		#endregion //Dispose
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		protected void OpenOnly(Stream stream, bool streamDispose)
+		protected void OpenOnly(Stream stream, bool dispose)
 		{
 			if (stream == null)
 			{
@@ -71,7 +68,7 @@ namespace Innovoft.IO
 				throw new ArgumentException("!stream.CanRead");
 			}
 			this.stream = stream;
-			this.streamDispose = streamDispose;
+			this.dispose = dispose ? stream.Dispose : default(Action);
 			this.streamRead = stream.Read;
 		}
 		#endregion //Methods

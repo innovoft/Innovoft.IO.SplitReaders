@@ -30,14 +30,14 @@ namespace Innovoft.IO
 		public BytesSplitReader(Stream stream)
 			: base()
 		{
-			OpenOnly(stream, streamDispose: true);
+			OpenOnly(stream, dispose: true);
 		}
 		#endregion //Constructors
 
 		#region Methods
-		public new void OpenOnly(Stream stream, bool streamDispose)
+		public new void OpenOnly(Stream stream, bool dispose)
 		{
-			base.OpenOnly(stream, streamDispose);
+			base.OpenOnly(stream, dispose);
 
 			bufferOffset = 0;
 			bufferLength = 0;
