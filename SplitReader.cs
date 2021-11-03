@@ -35,6 +35,7 @@ namespace Innovoft.IO
 		#endregion //Finalizer
 
 		#region Properties
+		public long Length => stream.Length;
 		#endregion //Properties
 
 		#region Methods
