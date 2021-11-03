@@ -16,11 +16,19 @@ namespace Innovoft.IO
 		public StringSplitReader(Stream stream)
 			: base()
 		{
-			OpenOnly(stream, dispose: true);
+			OpenOnly(stream);
 		}
 		#endregion //Constructors
 
 		#region Methods
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private new void OpenOnly(Stream stream)
+		{
+			base.OpenOnly(stream);
+
+			builder.Clear();
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private new void OpenOnly(Stream stream, bool dispose)
 		{
