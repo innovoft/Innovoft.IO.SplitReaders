@@ -32,6 +32,12 @@ namespace Innovoft.IO
 		{
 			OpenOnly(stream);
 		}
+
+		public BytesSplitReader(Stream stream, bool dispose)
+			: base()
+		{
+			OpenOnly(stream, dispose);
+		}
 		#endregion //Constructors
 
 		#region Methods
