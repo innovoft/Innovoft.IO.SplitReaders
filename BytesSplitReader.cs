@@ -108,10 +108,12 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
 					++bufferOffset;
+					position += bufferOffset;
 					return true;
 
 				default:
