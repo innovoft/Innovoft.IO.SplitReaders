@@ -46,6 +46,9 @@ namespace Innovoft.IO
 		}
 		#endregion //Constructors
 
+		#region Properties
+		#endregion //Properties
+
 		#region Methods
 		public new void OpenOnly(Stream stream)
 		{
