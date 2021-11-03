@@ -20,6 +20,12 @@ namespace Innovoft.IO
 		{
 			OpenOnly(stream, dispose);
 		}
+
+		public CharsSplitReader(Stream stream, Action dispose)
+			: base()
+		{
+			OpenOnly(stream, dispose);
+		}
 		#endregion //Constructors
 
 		#region Methods
