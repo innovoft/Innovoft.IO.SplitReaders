@@ -14,6 +14,7 @@ namespace Innovoft.IO
 		public const byte LF = 0x0A;
 		public const byte Space = 0x20;
 		public const byte Comma = 0x2C;
+		public const byte Pipe = 0x7C;
 		#endregion //Constants
 
 		#region Fields
