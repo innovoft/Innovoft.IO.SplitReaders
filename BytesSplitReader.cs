@@ -49,6 +49,7 @@ namespace Innovoft.IO
 		#endregion //Constructors
 
 		#region Properties
+		public long Position => position;
 		#endregion //Properties
 
 		#region Methods
