@@ -42,6 +42,14 @@ namespace Innovoft.IO
 
 			builder.Clear();
 		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private new void OpenOnly(Stream stream, Action dispose)
+		{
+			base.OpenOnly(stream, dispose);
+
+			builder.Clear();
+		}
 		#endregion //Methods
 	}
 }
