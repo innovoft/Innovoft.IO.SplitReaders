@@ -15,6 +15,7 @@ namespace Innovoft.IO
 		public const char LF = '\n';
 		public const char Space = ' ';
 		public const char Comma = ',';
+		public const char Pipe = '|';
 		#endregion //Constants
 
 		#region Fields
