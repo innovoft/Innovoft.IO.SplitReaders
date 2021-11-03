@@ -57,6 +57,22 @@ namespace Innovoft.IO
 		#endregion //Dispose
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void OpenOnly(Stream stream)
+		{
+			if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
+			if (!stream.CanRead)
+			{
+				throw new ArgumentException("!stream.CanRead");
+			}
+			this.stream = stream;
+			this.dispose = stream.Dispose;
+			this.streamRead = stream.Read;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected void OpenOnly(Stream stream, bool dispose)
 		{
 			if (stream == null)
