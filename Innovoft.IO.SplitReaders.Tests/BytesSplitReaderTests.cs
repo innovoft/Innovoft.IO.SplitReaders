@@ -101,5 +101,20 @@ namespace Innovoft.IO
 				}
 			}
 		}
+
+		[TestMethod]
+		public void PositionTest()
+		{
+			const byte separator = BytesSplitReader.Comma;
+			var expecteds = new string[] { "A", "B", "C", "D", "", };
+			var text = string.Join(((char)separator).ToString(), expecteds);
+			var raw = Encoding.UTF8.GetBytes(text);
+			using (var readerStream = new MemoryStream(raw))
+			using (var reader = new BytesSplitReader(readerStream))
+			{
+				Assert.IsTrue(reader.ReadColumns());
+				Assert.AreEqual(raw.Length, reader.Position);
+			}
+		}
 	}
 }
