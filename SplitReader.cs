@@ -34,6 +34,9 @@ namespace Innovoft.IO
 		}
 		#endregion //Finalizer
 
+		#region Properties
+		#endregion //Properties
+
 		#region Methods
 		#region Dispose
 		public void Dispose()
