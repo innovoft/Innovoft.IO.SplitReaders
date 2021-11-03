@@ -119,11 +119,13 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
 					append.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
 					++bufferOffset;
+					position += bufferOffset;
 					return true;
 
 				default:
@@ -227,11 +229,13 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
 					append(buffer, offset, <#= method.Math #>);
 					++bufferOffset;
+					position += bufferOffset;
 					return true;
 
 				default:
@@ -336,6 +340,7 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
@@ -343,11 +348,13 @@ namespace Innovoft.IO
 					{
 						append(buffer, offset, <#= method.Math #>);
 						++bufferOffset;
+						position += bufferOffset;
 						return true;
 					}
 					else
 					{
 						++bufferOffset;
+						position += bufferOffset;
 						return true;
 					}
 
@@ -480,12 +487,14 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
 					//Column
 					append?.Invoke(buffer, offset, <#= method.Math #>);
 					++bufferOffset;
+					position += bufferOffset;
 					return true;
 
 				default:
@@ -591,12 +600,14 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
 					//Column
 					appends(column, buffer, offset, <#= method.Math #>);
 					++bufferOffset;
+					position += bufferOffset;
 					return true;
 
 				default:
@@ -717,12 +728,14 @@ namespace Innovoft.IO
 					{
 						++bufferOffset;
 					}
+					position += bufferOffset;
 					return true;
 
 				case LF:
 					//Column
 					append?.Append<#= method.Name #>(buffer, offset, <#= method.Math #>);
 					++bufferOffset;
+					position += bufferOffset;
 					return true;
 
 				default:

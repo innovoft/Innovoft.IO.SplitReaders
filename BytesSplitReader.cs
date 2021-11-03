@@ -19,6 +19,8 @@ namespace Innovoft.IO
 		#region Fields
 		private int bufferOffset;
 		private int bufferLength;
+
+		private long position;
 		#endregion //Fields
 
 		#region Constructors
@@ -56,6 +58,7 @@ namespace Innovoft.IO
 
 			bufferOffset = 0;
 			bufferLength = 0;
+			position = 0;
 		}
 
 		public new void OpenOnly(Stream stream, bool dispose)
@@ -64,6 +67,7 @@ namespace Innovoft.IO
 
 			bufferOffset = 0;
 			bufferLength = 0;
+			position = 0;
 		}
 
 		public new void OpenOnly(Stream stream, Action dispose)
@@ -72,6 +76,7 @@ namespace Innovoft.IO
 
 			bufferOffset = 0;
 			bufferLength = 0;
+			position = 0;
 		}
 
 		public bool ReadColumns()
@@ -127,7 +132,8 @@ namespace Innovoft.IO
 		{
 			bufferOffset = 0;
 			bufferLength = 0;
-			return stream.Seek(offset, origin);
+			position = stream.Seek(offset, origin);
+			return position;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -145,6 +151,7 @@ namespace Innovoft.IO
 
 		private bool ReadBuffer()
 		{
+			position += bufferLength;
 			bufferOffset = 0;
 			bufferLength = streamRead(buffer, 0, length);
 			return bufferLength > 0;
