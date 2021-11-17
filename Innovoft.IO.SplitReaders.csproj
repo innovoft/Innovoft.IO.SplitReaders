@@ -91,6 +91,6 @@
 	</ItemGroup>
 
 	<!--T4-->
-	<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
+	<Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
 
 </Project>
