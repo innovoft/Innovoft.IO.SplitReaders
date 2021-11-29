@@ -9,6 +9,11 @@ namespace Innovoft.IO
 	public sealed partial class CharsSplitReader : DecodeSplitReader
 	{
 		#region Constructors
+		public CharsSplitReader()
+			: base()
+		{
+		}
+
 		public CharsSplitReader(Stream stream)
 			: base()
 		{
