@@ -13,6 +13,11 @@ namespace Innovoft.IO
 		#endregion //Fields
 
 		#region Constructors
+		public StringSplitReader()
+			: base()
+		{
+		}
+
 		public StringSplitReader(Stream stream)
 			: base()
 		{
