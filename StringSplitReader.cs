@@ -34,7 +34,7 @@ namespace Innovoft.IO
 
 		#region Methods
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private new void OpenOnly(Stream stream)
+		public new void OpenOnly(Stream stream)
 		{
 			base.OpenOnly(stream);
 
@@ -42,7 +42,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private new void OpenOnly(Stream stream, bool dispose)
+		public new void OpenOnly(Stream stream, bool dispose)
 		{
 			base.OpenOnly(stream, dispose);
 
@@ -50,7 +50,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private new void OpenOnly(Stream stream, Action dispose)
+		public new void OpenOnly(Stream stream, Action dispose)
 		{
 			base.OpenOnly(stream, dispose);
 
