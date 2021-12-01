@@ -133,6 +133,7 @@ namespace Innovoft.IO
 				{
 					return;
 				}
+				writer.Write(separator);
 			}
 		}
 
