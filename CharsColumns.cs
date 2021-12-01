@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -115,6 +116,23 @@ namespace Innovoft.IO
 			{
 				var value = column.ToString();
 				add(value);
+			}
+		}
+
+		public void Write(TextWriter writer, char separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return;
+			}
+			for (var offset = 0; ; )
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					return;
+				}
 			}
 		}
 		#endregion //Methods
