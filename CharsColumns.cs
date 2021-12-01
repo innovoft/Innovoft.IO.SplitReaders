@@ -125,6 +125,23 @@ namespace Innovoft.IO
 			{
 				return;
 			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					return;
+				}
+			}
+		}
+
+		public void Write(TextWriter writer, string separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return;
+			}
 			for (var offset = 0; ; )
 			{
 				columns[offset].Write(writer);
@@ -133,6 +150,7 @@ namespace Innovoft.IO
 				{
 					return;
 				}
+				writer.Write(separator);
 			}
 		}
 		#endregion //Methods
