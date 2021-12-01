@@ -154,6 +154,46 @@ namespace Innovoft.IO
 				writer.Write(separator);
 			}
 		}
+
+		public void WriteLine(TextWriter writer, char separator)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
+		public void WriteLine(TextWriter writer, string separator)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ; )
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
 		#endregion //Methods
 	}
 }
