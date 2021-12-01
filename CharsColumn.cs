@@ -499,6 +499,18 @@ namespace Innovoft.IO
 				writer.Write(values, 0, count);
 			}
 		}
+
+		public void WriteLine(TextWriter writer)
+		{
+			if (count > 0)
+			{
+				writer.WriteLine(values, 0, count);
+			}
+			else
+			{
+				writer.WriteLine();
+			}
+		}
 		#endregion //Methods
 
 		#region Operators
