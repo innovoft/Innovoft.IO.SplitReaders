@@ -1010,6 +1010,45 @@ namespace Innovoft.IO
 				writer.Write(decoded, 0, length);
 			}
 		}
+
+		public void WriteLine(TextWriter writer, ref char[] decoded)
+		{
+			if (count > 0)
+			{
+				var length = ToChars(ref decoded);
+				writer.WriteLine(decoded, 0, length);
+			}
+			else
+			{
+				writer.WriteLine();
+			}
+		}
+
+		public void WriteLine(TextWriter writer, Encoding encoding, ref char[] decoded)
+		{
+			if (count > 0)
+			{
+				var length = ToChars(encoding, ref decoded);
+				writer.WriteLine(decoded, 0, length);
+			}
+			else
+			{
+				writer.WriteLine();
+			}
+		}
+
+		public void WriteLine(TextWriter writer, Decoder decoder, ref char[] decoded)
+		{
+			if (count > 0)
+			{
+				var length = ToChars(decoder, ref decoded);
+				writer.WriteLine(decoded, 0, length);
+			}
+			else
+			{
+				writer.WriteLine();
+			}
+		}
 		#endregion //Methods
 
 		#region Operators
