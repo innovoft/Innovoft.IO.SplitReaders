@@ -288,6 +288,126 @@ namespace Innovoft.IO
 				writer.Write(separator);
 			}
 		}
+
+		public void WriteLine(TextWriter writer, char separator, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer, ref decoded);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
+		public void WriteLine(TextWriter writer, string separator, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer, ref decoded);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
+		public void WriteLine(TextWriter writer, char separator, Encoding encoding, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer, encoding, ref decoded);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
+		public void WriteLine(TextWriter writer, string separator, Encoding encoding, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer, encoding, ref decoded);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
+		public void WriteLine(TextWriter writer, char separator, Decoder decoder, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer, decoder, ref decoded);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
+		public void WriteLine(TextWriter writer, string separator, Decoder decoder, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.WriteLine();
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer, decoder, ref decoded);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.WriteLine();
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
 		#endregion //Methods
 	}
 }
