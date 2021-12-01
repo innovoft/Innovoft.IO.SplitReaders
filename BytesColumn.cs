@@ -986,27 +986,27 @@ namespace Innovoft.IO
 
 		public void Write(TextWriter writer, ref char[] decoded)
 		{
-			var length = ToChars(ref decoded);
-			if (length > 0)
+			if (count > 0)
 			{
+				var length = ToChars(ref decoded);
 				writer.Write(decoded, 0, length);
 			}
 		}
 
 		public void Write(TextWriter writer, Encoding encoding, ref char[] decoded)
 		{
-			var length = ToChars(encoding, ref decoded);
-			if (length > 0)
+			if (count > 0)
 			{
+				var length = ToChars(encoding, ref decoded);
 				writer.Write(decoded, 0, length);
 			}
 		}
 
 		public void Write(TextWriter writer, Decoder decoder, ref char[] decoded)
 		{
-			var length = ToChars(decoder, ref decoded);
-			if (length > 0)
+			if (count > 0)
 			{
+				var length = ToChars(decoder, ref decoded);
 				writer.Write(decoded, 0, length);
 			}
 		}
