@@ -586,6 +586,23 @@ namespace Innovoft.IO
 			}
 			return true;
 		}
+		/// <remarks>does not check for nulls</remarks>
+		public static bool operator ==(CharsColumn x, string y)
+		{
+			if (x.count != y.Length)
+			{
+				return false;
+			}
+			var xv = x.values;
+			for (var i = x.count - 1; i >= 0; --i)
+			{
+				if (xv[i] != y[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 
 		/// <remarks>does not check for nulls</remarks>
 		public static bool operator !=(CharsColumn x, CharsColumn y)
@@ -653,6 +670,24 @@ namespace Innovoft.IO
 			for (var i = y.count - 1; i >= 0; --i)
 			{
 				if (x[i] != yv[i])
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <remarks>does not check for nulls</remarks>
+		public static bool operator !=(CharsColumn x, string y)
+		{
+			if (x.count != y.Length)
+			{
+				return true;
+			}
+			var xv = x.values;
+			for (var i = x.count - 1; i >= 0; --i)
+			{
+				if (xv[i] != y[i])
 				{
 					return true;
 				}
