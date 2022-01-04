@@ -709,20 +709,6 @@ namespace Innovoft.IO
 			}
 		}
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParse(out string value)
-		{
-			value = ToString();
-			return true;
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseObjectString(out object value)
-		{
-			value = ToString();
-			return true;
-		}
-
 		public TimeSpan ToTimeSpan()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out TimeSpan value, out var consumed))
@@ -1382,6 +1368,20 @@ namespace Innovoft.IO
 			{
 				return null;
 			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out string value)
+		{
+			value = ToString();
+			return true;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectString(out object value)
+		{
+			value = ToString();
+			return true;
 		}
 
 		public char[] ToChars()
