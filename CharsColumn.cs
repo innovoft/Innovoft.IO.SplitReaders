@@ -527,6 +527,21 @@ namespace Innovoft.IO
 			return bool.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectBool(out object value)
+		{
+			if (bool.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public DateTime ToDateTime()
 		{
 			return DateTime.Parse(ToString());
@@ -536,6 +551,21 @@ namespace Innovoft.IO
 		public bool TryParse(out DateTime value)
 		{
 			return DateTime.TryParse(ToString(), out value);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDateTime(out object value)
+		{
+			if (DateTime.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public decimal ToDecimal()
@@ -549,6 +579,21 @@ namespace Innovoft.IO
 			return decimal.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDecimal(out object value)
+		{
+			if (decimal.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public double ToDouble()
 		{
 			return double.Parse(ToString());
@@ -558,6 +603,21 @@ namespace Innovoft.IO
 		public bool TryParse(out double value)
 		{
 			return double.TryParse(ToString(), out value);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDouble(out object value)
+		{
+			if (double.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public Guid ToGUID()
@@ -571,6 +631,21 @@ namespace Innovoft.IO
 			return Guid.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectGUID(out object value)
+		{
+			if (Guid.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public short ToInt16()
 		{
 			return short.Parse(ToString());
@@ -580,6 +655,21 @@ namespace Innovoft.IO
 		public bool TryParse(out short value)
 		{
 			return short.TryParse(ToString(), out value);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt16(out object value)
+		{
+			if (short.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public int ToInt32()
@@ -593,6 +683,21 @@ namespace Innovoft.IO
 			return int.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt32(out object value)
+		{
+			if (int.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public long ToInt64()
 		{
 			return long.Parse(ToString());
@@ -602,6 +707,21 @@ namespace Innovoft.IO
 		public bool TryParse(out long value)
 		{
 			return long.TryParse(ToString(), out value);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt64(out object value)
+		{
+			if (long.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public float ToSingle()
@@ -615,6 +735,21 @@ namespace Innovoft.IO
 			return float.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectSingle(out object value)
+		{
+			if (float.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public TimeSpan ToTimeSpan()
 		{
 			return TimeSpan.Parse(ToString());
@@ -624,6 +759,21 @@ namespace Innovoft.IO
 		public bool TryParse(out TimeSpan value)
 		{
 			return TimeSpan.TryParse(ToString(), out value);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectTimeSpan(out object value)
+		{
+			if (TimeSpan.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public ushort ToUInt16()
@@ -637,6 +787,21 @@ namespace Innovoft.IO
 			return ushort.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt16(out object value)
+		{
+			if (ushort.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public uint ToUInt32()
 		{
 			return uint.Parse(ToString());
@@ -648,6 +813,21 @@ namespace Innovoft.IO
 			return uint.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt32(out object value)
+		{
+			if (uint.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public ulong ToUInt64()
 		{
 			return ulong.Parse(ToString());
@@ -657,6 +837,21 @@ namespace Innovoft.IO
 		public bool TryParse(out ulong value)
 		{
 			return ulong.TryParse(ToString(), out value);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt64(out object value)
+		{
+			if (ulong.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
