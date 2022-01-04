@@ -305,6 +305,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectBool(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out bool parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public DateTime ToDateTime()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out DateTime value, out var consumed))
