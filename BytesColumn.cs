@@ -27,6 +27,11 @@ namespace Innovoft.IO
 			return parse.TryParseObjectDecimal(out value);
 		}
 
+		public static bool TryParseObjectDouble(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectDouble(out value);
+		}
+
 		public static bool TryParseObjectGUID(BytesColumn parse, out object value)
 		{
 			return parse.TryParseObjectGUID(out value);
