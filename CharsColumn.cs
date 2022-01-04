@@ -216,7 +216,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseObjectBool(out object value)
+		public bool TryParseObjectDateTime(out object value)
 		{
 			if (DateTime.TryParse(ToReadOnlySpan(), out var parsed))
 			{
