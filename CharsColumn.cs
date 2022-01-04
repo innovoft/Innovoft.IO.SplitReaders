@@ -72,8 +72,13 @@ namespace Innovoft.IO
 		public static bool TryParseObjectUInt64(CharsColumn parse, out object value)
 		{
 			return parse.TryParseObjectUInt64(out value);
-		}		
-#endregion //Class Methods
+		}
+
+		public static bool TryParseObjectString(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectString(out value);
+		}
+		#endregion //Class Methods
 
 		#region Constructors
 		public CharsColumn()
