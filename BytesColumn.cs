@@ -793,6 +793,21 @@ namespace Innovoft.IO
 			return bool.TryParse(ToString(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectBool(out object value)
+		{
+			if (bool.TryParse(ToString(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public DateTime ToDateTime()
 		{
 			return DateTime.Parse(ToString());
