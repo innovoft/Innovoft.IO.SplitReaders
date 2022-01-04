@@ -11,6 +11,68 @@ namespace Innovoft.IO
 {
 	public class BytesColumn : SplitColumn<byte>, IEquatable<BytesColumn>
 	{
+		#region Class Methods
+		public static bool TryParseObjectBool(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectBool(out value);
+		}
+
+		public static bool TryParseObjectDateTime(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectDateTime(out value);
+		}
+
+		public static bool TryParseObjectDecimal(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectDecimal(out value);
+		}
+
+		public static bool TryParseObjectGUID(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectGUID(out value);
+		}
+
+		public static bool TryParseObjectInt16(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectInt16(out value);
+		}
+
+		public static bool TryParseObjectInt32(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectInt32(out value);
+		}
+
+		public static bool TryParseObjectInt64(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectInt64(out value);
+		}
+
+		public static bool TryParseObjectSingle(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectSingle(out value);
+		}
+
+		public static bool TryParseObjectTimeSpan(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectTimeSpan(out value);
+		}
+
+		public static bool TryParseObjectUInt16(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectUInt16(out value);
+		}
+
+		public static bool TryParseObjectUInt32(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectUInt32(out value);
+		}
+
+		public static bool TryParseObjectUInt64(BytesColumn parse, out object value)
+		{
+			return parse.TryParseObjectUInt64(out value);
+		}
+		#endregion //Class Methods
+
 		#region Constructors
 		public BytesColumn()
 			: base()
@@ -451,7 +513,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseObjectQUID(out object value)
+		public bool TryParseObjectGUID(out object value)
 		{
 			if (Utf8Parser.TryParse(ToReadOnlySpan(), out Guid parsed, out var consumed))
 			{
