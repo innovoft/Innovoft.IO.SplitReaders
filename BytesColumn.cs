@@ -487,6 +487,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDouble(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out double parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public Guid ToGUID()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out Guid value, out var consumed))
