@@ -8,6 +8,73 @@ namespace Innovoft.IO
 {
 	public class CharsColumn : SplitColumn<char>, IEquatable<CharsColumn>
 	{
+		#region Class Methods
+		public static bool TryParseObjectBool(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectBool(out value);
+		}
+
+		public static bool TryParseObjectDateTime(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectDateTime(out value);
+		}
+
+		public static bool TryParseObjectDecimal(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectDecimal(out value);
+		}
+
+		public static bool TryParseObjectDouble(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectDouble(out value);
+		}
+
+		public static bool TryParseObjectGUID(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectGUID(out value);
+		}
+
+		public static bool TryParseObjectInt16(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectInt16(out value);
+		}
+
+		public static bool TryParseObjectInt32(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectInt32(out value);
+		}
+
+		public static bool TryParseObjectInt64(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectInt64(out value);
+		}
+
+		public static bool TryParseObjectSingle(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectSingle(out value);
+		}
+
+		public static bool TryParseObjectTimeSpan(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectTimeSpan(out value);
+		}
+
+		public static bool TryParseObjectUInt16(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectUInt16(out value);
+		}
+
+		public static bool TryParseObjectUInt32(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectUInt32(out value);
+		}		
+
+		public static bool TryParseObjectUInt64(CharsColumn parse, out object value)
+		{
+			return parse.TryParseObjectUInt64(out value);
+		}		
+#endregion //Class Methods
+
 		#region Constructors
 		public CharsColumn()
 			: base()
@@ -204,6 +271,21 @@ namespace Innovoft.IO
 			return bool.TryParse(ToReadOnlySpan(), out value);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectBool(out object value)
+		{
+			if (bool.TryParse(ToReadOnlySpan(), out var parsed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public DateTime ToDateTime()
 		{
 			return DateTime.Parse(ToReadOnlySpan());
@@ -294,7 +376,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParse(out object value)
+		public bool TryParseObjectGUID(out object value)
 		{
 			if (Guid.TryParse(ToReadOnlySpan(), out var parsed))
 			{
