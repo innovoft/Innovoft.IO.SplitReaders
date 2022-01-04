@@ -949,6 +949,20 @@ namespace Innovoft.IO
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(out string value)
+		{
+			value = ToString();
+			return true;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectString(out object value)
+		{
+			value = ToString();
+			return true;
+		}
+
 		public void Write(TextWriter writer)
 		{
 			if (count > 0)
