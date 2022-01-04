@@ -330,6 +330,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDateTime(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out DateTime parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public decimal ToDecimal()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out decimal value, out var consumed))
@@ -353,6 +368,21 @@ namespace Innovoft.IO
 		public bool TryParse(out decimal value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDecimal(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out decimal parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public double ToDouble()
@@ -405,6 +435,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectQUID(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out Guid parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public short ToInt16()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out short value, out var consumed))
@@ -428,6 +473,22 @@ namespace Innovoft.IO
 		public bool TryParse(out short value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt16(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out short parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+
 		}
 
 		public int ToInt32()
@@ -455,6 +516,22 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt32(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out int parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+
+		}
+
 		public long ToInt64()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out long value, out var consumed))
@@ -478,6 +555,21 @@ namespace Innovoft.IO
 		public bool TryParse(out long value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt64(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out long parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public float ToSingle()
@@ -505,6 +597,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectSingle(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out float parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public TimeSpan ToTimeSpan()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out TimeSpan value, out var consumed))
@@ -528,6 +635,21 @@ namespace Innovoft.IO
 		public bool TryParse(out TimeSpan value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectTimeSpan(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out TimeSpan parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 
 		public ushort ToUInt16()
@@ -555,6 +677,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt16(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out ushort parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public uint ToUInt32()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out uint value, out var consumed))
@@ -580,6 +717,21 @@ namespace Innovoft.IO
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt32(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out uint parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public ulong ToUInt64()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out ulong value, out var consumed))
@@ -603,6 +755,21 @@ namespace Innovoft.IO
 		public bool TryParse(out ulong value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt64(out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(), out ulong parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
