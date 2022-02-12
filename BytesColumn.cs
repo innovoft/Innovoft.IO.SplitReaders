@@ -81,6 +81,54 @@ namespace Innovoft.IO
 		{
 			return parse.TryParseObjectString(out value);
 		}
+
+		public static char[] ToChars(byte[] values)
+		{
+			return ToChars(values, Encoding.UTF8);
+		}
+
+		public static char[] ToChars(byte[] values, Encoding encoding)
+		{
+			return encoding.GetChars(values, 0, values.Length);
+		}
+
+		public static int ToChars(byte[] values, ref char[] decoded)
+		{
+			return ToChars(values, Encoding.UTF8, ref decoded);
+		}
+
+		public static int ToChars(byte[] values, Encoding encoding, ref char[] decoded)
+		{
+			var count = values.Length;
+			var length = encoding.GetCharCount(values, 0, count);
+			if (length > decoded.Length)
+			{
+				Array.Resize(ref decoded, 2 * decoded.Length);
+			}
+			encoding.GetChars(values, 0, count, decoded, 0);
+			return length;
+		}
+
+		public static char[] ToChars(byte[] values, Decoder decoder)
+		{
+			var count = values.Length;
+			var length = decoder.GetCharCount(values, 0, count);
+			var decoded = new char[length];
+			decoder.GetChars(values, 0, count, decoded, 0);
+			return decoded;
+		}
+
+		public static int ToChars(byte[] values, Decoder decoder, ref char[] decoded)
+		{
+			var count = values.Length;
+			var length = decoder.GetCharCount(values, 0, count);
+			if (length > decoded.Length)
+			{
+				Array.Resize(ref decoded, 2 * decoded.Length);
+			}
+			decoder.GetChars(values, 0, count, decoded, 0);
+			return length;
+		}
 		#endregion //Class Methods
 
 		#region Constructors
