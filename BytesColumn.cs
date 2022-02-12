@@ -129,6 +129,33 @@ namespace Innovoft.IO
 			decoder.GetChars(values, 0, count, decoded, 0);
 			return length;
 		}
+
+		public static void Write(byte[] values, TextWriter writer, ref char[] decoded)
+		{
+			if (values.Length > 0)
+			{
+				var length = ToChars(values, ref decoded);
+				writer.Write(decoded, 0, length);
+			}
+		}
+
+		public static void Write(byte[] values, TextWriter writer, Encoding encoding, ref char[] decoded)
+		{
+			if (values.Length > 0)
+			{
+				var length = ToChars(values, encoding, ref decoded);
+				writer.Write(decoded, 0, length);
+			}
+		}
+
+		public static void Write(byte[] values, TextWriter writer, Decoder decoder, ref char[] decoded)
+		{
+			if (values.Length > 0)
+			{
+				var length = ToChars(values, decoder, ref decoded);
+				writer.Write(decoded, 0, length);
+			}
+		}
 		#endregion //Class Methods
 
 		#region Constructors
