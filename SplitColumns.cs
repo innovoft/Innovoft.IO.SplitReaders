@@ -133,6 +133,16 @@ namespace Innovoft.IO
 				queue.Enqueue(value);
 			}
 		}
+
+		public TValue[][] ToArrays()
+		{
+			var values = new TValue[columns.Count][];
+			for (var i = values.Length - 1; i >= 0; --i)
+			{
+				values[i] = columns[i].ToArray();
+			}
+			return values;
+		}
 		#endregion //Methods
 	}
 }
