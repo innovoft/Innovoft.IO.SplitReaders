@@ -169,6 +169,11 @@ namespace Innovoft.IO
 			return new Span<T>(values, 0, count);
 		}
 
+		public Span<T> ToSpan(int offset, int length)
+		{
+			return new Span<T>(values, offset, length);
+		}
+
 		public static implicit operator Span<T>(SplitColumn<T> value)
 		{
 			return value.ToSpan();
@@ -177,6 +182,11 @@ namespace Innovoft.IO
 		public ReadOnlySpan<T> ToReadOnlySpan()
 		{
 			return new ReadOnlySpan<T>(values, 0, count);
+		}
+
+		public ReadOnlySpan<T> ToReadOnlySpan(int offset, int length)
+		{
+			return new ReadOnlySpan<T>(values, offset, length);
 		}
 
 		public static implicit operator ReadOnlySpan<T>(SplitColumn<T> value)
@@ -189,6 +199,11 @@ namespace Innovoft.IO
 			return new Memory<T>(values, 0, count);
 		}
 
+		public Memory<T> ToMemory(int offset, int length)
+		{
+			return new Memory<T>(values, offset, length);
+		}
+
 		public static implicit operator Memory<T>(SplitColumn<T> value)
 		{
 			return value.ToMemory();
@@ -197,6 +212,11 @@ namespace Innovoft.IO
 		public ReadOnlyMemory<T> ToReadOnlyMemory()
 		{
 			return new ReadOnlyMemory<T>(values, 0, count);
+		}
+
+		public ReadOnlyMemory<T> ToReadOnlyMemory(int offset, int length)
+		{
+			return new ReadOnlyMemory<T>(values, offset, length);
 		}
 
 		public static implicit operator ReadOnlyMemory<T>(SplitColumn<T> value)
