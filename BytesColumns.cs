@@ -426,6 +426,26 @@ namespace Innovoft.IO
 				writer.WriteByte(separator);
 			}
 		}
+
+		public void WriteLine(Stream writer, byte separator, byte[] newline)
+		{
+			if (columns.Count <= 0)
+			{
+				writer.Write(newline, 0, newline.Length);
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					writer.Write(newline, 0, newline.Length);
+					return;
+				}
+				writer.WriteByte(separator);
+			}
+		}
 		#endregion //Methods
 	}
 }
