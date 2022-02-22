@@ -408,6 +408,24 @@ namespace Innovoft.IO
 				writer.Write(separator);
 			}
 		}
+
+		public void Write(Stream writer, byte separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					return;
+				}
+				writer.WriteByte(separator);
+			}
+		}
 		#endregion //Methods
 	}
 }
