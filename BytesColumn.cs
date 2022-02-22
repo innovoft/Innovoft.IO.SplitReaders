@@ -1649,6 +1649,15 @@ namespace Innovoft.IO
 				writer.Write(values, 0, count);
 			}
 		}
+
+		public void WriteLine(Stream writer, byte[] newline)
+		{
+			if (count > 0)
+			{
+				writer.Write(values, 0, count);
+			}
+			writer.Write(newline, 0, newline.Length);
+		}
 		#endregion //Methods
 
 		#region Operators
