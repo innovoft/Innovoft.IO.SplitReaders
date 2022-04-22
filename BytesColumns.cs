@@ -435,6 +435,24 @@ namespace Innovoft.IO
 			}
 		}
 
+		public void Write(Stream writer, byte[] separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					return;
+				}
+				writer.Write(separator, 0, separator.Length);
+			}
+		}
+
 		public void WriteLine(Stream writer, byte separator, byte[] newline)
 		{
 			if (columns.Count <= 0)
