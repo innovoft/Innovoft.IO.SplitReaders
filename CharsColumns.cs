@@ -145,6 +145,24 @@ namespace Innovoft.IO
 			}
 		}
 
+		public void Write(TextWriter writer, char[] separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				columns[offset].Write(writer);
+				++offset;
+				if (offset >= columns.Count)
+				{
+					return;
+				}
+				writer.Write(separator);
+			}
+		}
+
 		public void Write(TextWriter writer, string separator)
 		{
 			if (columns.Count <= 0)
