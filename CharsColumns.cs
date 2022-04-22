@@ -12,6 +12,14 @@ namespace Innovoft.IO
 		public const int DefaultCapacity = CharsColumn.DefaultCapacity;
 		#endregion //Constants
 
+		#region Class Methods
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void Clear(CharsColumns value)
+		{
+			value.Clear();
+		}
+		#endregion //Class Methods
+
 		#region Fields
 		private int capacity;
 		#endregion //Fields
