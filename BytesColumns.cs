@@ -42,6 +42,40 @@ namespace Innovoft.IO
 				writer.Write(separator, 0, separator.Length);
 			}
 		}
+
+		public static void WriteLine(Stream writer, IEnumerable<byte[]> columns, byte[] separator, byte[] newline)
+		{
+			if (columns == null)
+			{
+				writer.Write(newline, 0, newline.Length);
+				return;
+			}
+			using (var enumerator = columns.GetEnumerator())
+			{
+				if (enumerator.MoveNext())
+				{
+					while (true)
+					{
+						var column = enumerator.Current;
+						if (column != null)
+						{
+							writer.Write(column, 0, column.Length);
+						}
+						if (enumerator.MoveNext())
+						{
+							writer.Write(newline, 0, newline.Length);
+							return;
+						}
+						writer.Write(separator, 0, separator.Length);
+					}
+				}
+				else
+				{
+					writer.Write(newline, 0, newline.Length);
+					return;
+				}
+			}
+		}
 		#endregion //Class Methods
 
 		#region Fields
