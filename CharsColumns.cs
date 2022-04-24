@@ -39,6 +39,37 @@ namespace Innovoft.IO
 				writer.Write(separator);
 			}
 		}
+
+		public static void WriteLine(TextWriter writer, IEnumerable<char[]> columns, char[] separator, char[] newline)
+		{
+			if (columns == null)
+			{
+				writer.Write(newline);
+				return;
+			}
+			using (var enumerator = columns.GetEnumerator())
+			{
+				if (enumerator.MoveNext())
+				{
+					while (true)
+					{
+						var column = enumerator.Current;
+						writer.Write(column);
+						if (enumerator.MoveNext())
+						{
+							writer.Write(newline);
+							return;
+						}
+						writer.Write(separator);
+					}
+				}
+				else
+				{
+					writer.Write(newline);
+					return;
+				}
+			}
+		}
 		#endregion //Class Methods
 
 		#region Fields
