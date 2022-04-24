@@ -18,6 +18,30 @@ namespace Innovoft.IO
 		{
 			value.Clear();
 		}
+
+		public static void WriteLine(Stream writer, byte[][] columns, byte[] separator, byte[] newline)
+		{
+			if (columns == null || columns.Length <= 0)
+			{
+				writer.Write(newline, 0, newline.Length);
+				return;
+			}
+			for (var offset = 0; ;)
+			{
+				var column = columns[offset];
+				if (column != null)
+				{
+					writer.Write(column, 0, column.Length);
+				}
+				++offset;
+				if (offset >= columns.Length)
+				{
+					writer.Write(newline, 0, newline.Length);
+					return;
+				}
+				writer.Write(separator, 0, separator.Length);
+			}
+		}
 		#endregion //Class Methods
 
 		#region Fields
