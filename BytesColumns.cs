@@ -96,7 +96,7 @@ namespace Innovoft.IO
 						{
 							writer.Write(column, 0, column.Length);
 						}
-						if (enumerator.MoveNext())
+						if (!enumerator.MoveNext())
 						{
 							writer.Write(newline, 0, newline.Length);
 							return;
