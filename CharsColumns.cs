@@ -33,7 +33,7 @@ namespace Innovoft.IO
 					while (true)
 					{
 						enumerator.Current.Write(writer);
-						if (enumerator.MoveNext())
+						if (!enumerator.MoveNext())
 						{
 							writer.Write(newline);
 							return;
