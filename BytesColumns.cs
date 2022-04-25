@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Innovoft.IO
@@ -13,13 +12,13 @@ namespace Innovoft.IO
 		#endregion //Constants
 
 		#region Class Methods
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 		public static void Clear(BytesColumns value)
 		{
 			value.Clear();
 		}
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 		public static void WriteLine(Stream writer, BytesColumns columns, byte[] separator, byte[] newline)
 		{
 			columns.WriteLine(writer, separator, newline);
