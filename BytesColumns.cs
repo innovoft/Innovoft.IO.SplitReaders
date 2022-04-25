@@ -19,6 +19,12 @@ namespace Innovoft.IO
 			value.Clear();
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void WriteLine(Stream writer, BytesColumns columns, byte[] separator, byte[] newline)
+		{
+			columns.WriteLine(writer, separator, newline);
+		}
+
 		public static void WriteLine(Stream writer, IEnumerable<BytesColumn> columns, byte[] separator, byte[] newline)
 		{
 			if (columns == null)
