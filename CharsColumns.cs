@@ -85,7 +85,7 @@ namespace Innovoft.IO
 					{
 						var column = enumerator.Current;
 						writer.Write(column);
-						if (enumerator.MoveNext())
+						if (!enumerator.MoveNext())
 						{
 							writer.Write(newline);
 							return;
