@@ -38,7 +38,7 @@ namespace Innovoft.IO
 					while (true)
 					{
 						enumerator.Current.Write(writer);
-						if (enumerator.MoveNext())
+						if (!enumerator.MoveNext())
 						{
 							writer.Write(newline, 0, newline.Length);
 							return;
