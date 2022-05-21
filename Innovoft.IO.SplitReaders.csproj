@@ -20,6 +20,7 @@
 		<TransformOnBuild>true</TransformOnBuild>
 		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
 		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -87,6 +88,13 @@
 		<None Include="BytesSplitReader.tt.cs">
 			<AutoGen>True</AutoGen>
 			<DependentUpon>BytesSplitReader.tt</DependentUpon>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\Innovoft.Text.JSON\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
 
