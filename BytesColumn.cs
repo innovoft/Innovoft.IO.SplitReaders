@@ -1576,6 +1576,26 @@ namespace Innovoft.IO
 			}
 		}
 
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public ReadOnlySpan<char> ToCharsRead(Encoding encoding, ref char[] decoded)
+		{
+			if (appended)
+			{
+				var length = encoding.GetCharCount(values, 0, count);
+				if (length > decoded.Length)
+				{
+					Array.Resize(ref decoded, 2 * decoded.Length);
+				}
+				encoding.GetChars(values, 0, count, decoded, 0);
+				return new ReadOnlySpan<char>(decoded, 0, length);
+			}
+			else
+			{
+				return new ReadOnlySpan<char>(null, 0, -1);
+			}
+		}
+#endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
+
 		public void Write(TextWriter writer, ref char[] decoded)
 		{
 			if (count > 0)
