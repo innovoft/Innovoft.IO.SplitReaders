@@ -1577,6 +1577,11 @@ namespace Innovoft.IO
 		}
 
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
+		public ReadOnlySpan<char> ToCharsRead(ref char[] decoded)
+		{
+			return ToCharsRead(Encoding.UTF8, ref decoded);
+		}
+
 		public ReadOnlySpan<char> ToCharsRead(Encoding encoding, ref char[] decoded)
 		{
 			if (appended)
