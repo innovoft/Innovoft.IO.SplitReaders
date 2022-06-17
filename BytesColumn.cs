@@ -876,7 +876,6 @@ namespace Innovoft.IO
 				value = null;
 				return false;
 			}
-
 		}
 
 		public long ToInt64()
