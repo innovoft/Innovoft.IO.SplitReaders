@@ -1000,6 +1000,21 @@ namespace Innovoft.IO
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectSingle(int offset, out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out float parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public TimeSpan ToTimeSpan()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out TimeSpan value, out var consumed))
