@@ -573,6 +573,21 @@ namespace Innovoft.IO
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDateTimeOffset(int offset, out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out DateTime parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public decimal ToDecimal()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out decimal value, out var consumed))
