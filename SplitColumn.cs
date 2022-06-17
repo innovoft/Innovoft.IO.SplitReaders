@@ -214,6 +214,11 @@ namespace Innovoft.IO
 			return new Memory<T>(values, offset, length);
 		}
 
+		public Memory<T> ToMemoryOffset(int offset)
+		{
+			return new Memory<T>(values, offset, count - offset);
+		}
+
 		public static implicit operator Memory<T>(SplitColumn<T> value)
 		{
 			return value.ToMemory();
