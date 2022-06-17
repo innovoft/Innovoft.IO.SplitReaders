@@ -634,6 +634,21 @@ namespace Innovoft.IO
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectDecimalOffset(int offset, out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out decimal parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public double ToDouble()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out double value, out var consumed))
