@@ -1224,6 +1224,12 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParse(int offset, out ulong value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseObjectUInt64(out object value)
 		{
 			if (Utf8Parser.TryParse(ToReadOnlySpan(), out ulong parsed, out var consumed))
