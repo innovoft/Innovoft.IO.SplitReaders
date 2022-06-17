@@ -878,6 +878,21 @@ namespace Innovoft.IO
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectInt32(int offset, out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out int parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
+
 		public long ToInt64()
 		{
 			if (!Utf8Parser.TryParse(ToReadOnlySpan(), out long value, out var consumed))
