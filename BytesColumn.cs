@@ -494,7 +494,7 @@ namespace Innovoft.IO
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseOffset(int offset, out bool value)
 		{
-			return Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out value, out var consumed);
+			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -515,7 +515,7 @@ namespace Innovoft.IO
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseObjectBoolOffset(int offset, out object value)
 		{
-			if (Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out bool parsed, out var consumed))
+			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out bool parsed, out var consumed))
 			{
 				value = parsed;
 				return true;
@@ -555,7 +555,7 @@ namespace Innovoft.IO
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseOffset(int offset, out DateTime value)
 		{
-			return Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out value, out var consumed);
+			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -576,7 +576,7 @@ namespace Innovoft.IO
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseObjectDateTimeOffset(int offset, out object value)
 		{
-			if (Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out DateTime parsed, out var consumed))
+			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out DateTime parsed, out var consumed))
 			{
 				value = parsed;
 				return true;
@@ -616,7 +616,7 @@ namespace Innovoft.IO
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseOffset(int offset, out decimal value)
 		{
-			return Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out value, out var consumed);
+			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -637,7 +637,7 @@ namespace Innovoft.IO
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseObjectDecimalOffset(int offset, out object value)
 		{
-			if (Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out decimal parsed, out var consumed))
+			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out decimal parsed, out var consumed))
 			{
 				value = parsed;
 				return true;

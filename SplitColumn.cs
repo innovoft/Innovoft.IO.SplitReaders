@@ -169,14 +169,14 @@ namespace Innovoft.IO
 			return new Span<T>(values, 0, count);
 		}
 
+		public Span<T> ToSpan(int offset)
+		{
+			return new Span<T>(values, offset, count - offset);
+		}
+
 		public Span<T> ToSpan(int offset, int length)
 		{
 			return new Span<T>(values, offset, length);
-		}
-
-		public Span<T> ToSpanOffset(int offset)
-		{
-			return new Span<T>(values, offset, count - offset);
 		}
 
 		public static implicit operator Span<T>(SplitColumn<T> value)
@@ -189,14 +189,14 @@ namespace Innovoft.IO
 			return new ReadOnlySpan<T>(values, 0, count);
 		}
 
+		public ReadOnlySpan<T> ToReadOnlySpan(int offset)
+		{
+			return new ReadOnlySpan<T>(values, offset, count - offset);
+		}
+
 		public ReadOnlySpan<T> ToReadOnlySpan(int offset, int length)
 		{
 			return new ReadOnlySpan<T>(values, offset, length);
-		}
-
-		public ReadOnlySpan<T> ToReadOnlySpanOffset(int offset)
-		{
-			return new ReadOnlySpan<T>(values, offset, count - offset);
 		}
 
 		public static implicit operator ReadOnlySpan<T>(SplitColumn<T> value)
@@ -209,14 +209,14 @@ namespace Innovoft.IO
 			return new Memory<T>(values, 0, count);
 		}
 
+		public Memory<T> ToMemory(int offset)
+		{
+			return new Memory<T>(values, offset, count - offset);
+		}
+
 		public Memory<T> ToMemory(int offset, int length)
 		{
 			return new Memory<T>(values, offset, length);
-		}
-
-		public Memory<T> ToMemoryOffset(int offset)
-		{
-			return new Memory<T>(values, offset, count - offset);
 		}
 
 		public static implicit operator Memory<T>(SplitColumn<T> value)
@@ -229,14 +229,14 @@ namespace Innovoft.IO
 			return new ReadOnlyMemory<T>(values, 0, count);
 		}
 
+		public ReadOnlyMemory<T> ToReadOnlyMemory(int offset)
+		{
+			return new ReadOnlyMemory<T>(values, offset, count - offset);
+		}
+
 		public ReadOnlyMemory<T> ToReadOnlyMemory(int offset, int length)
 		{
 			return new ReadOnlyMemory<T>(values, offset, length);
-		}
-
-		public ReadOnlyMemory<T> ToReadOnlyMemoryOffset(int offset)
-		{
-			return new ReadOnlyMemory<T>(values, offset, count - offset);
 		}
 
 		public static implicit operator ReadOnlyMemory<T>(SplitColumn<T> value)
