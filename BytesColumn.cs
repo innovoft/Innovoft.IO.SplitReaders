@@ -815,7 +815,6 @@ namespace Innovoft.IO
 				value = null;
 				return false;
 			}
-
 		}
 
 		public int ToInt32()
