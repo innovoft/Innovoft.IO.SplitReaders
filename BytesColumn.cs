@@ -553,6 +553,12 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseOffset(int offset, out DateTime value)
+		{
+			return Utf8Parser.TryParse(ToReadOnlySpanOffset(offset), out value, out var consumed);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParseObjectDateTime(out object value)
 		{
 			if (Utf8Parser.TryParse(ToReadOnlySpan(), out DateTime parsed, out var consumed))
