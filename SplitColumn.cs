@@ -189,6 +189,11 @@ namespace Innovoft.IO
 			return new ReadOnlySpan<T>(values, offset, length);
 		}
 
+		public ReadOnlySpan<T> ToReadOnlySpanOffset(int offset)
+		{
+			return new ReadOnlySpan<T>(values, offset, count - offset);
+		}
+
 		public static implicit operator ReadOnlySpan<T>(SplitColumn<T> value)
 		{
 			return value.ToReadOnlySpan();
