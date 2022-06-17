@@ -492,7 +492,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseOffset(int offset, out bool value)
+		public bool TryParse(int offset, out bool value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
 		}
@@ -513,7 +513,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseObjectBoolOffset(int offset, out object value)
+		public bool TryParseObjectBool(int offset, out object value)
 		{
 			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out bool parsed, out var consumed))
 			{
@@ -553,7 +553,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseOffset(int offset, out DateTime value)
+		public bool TryParse(int offset, out DateTime value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
 		}
@@ -574,7 +574,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseObjectDateTimeOffset(int offset, out object value)
+		public bool TryParseObjectDateTime(int offset, out object value)
 		{
 			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out DateTime parsed, out var consumed))
 			{
@@ -614,7 +614,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseOffset(int offset, out decimal value)
+		public bool TryParse(int offset, out decimal value)
 		{
 			return Utf8Parser.TryParse(ToReadOnlySpan(offset), out value, out var consumed);
 		}
@@ -635,7 +635,7 @@ namespace Innovoft.IO
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool TryParseObjectDecimalOffset(int offset, out object value)
+		public bool TryParseObjectDecimal(int offset, out object value)
 		{
 			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out decimal parsed, out var consumed))
 			{
