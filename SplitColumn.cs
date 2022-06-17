@@ -234,6 +234,11 @@ namespace Innovoft.IO
 			return new ReadOnlyMemory<T>(values, offset, length);
 		}
 
+		public ReadOnlyMemory<T> ToReadOnlyMemoryOffset(int offset)
+		{
+			return new ReadOnlyMemory<T>(values, offset, count - offset);
+		}
+
 		public static implicit operator ReadOnlyMemory<T>(SplitColumn<T> value)
 		{
 			return value.ToReadOnlyMemory();
