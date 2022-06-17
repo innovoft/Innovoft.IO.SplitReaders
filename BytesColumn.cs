@@ -1243,6 +1243,21 @@ namespace Innovoft.IO
 				return false;
 			}
 		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public bool TryParseObjectUInt64(int offset, out object value)
+		{
+			if (Utf8Parser.TryParse(ToReadOnlySpan(offset), out ulong parsed, out var consumed))
+			{
+				value = parsed;
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
+		}
 #else //NETSTANDARD2_1 || NET5_0_OR_GREATER
 		public bool ToBoolean()
 		{
