@@ -174,6 +174,11 @@ namespace Innovoft.IO
 			return new Span<T>(values, offset, length);
 		}
 
+		public Span<T> ToSpanOffset(int offset)
+		{
+			return new Span<T>(values, offset, count - offset);
+		}
+
 		public static implicit operator Span<T>(SplitColumn<T> value)
 		{
 			return value.ToSpan();
