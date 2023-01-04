@@ -91,14 +91,7 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Include="..\Innovoft.Text.JSON\README.md">
-		  <Pack>True</Pack>
-		  <PackagePath>\</PackagePath>
-		</None>
-	</ItemGroup>
-
 	<!--T4-->
-	<Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+	<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets " />
 
 </Project>
