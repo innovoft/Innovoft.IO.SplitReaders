@@ -51,6 +51,10 @@
     <None Remove="Innovoft.IO.SplitReaders.Tests\**" />
     <None Remove=".gitignore" />
   </ItemGroup>
+	
+	<ItemGroup>
+		<None Include="docs\readme.md" Pack="true" PackagePath=""/>
+	</ItemGroup>
 
   <ItemGroup>
 		<T4Transform Include="StringSplitReader.tt">
