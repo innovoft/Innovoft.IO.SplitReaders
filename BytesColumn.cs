@@ -296,7 +296,7 @@ namespace Innovoft.IO
 			var required = count + appendCount;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			Array.Copy(append.values, 0, values, count, appendCount);
 			count += appendCount;
@@ -309,7 +309,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetBytes(append, 0, append.Length, values, count);
 			count += length;
@@ -337,7 +337,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetBytes(append, new Span<byte>(values, count, length));
 			count += length;
@@ -350,7 +350,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoder.GetBytes(append, new Span<byte>(values, count, length), flush);
 			count += length;
@@ -365,7 +365,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetBytes(append, offset, length, values, count);
 			count += length;
@@ -383,7 +383,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetBytes(append, offset, length, values, count);
 			count += length;
@@ -418,7 +418,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetBytes(append, 0, append.Length, values, count);
 			count += encodedLength;
@@ -432,7 +432,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetBytes(append, 0, append.Length, values, count);
 			count += encodedLength;
@@ -445,7 +445,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoder.GetBytes(append, 0, append.Length, values, count, flush);
 			count += encodedLength;
@@ -459,7 +459,7 @@ namespace Innovoft.IO
 			var required = count + encodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoder.GetBytes(append, 0, append.Length, values, count, flush);
 			count += encodedLength;

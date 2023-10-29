@@ -117,7 +117,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			Array.Copy(append, offset, values, count, length);
 			count += length;
@@ -130,16 +130,24 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			Array.Copy(append, offset, values, count, length);
 			count += length;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		protected void Enlarge()
+		protected void Enlarge(int required)
 		{
-			var enlargedCapacity = 2 * capacity;
+			var enlargedCapacity = capacity;
+			while (true)
+			{
+				enlargedCapacity *= 2;
+				if (enlargedCapacity <= required)
+				{
+					break;
+				}
+			}
 			var enlarged = new T[enlargedCapacity];
 			Array.Copy(values, 0, enlarged, 0, count);
 			capacity = enlargedCapacity;

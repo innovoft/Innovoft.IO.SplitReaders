@@ -166,7 +166,7 @@ namespace Innovoft.IO
 			var required = count + appendCount;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			Array.Copy(append.values, 0, values, count, appendCount);
 			count += appendCount;
@@ -179,7 +179,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			append.CopyTo(0, values, count, length);
 			count += length;
@@ -191,7 +191,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			append.CopyTo(offset, values, count, length);
 			count += length;
@@ -204,7 +204,7 @@ namespace Innovoft.IO
 			var required = count + length;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			append.CopyTo(offset, values, count, length);
 			count += length;
@@ -217,7 +217,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetChars(append, offset, length, values, count);
 			count += decodedLength;
@@ -231,7 +231,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			encoding.GetChars(append, offset, length, values, count);
 			count += decodedLength;
@@ -244,7 +244,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			decoder.GetChars(append, offset, length, values, count);
 			count += decodedLength;
@@ -258,7 +258,7 @@ namespace Innovoft.IO
 			var required = count + decodedLength;
 			if (required > capacity)
 			{
-				Enlarge();
+				Enlarge(required);
 			}
 			decoder.GetChars(append, offset, length, values, count);
 			count += decodedLength;
