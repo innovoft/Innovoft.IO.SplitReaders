@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 	
-	<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation" Condition="$(SourceRevisionId) == ''">
+	<!--<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation" Condition="$(SourceRevisionId) == ''">
 		<Exec Command="git rev-parse HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False">
 			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
 		</Exec>
@@ -40,7 +40,7 @@
 				<_Parameter2>$(SourceRevisionId)</_Parameter2>
 			</AssemblyAttribute>
 		</ItemGroup>
-	</Target>
+	</Target>-->
 	
   <ItemGroup>
     <Compile Remove="Innovoft.IO.SplitReaders.Test.Console\**" />
