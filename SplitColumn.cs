@@ -143,7 +143,7 @@ namespace Innovoft.IO
 			while (true)
 			{
 				enlargedCapacity *= 2;
-				if (enlargedCapacity <= required)
+				if (enlargedCapacity >= required)
 				{
 					break;
 				}
