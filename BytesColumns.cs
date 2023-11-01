@@ -498,6 +498,17 @@ namespace Innovoft.IO
 			return true;
 		}
 
+		public string TryToString(int offset)
+		{
+			if (offset >= columns.Count)
+			{
+				return null;
+			}
+			var column = columns[offset];
+			var value = column.ToString();
+			return value;
+		}
+
 		public void Write(TextWriter writer, char separator, ref char[] decoded)
 		{
 			if (columns.Count <= 0)
