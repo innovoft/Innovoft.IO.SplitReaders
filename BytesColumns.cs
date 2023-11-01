@@ -193,7 +193,8 @@ namespace Innovoft.IO
 			var builder = new StringBuilder();
 			for (var i = 0; ; )
 			{
-				var columnText = columns[i].ToString(encoding);
+				var column = columns[i];
+				var columnText = column.ToString(encoding);
 				builder.Append(columnText);
 				++i;
 				if (i >= columns.Count)
@@ -220,7 +221,8 @@ namespace Innovoft.IO
 			var builder = new StringBuilder();
 			for (var i = 0; ; )
 			{
-				var columnText = columns[i].ToString(encoding);
+				var column = columns[i];
+				var columnText = column.ToString(encoding);
 				builder.Append(columnText);
 				++i;
 				if (i >= columns.Count)
