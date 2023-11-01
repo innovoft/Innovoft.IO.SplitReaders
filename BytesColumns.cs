@@ -509,6 +509,29 @@ namespace Innovoft.IO
 			return value;
 		}
 
+		public bool TryToString(Encoding encoding, int offset, out string value)
+		{
+			if (offset >= columns.Count)
+			{
+				value = null;
+				return false;
+			}
+			var column = columns[offset];
+			value = column.ToString(encoding);
+			return true;
+		}
+
+		public string TryToString(Encoding encoding, int offset)
+		{
+			if (offset >= columns.Count)
+			{
+				return null;
+			}
+			var column = columns[offset];
+			var value = column.ToString(encoding);
+			return value;
+		}
+
 		public void Write(TextWriter writer, char separator, ref char[] decoded)
 		{
 			if (columns.Count <= 0)
