@@ -207,6 +207,34 @@ namespace Innovoft.IO
 			return builderText;
 		}
 
+		public string ToString(char separator, ref char[] decoded)
+		{
+			return ToString(Encoding.UTF8, separator, ref decoded);
+		}
+
+		public string ToString(Encoding encoding, char separator, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				var length = column.ToChars(encoding, ref decoded);
+				builder.Append(decoded, 0, length);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
 		public string ToString(string separator)
 		{
 			return ToString(Encoding.UTF8, separator);
@@ -224,6 +252,34 @@ namespace Innovoft.IO
 				var column = columns[i];
 				var columnText = column.ToString(encoding);
 				builder.Append(columnText);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
+		public string ToString(string separator, ref char[] decoded)
+		{
+			return ToString(Encoding.UTF8, separator, ref decoded);
+		}
+
+		public string ToString(Encoding encoding, string separator, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				var length = column.ToChars(encoding, ref decoded);
+				builder.Append(decoded, 0, length);
 				++i;
 				if (i >= columns.Count)
 				{
