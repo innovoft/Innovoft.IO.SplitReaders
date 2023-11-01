@@ -207,6 +207,29 @@ namespace Innovoft.IO
 			return builderText;
 		}
 
+		public string ToString(Decoder decoder, char separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				var columnText = column.ToString(decoder);
+				builder.Append(columnText);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
 		public string ToString(char separator, ref char[] decoded)
 		{
 			return ToString(Encoding.UTF8, separator, ref decoded);
@@ -223,6 +246,29 @@ namespace Innovoft.IO
 			{
 				var column = columns[i];
 				var length = column.ToChars(encoding, ref decoded);
+				builder.Append(decoded, 0, length);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
+		public string ToString(Decoder decoder, char separator, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				var length = column.ToChars(decoder, ref decoded);
 				builder.Append(decoded, 0, length);
 				++i;
 				if (i >= columns.Count)
@@ -263,6 +309,29 @@ namespace Innovoft.IO
 			return builderText;
 		}
 
+		public string ToString(Decoder decoder, string separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				var columnText = column.ToString(decoder);
+				builder.Append(columnText);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
 		public string ToString(string separator, ref char[] decoded)
 		{
 			return ToString(Encoding.UTF8, separator, ref decoded);
@@ -279,6 +348,29 @@ namespace Innovoft.IO
 			{
 				var column = columns[i];
 				var length = column.ToChars(encoding, ref decoded);
+				builder.Append(decoded, 0, length);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
+		public string ToString(Decoder decoder, string separator, ref char[] decoded)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				var length = column.ToChars(decoder, ref decoded);
 				builder.Append(decoded, 0, length);
 				++i;
 				if (i >= columns.Count)
