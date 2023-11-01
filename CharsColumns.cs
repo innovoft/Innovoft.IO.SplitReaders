@@ -168,6 +168,50 @@ namespace Innovoft.IO
 			return value.AppendEnding;
 		}
 
+		public string ToString(char separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				column.ToString(builder);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
+		public string ToString(string separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var column = columns[i];
+				column.ToString(builder);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
 		public string[] ToStringsArray()
 		{
 			var values = new string[columns.Count];
