@@ -954,6 +954,11 @@ namespace Innovoft.IO
 			}
 		}
 
+		public void ToString(StringBuilder builder)
+		{
+			builder.Append(values, 0, count);
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParse(out string value)
 		{
