@@ -179,6 +179,60 @@ namespace Innovoft.IO
 			return value.AppendEnding;
 		}
 
+		public string ToString(char separator)
+		{
+			return ToString(Encoding.UTF8, separator);
+		}
+
+		public string ToString(Encoding encoding, char separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var columnText = columns[i].ToString(encoding);
+				builder.Append(columnText);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
+		public string ToString(string separator)
+		{
+			return ToString(Encoding.UTF8, separator);
+		}
+
+		public string ToString(Encoding encoding, string separator)
+		{
+			if (columns.Count <= 0)
+			{
+				return string.Empty;
+			}
+			var builder = new StringBuilder();
+			for (var i = 0; ; )
+			{
+				var columnText = columns[i].ToString(encoding);
+				builder.Append(columnText);
+				++i;
+				if (i >= columns.Count)
+				{
+					break;
+				}
+				builder.Append(separator);
+			}
+			var builderText = builder.ToString();
+			return builderText;
+		}
+
 		public string[] ToStringsArray()
 		{
 			return ToStringsArray(Encoding.UTF8);
