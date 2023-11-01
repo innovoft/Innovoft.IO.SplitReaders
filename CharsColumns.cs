@@ -271,6 +271,29 @@ namespace Innovoft.IO
 			}
 		}
 
+		public bool TryToString(int offset, out string value)
+		{
+			if (offset >= columns.Count)
+			{
+				value = null;
+				return false;
+			}
+			var column = columns[offset];
+			value = column.ToString();
+			return true;
+		}
+
+		public string TryToString(int offset)
+		{
+			if (offset >= columns.Count)
+			{
+				return null;
+			}
+			var column = columns[offset];
+			var value = column.ToString();
+			return value;
+		}
+
 		public void Write(TextWriter writer, char[] separator)
 		{
 			if (columns.Count <= 0)
