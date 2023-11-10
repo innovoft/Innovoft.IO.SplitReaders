@@ -1871,6 +1871,15 @@ namespace Innovoft.IO
 			return encoding.GetString(values, starting, length);
 		}
 
+		public string ToStringEnding(Decoder decoder, int starting, int ending)
+		{
+			var count = (ending - starting) + 1;
+			var length = decoder.GetCharCount(values, starting, count);
+			var decoded = new char[length];
+			decoder.GetChars(values, starting, count, decoded, 0);
+			return new string(decoded);
+		}
+
 		public string ToStringLength(int offset, int length)
 		{
 			return ToStringLength(Encoding.UTF8, offset, length);
