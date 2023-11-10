@@ -942,6 +942,86 @@ namespace Innovoft.IO
 		}
 #endif //NETSTANDARD2_1 || NET5_0_OR_GREATER
 
+		public bool TryIndexOf(char value, int starting, out int offset)
+		{
+			for (; starting < count; ++starting)
+			{
+				if (value == values[starting])
+				{
+					offset = starting;
+					return true;
+				}
+			}
+			offset = default;
+			return false;
+		}
+
+		public int IndexOf(char value, int starting)
+		{
+			for (; starting < count; ++starting)
+			{
+				if (value == values[starting])
+				{
+					return starting;
+				}
+			}
+			return -1;
+		}
+
+		public bool TryIndexOfEnding(char value, int starting, int finished, out int offset)
+		{
+			for (; starting <= finished; ++starting)
+			{
+				if (value == values[starting])
+				{
+					offset = starting;
+					return true;
+				}
+			}
+			offset = default;
+			return false;
+		}
+
+		public int IndexOfEnding(char value, int starting, int finished)
+		{
+			for (; starting <= finished; ++starting)
+			{
+				if (value == values[starting])
+				{
+					return starting;
+				}
+			}
+			return -1;
+		}
+
+		public bool TryIndexOfLength(char value, int starting, int length, out int offset)
+		{
+			length += starting;
+			for (; starting < length; ++starting)
+			{
+				if (value == values[starting])
+				{
+					offset = starting;
+					return true;
+				}
+			}
+			offset = default;
+			return false;
+		}
+
+		public int IndexOfLength(char value, int starting, int length)
+		{
+			length += starting;
+			for (; starting < length; ++starting)
+			{
+				if (value == values[starting])
+				{
+					return starting;
+				}
+			}
+			return -1;
+		}
+
 		public sealed override string ToString()
 		{
 			if (appended)
