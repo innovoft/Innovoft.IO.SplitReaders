@@ -1890,6 +1890,14 @@ namespace Innovoft.IO
 			return encoding.GetString(values, offset, length);
 		}
 
+		public string ToStringLength(Decoder decoder, int offset, int count)
+		{
+			var length = decoder.GetCharCount(values, offset, count);
+			var decoded = new char[length];
+			decoder.GetChars(values, offset, count, decoded, 0);
+			return new string(decoded);
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParse(out string value)
 		{
