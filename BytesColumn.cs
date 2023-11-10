@@ -1825,6 +1825,17 @@ namespace Innovoft.IO
 			}
 		}
 
+		public string ToString(int starting)
+		{
+			return ToString(Encoding.UTF8, starting);
+		}
+
+		public string ToString(Encoding encoding, int starting)
+		{
+			var length = count - starting;
+			return encoding.GetString(values, starting, length);
+		}
+
 		public string ToString(Decoder decoder)
 		{
 			if (appended)
