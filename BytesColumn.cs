@@ -1862,6 +1862,16 @@ namespace Innovoft.IO
 			return encoding.GetString(values, starting, length);
 		}
 
+		public string ToStringLength(int offset, int length)
+		{
+			return ToStringLength(Encoding.UTF8, offset, length);
+		}
+
+		public string ToStringLength(Encoding encoding, int offset, int length)
+		{
+			return encoding.GetString(values, offset, length);
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public bool TryParse(out string value)
 		{
