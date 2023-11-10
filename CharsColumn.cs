@@ -1040,6 +1040,12 @@ namespace Innovoft.IO
 			return new string(values, offset, length);
 		}
 
+		public string ToStringEnding(int offset, int ending)
+		{
+			var length = (ending - offset) + 1;
+			return new string(values, offset, length);
+		}
+
 		public void ToString(StringBuilder builder)
 		{
 			builder.Append(values, 0, count);
