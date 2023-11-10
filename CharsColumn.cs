@@ -1046,6 +1046,11 @@ namespace Innovoft.IO
 			return new string(values, offset, length);
 		}
 
+		public string ToStringLength(int offset, int length)
+		{
+			return new string(values, offset, length);
+		}
+
 		public void ToString(StringBuilder builder)
 		{
 			builder.Append(values, 0, count);
