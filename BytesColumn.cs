@@ -1836,17 +1836,6 @@ namespace Innovoft.IO
 			return encoding.GetString(values, starting, length);
 		}
 
-		public string ToStringEnding(int starting, int ending)
-		{
-			return ToStringEnding(Encoding.UTF8, starting, ending);
-		}
-
-		public string ToStringEnding(Encoding encoding, int starting, int ending)
-		{
-			var length = (ending - starting) + 1;
-			return encoding.GetString(values, starting, length);
-		}
-
 		public string ToString(Decoder decoder)
 		{
 			if (appended)
@@ -1860,6 +1849,17 @@ namespace Innovoft.IO
 			{
 				return null;
 			}
+		}
+
+		public string ToStringEnding(int starting, int ending)
+		{
+			return ToStringEnding(Encoding.UTF8, starting, ending);
+		}
+
+		public string ToStringEnding(Encoding encoding, int starting, int ending)
+		{
+			var length = (ending - starting) + 1;
+			return encoding.GetString(values, starting, length);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
